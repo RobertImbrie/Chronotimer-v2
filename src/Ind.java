@@ -1,10 +1,8 @@
 package src;
 
 import java.util.ArrayList;
-import org.junit.*;
-import static org.junit.Assert.*;
 
-public class Run {
+public class Ind {
 	ArrayList<Competitor> competitors;
 	int curStart;
 	int curFinish;
@@ -12,7 +10,7 @@ public class Run {
 	/**
 	 * the constructor that creates the run, with default values
 	 */
-	public Run() {
+	public Ind() {
 		competitors = new ArrayList<Competitor>();
 		curStart = 0;
 		curFinish = 0;
