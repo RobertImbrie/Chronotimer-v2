@@ -14,8 +14,8 @@ public class ParaInd {
 	 */
 	public ParaInd() {
 		competitors = new ArrayList<Competitor>();
-		lane1 = 0;
-		lane2 = 0;
+		laneOne = 0;
+		laneTwo = 0;
 	}
 	
 	/**
