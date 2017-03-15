@@ -73,7 +73,7 @@ public class Chronotimer{
   /** Returns a formatted String representing the run,
      which is outputted by Simulator */
   public ArrayList<String> print(){
-	return r.competitorList();
+	return races.get(currentRace).competitorList();
     //TODO
   }
 }
