@@ -1,6 +1,11 @@
 package src;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import com.google.gson.Gson;
+//import com.google.gson.JsonElement;
+import com.google.gson.GsonBuilder;
 
 public class Chronotimer{
   ArrayList<Boolean> channels;
@@ -9,6 +14,7 @@ public class Chronotimer{
   boolean runStarted;
   String event;
   int currentRace;
+  String outputLocation = java.io.File.separator;
   
   public Chronotimer(){
 	  channels = new ArrayList<Boolean>();
@@ -72,8 +78,56 @@ public class Chronotimer{
   
   /** Returns a formatted String representing the run,
      which is outputted by Simulator */
-  public ArrayList<String> print(){
-	return races.get(currentRace).competitorList();
+//  public ArrayList<String> print(){
+//	return races.get(currentRace).competitorList();
+//    //TODO
+//  }
+  
+  public String print(){
+	  String outputPath = outputLocation + "RUN0001.txt";
+	  String outputPathJSON = outputLocation + "RUN0001.json";
+	  String outputPathPlainTxt = outputLocation + "RUN0001.json";
+	  //Gson g = new Gson();		//use for single line (not pretty)
+	  Gson g = new GsonBuilder().setPrettyPrinting().create(); //use for pretty
+	  
+	  String json = g.toJson(this);		//maybe change <this> to <races>
+	  String plainTxt = this.toString();
+	//return run.competitorList();
     //TODO
+	  BufferedWriter output = null;
+	  try{
+		  output = new BufferedWriter(new FileWriter(outputPath));
+		  output.write(json);
+		  output.close();
+	  }
+	  catch(Exception e){
+		  System.out.println("ERROR - could not print outputPath");
+	  }
+	  try{
+		  output = new BufferedWriter(new FileWriter(outputPathJSON));
+		  output.write(json);
+		  output.close();
+	  }
+	  catch(Exception e){
+		  System.out.println("ERROR - could not print outputPathJSON");
+	  }
+	  try{
+		  output = new BufferedWriter(new FileWriter(outputPathPlainTxt));
+		  output.write(json);
+		  output.close();
+	  }
+	  catch(Exception e){
+		  System.out.println("ERROR - could not print outputPathPlainTxt");
+	  }
+	  return json;
+  }
+  
+  @Override
+  public String toString(){
+	  String out = "\t\tRecipt\n\n\t**********\n\n";
+	  for(int i = 0; i < races.size(); i++){
+		  out = out +  races.get(i).toString() + "\n\n\t********************";
+	  }
+	  return out;
   }
 }
