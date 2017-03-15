@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class ParaInd {
+public class ParaInd extends Race{
 	ArrayList<Competitor> competitors;
 	int laneOne, laneTwo;
 	boolean laneOneHasStarted, laneTwoHasStarted;
@@ -274,5 +274,14 @@ public class ParaInd {
 	
 	public ArrayList<Competitor> getCompetitors(){
 		return competitors;
+	}
+	
+	@Override
+	public String toString(){
+		String out = "";
+		for(int i = 0; i < competitors.size(); i++){
+			out = out +  "\t" + competitors.get(i).toString() + "\n";
+		}
+		return out;
 	}
 }

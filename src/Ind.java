@@ -2,7 +2,7 @@ package src;
 
 import java.util.ArrayList;
 
-public class Ind {
+public class Ind extends Race{
 	ArrayList<Competitor> competitors;
 	int curStart;
 	int curFinish;
@@ -244,5 +244,14 @@ public class Ind {
 	
 	public ArrayList<Competitor> getCompetitors(){
 		return competitors;
+	}
+	
+	@Override
+	public String toString(){
+		String out = "";
+		for(int i = 0; i < competitors.size(); i++){
+			out = out +  "\t" + competitors.get(i).toString() + "\n";
+		}
+		return out;
 	}
 }
