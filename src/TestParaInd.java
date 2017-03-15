@@ -65,57 +65,244 @@ public class TestParaInd {
 	
 	@Test
 	public void testCompetitorList(){
-		
+		ParaInd r = new ParaInd();
+		r.addCompetitor(111);
+		assertEquals("Competitor: 111 --- Has Not Started", r.competitorList().get(0));
+		r.addCompetitor(122);
+		assertEquals("Competitor: 111 --- Has Not Started", r.competitorList().get(0));
+		assertEquals("Competitor: 122 --- Has Not Started", r.competitorList().get(1));
+		r.removeCompetitorByBib(111);
+		assertEquals("Competitor: 122 --- Has Not Started", r.competitorList().get(0));
+		r.addCompetitor(333);
+		r.trigger(1, 1000000000);
+		assertEquals("Competitor: 122 --- DNF", r.competitorList().get(0));
+		assertEquals("Competitor: 333 --- Has Not Started", r.competitorList().get(1));
+		r.trigger(3, 2000000000);
+		assertEquals("Competitor: 122 --- 1 Seconds", r.competitorList().get(0));
+		assertEquals("Competitor: 333 --- Has Not Started", r.competitorList().get(1));
+		r.trigger(2, 3000000000L);
+		assertEquals("Competitor: 122 --- 1 Seconds", r.competitorList().get(0));
+		assertEquals("Competitor: 333 --- DNF", r.competitorList().get(1));
+		r.trigger(4, 7000000000L);
+		assertEquals("Competitor: 122 --- 1 Seconds", r.competitorList().get(0));
+		assertEquals("Competitor: 333 --- 4 Seconds", r.competitorList().get(1));
+		r.removeCompetitorByBib(122);
+		assertEquals("Competitor: 333 --- 4 Seconds", r.competitorList().get(0));
 	}
 	
 	@Test
 	public void testAddCompetitor(){
-		
+		ParaInd r = new ParaInd();
+		assertEquals(true, r.addCompetitor(111));
+		assertEquals(true, r.addCompetitor(222));
+		assertEquals(false, r.addCompetitor(111));
+		assertEquals(false, r.addCompetitor(222));
+		assertEquals(true, r.addCompetitor(333));
+		r.removeCompetitorByBib(111);
+		assertEquals(true, r.addCompetitor(111));
 	}
 	
 	@Test
 	public void testClear(){
-		
+		ParaInd r = new ParaInd();
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		assertEquals("Competitor: 111 --- Has Not Started", r.clear()[0]);
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		assertEquals("Competitor: 222 --- Has Not Started", r.clear()[1]);
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		assertEquals("Competitor: 333 --- Has Not Started", r.clear()[2]);
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		r.trigger(1, 1000000000);
+		r.trigger(3, 2000000000);
+		r.trigger(1, 3000000000L);
+		r.trigger(3, 4000000000L);
+		r.trigger(1, 5000000000L);
+		assertEquals("Competitor: 111 --- 1 Seconds", r.clear()[0]);
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		r.trigger(2, 1000000000);
+		r.trigger(4, 2000000000);
+		r.trigger(1, 3000000000L);
+		r.trigger(3, 4000000000L);
+		r.trigger(2, 5000000000L);
+		assertEquals("Competitor: 222 --- 1 Seconds", r.clear()[1]);
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		r.trigger(1, 1000000000);
+		r.trigger(3, 2000000000);
+		r.trigger(2, 3000000000L);
+		r.trigger(4, 4000000000L);
+		r.trigger(2, 5000000000L);
+		assertEquals("Competitor: 333 --- DNF", r.clear()[2]);
 	}
 	
 	@Test
 	public void testRemoveCompetitorByBib(){
-		
+		ParaInd r = new ParaInd();
+    	r.addCompetitor(111);
+		assertEquals("Competitor: 111 --- Has Not Started", r.removeCompetitorByBib(111));
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.trigger(2, 1000000000);
+		r.trigger(4, 3000000000L);
+		assertEquals("Competitor: 222 --- Has Not Started", r.removeCompetitorByBib(222));
+		assertEquals("Competitor: 111 --- 2 Seconds", r.removeCompetitorByBib(111));
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		r.trigger(1, 1000000000);
+		r.trigger(3, 2000000000);
+		r.trigger(2, 3000000000L);
+		r.trigger(4, 5000000000L);
+		assertEquals("Competitor: 222 --- 2 Seconds", r.removeCompetitorByBib(222));
+		assertEquals("Competitor: 111 --- 1 Seconds", r.removeCompetitorByBib(111));
+		r.trigger(2, 6000000000L);
+		r.trigger(4, 8000000000L);
+		assertEquals("Competitor: 333 --- 2 Seconds", r.removeCompetitorByBib(333));
 	}
 	
 	@Test
 	public void testRemoveCompetitorByPos(){
-		
+		ParaInd r = new ParaInd();
+		r.addCompetitor(111);
+		assertEquals("Competitor: 111 --- Has Not Started", r.removeCompetitorByPos(0));
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.trigger(1, 1000000000);
+		r.trigger(3, 3000000000L);
+		assertEquals("Competitor: 222 --- Has Not Started", r.removeCompetitorByPos(1));
+		assertEquals("Competitor: 111 --- 2 Seconds", r.removeCompetitorByPos(0));
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		r.trigger(2, 1000000000);
+		r.trigger(4, 2000000000);
+		r.trigger(2, 3000000000L);
+		r.trigger(4, 5000000000L);
+		assertEquals("Competitor: 222 --- 2 Seconds", r.removeCompetitorByPos(1));
+		assertEquals("Competitor: 111 --- 1 Seconds", r.removeCompetitorByPos(0));
+		r.trigger(1, 6000000000L);
+		r.trigger(3, 8000000000L);
+		assertEquals("Competitor: 333 --- 2 Seconds", r.removeCompetitorByPos(0));
 	}
 	
 	@Test
 	public void testDidNotFinish(){
-		
+		ParaInd r = new ParaInd();
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.trigger(1, 1000000000);
+		r.didNotFinish();
+		r.trigger(2, 2000000000);
+		r.trigger(4, 3000000000L);
+		assertEquals("Competitor: 111 --- DNF", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 222 --- 1 Seconds", r.getCompetitors().get(1).toString());
+		r.clear();
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		r.didNotFinish();
+		r.trigger(2, 1000000000);
+		r.didNotFinish();
+		r.trigger(1, 2000000000);
+		r.trigger(3, 4000000000L);
+		assertEquals("Competitor: 111 --- DNF", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 222 --- DNF", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
 	}
 	
 	@Test
 	public void testStart(){
-		
+		//start(int channel, long l)
+		ParaInd r = new ParaInd();
+    	r.addCompetitor(1);
+    	r.addCompetitor(2);
+    	r.trigger(1, 1000000000);
+    	r.trigger(2, 2000000000);
+    	assertFalse(r.getCompetitors().get(0).getStartTime() == -1);
+    	assertTrue(r.getCompetitors().get(0).getStarted());
 	}
 	
 	@Test
-	public void testEnd1(){
-		
+	public void testEnd(){
+		ParaInd r = new ParaInd();
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		r.addCompetitor(444);
+		r.trigger(1, 1000000000); 	
+		r.trigger(3, 2000000000);			
+		r.trigger(1, 3000000000L);   	
+		r.trigger(3, 4000000000L);		
+		r.trigger(2, 5000000000L);		
+		r.trigger(4, 6000000000L);			
+		r.trigger(1, 7000000000L);	
+		r.trigger(3, 8000000000L);		
+		r.trigger(4, 3000000000L);	
+		assertEquals("Competitor: 111 --- 2 Seconds", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 222 --- 1 Seconds", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 333 --- 1 Seconds", r.getCompetitors().get(2).toString());
+		assertEquals("Competitor: 444 --- 1 Seconds", r.getCompetitors().get(3).toString());
 	}
 	
-	@Test
-	public void testEnd2(){
-		
-	}
 	
 	@Test
 	public void testReset(){
-		
+		ParaInd r = new ParaInd();
+		r.addCompetitor(111); 
+		r.addCompetitor(222); 
+		r.addCompetitor(333);
+		r.trigger(1, 1000000000);  		
+		r.reset();					
+		r.trigger(1, 2000000000);		
+		r.trigger(3, 3000000000L);			
+		r.trigger(2, 4000000000L);	
+		r.trigger(4, 5000000000L);			
+		r.reset();				
+		r.trigger(2, 6000000000L);		
+		r.trigger(4, 7000000000L);		
+		r.trigger(1, 8000000000L);		
+		r.trigger(3, 10000000000L);		
+		assertEquals("Competitor: 111 --- 1 Seconds", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 222 --- 1 Seconds", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
+		r.reset();
+		assertEquals("Competitor: 333 --- Has Not Started", r.getCompetitors().get(2).toString());
 	}
 	
 	@Test 
 	public void TestRuntime(){
-		
+		ParaInd r = new ParaInd();
+    	r.addCompetitor(1);
+    	r.trigger(2, 1000000000);
+    	r.trigger(4, 2000000000);
+    	assertEquals(1000000000, r.runTime(0));
+    	r.addCompetitor(2);
+    	r.trigger(2, -1);
+    	r.trigger(4, 1000000000);
+    	assertEquals(-1, r.runTime(1));
+    	r.addCompetitor(3);
+    	r.trigger(4, 1000000000);
+    	assertEquals(-1, r.runTime(2));
+    	r.addCompetitor(4);
+    	r.trigger(1, 1000000000);
+    	r.trigger(3, -1);
+    	assertEquals(-1, r.runTime(3));
+    	r.addCompetitor(5);
+    	assertEquals(-1, r.runTime(4));
+    	r.addCompetitor(6);
+    	r.trigger(2, 2000000000);
+    	r.trigger(4, 1000000000);
+    	assertEquals(-1, r.runTime(5)); 
 	}
-
 }
