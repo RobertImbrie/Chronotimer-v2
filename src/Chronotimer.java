@@ -40,7 +40,7 @@ public class Chronotimer{
    * start a new competitor if channel 1, end a competitor if channel 2. */
   public void trigger(int channel, long time){
     if(channels.get(channel-1) && runStarted)
-	    races.get(currentRace).trigger(time - startTime);
+	    races.get(currentRace).trigger(channel, time - startTime);
   }
   
   /** Sets the time offset in the file */
