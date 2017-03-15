@@ -6,6 +6,7 @@ public class Competitor {
 	private long endTime;
 	private boolean started; // True if started running false if not
 	private boolean finished; // True if finsihed false if still running or DNF
+	private int lane;
 
 	/**
 	 * the constructor that creates the competitor, with a bib#. Sets the start
@@ -17,18 +18,7 @@ public class Competitor {
 		endTime = -1;
 		started = false;
 		finished = false;
-	}
-
-	public long getStartTime() {
-		return startTime;
-	}
-
-	public long getEndTime() {
-		return endTime;
-	}
-
-	public int getBibNum() {
-		return bibNum;
+		setLane(0);
 	}
 
 	/**
@@ -36,7 +26,7 @@ public class Competitor {
 	 * to true.
 	 */
 	public void start(long t) {
-		if(t < 0){
+		if (t < 0) {
 			startTime = -1;
 			started = false;
 			return;
@@ -51,16 +41,16 @@ public class Competitor {
 	 * and sets finishing time to -1 and finished to false to signify DNF
 	 */
 	public void end(long time) {
-		if(!started){
+		if (!started) {
 			endTime = -1;
 			finished = false;
 		} else if (startTime > time) {
 			this.endTime = -1;
 			finished = false;
-		} else if(time < 0){
+		} else if (time < 0) {
 			endTime = -1;
 			finished = false;
-		}else {
+		} else {
 			this.endTime = time;
 			finished = true;
 		}
@@ -84,8 +74,10 @@ public class Competitor {
 	 * @return long - The total time of the run
 	 */
 	public long runTime() {
-		if(!started || !finished) return -1;
-		if(startTime == -1 || endTime == -1) return -1;
+		if (!started || !finished)
+			return -1;
+		if (startTime == -1 || endTime == -1)
+			return -1;
 		return endTime - startTime;
 	}
 
@@ -107,40 +99,48 @@ public class Competitor {
 		}
 	}
 
-	/**
-	 * provides the XML for this competitor
-	 * 
-	 * @return String - the XML that represents this competitor
-	 */
-	public String toXML() {
-		//TODO
-		return null;
+	/* FOLLOWING METHODS ONLY USED FOR TESTING */
+	public long getStartTime() {
+		return startTime;
 	}
 
-	/* FOLLOWING METHODS ONLY USED FOR TESTING */
-	
-	public boolean getStarted(){
+	public long getEndTime() {
+		return endTime;
+	}
+
+	public int getBibNum() {
+		return bibNum;
+	}
+
+	public boolean getStarted() {
 		return started;
 	}
-	
-	public boolean getFinished(){
+
+	public boolean getFinished() {
 		return finished;
 	}
-	
-	public void setStartedTrue(){
+
+	public void setStartedTrue() {
 		started = true;
 	}
-	
-	public void setFinishedTrue(){
+
+	public void setFinishedTrue() {
 		finished = true;
 	}
-	
-	public void setStartedFalse(){
+
+	public void setStartedFalse() {
 		started = false;
 	}
-	
-	public void setFinishedFalse(){
+
+	public void setFinishedFalse() {
 		finished = false;
 	}
-	
+
+	public int getLane() {
+		return lane;
+	}
+
+	public void setLane(int lane) {
+		this.lane = lane;
+	}
 }
