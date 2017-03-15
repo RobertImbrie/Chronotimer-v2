@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class ParaInd extends Race{
+public class ParaInd extends Race {
 	ArrayList<Competitor> competitors;
-	int laneOne, laneTwo;
+	int curComp1, curComp2, nextComp;
 	boolean laneOneHasStarted, laneTwoHasStarted;
 
 	/**
@@ -14,34 +14,38 @@ public class ParaInd extends Race{
 	 */
 	public ParaInd() {
 		competitors = new ArrayList<Competitor>();
-		laneOne = 0;
-		laneTwo = 0;
+		curComp1 = -1;
+		curComp2 = -1;
+		nextComp = 0;
 	}
-	
+
 	/**
-	 * calls start if channel 1 or 2, and the appropriate lane has not started
-	 * calls end if channel 3 or 4, and the appropriate lane has started
+	 * calls start if channel 1 or 3, and the appropriate lane has not started
+	 * calls end if channel 2 or 4, and the appropriate lane has started
 	 *
 	 * @param channel
-	 * 		the channel that was triggered
+	 *            the channel that was triggered
 	 * @param time
-	 *		the time that the sensor was triggered
+	 *            the time that the sensor was triggered
 	 */
-	public void trigger(int channel, long time){
-		if(channel == 1 && !laneOneHasStarted){
-			start(channel, time);
+	public void trigger(int channel, long time) {
+		if (channel == 1 && !laneOneHasStarted) {
+			competitors.get(nextComp).start(time);
+			curComp1 = nextComp;
+			nextComp++;
 			laneOneHasStarted = true;
-		}
-		else if(channel == 2 && !laneTwoHasStarted){
-			start(channel, time);
-			laneOneHasStarted = true;
-		}
-		else if(channel == 3 && laneOneHasStarted){
-			end(channel, time);
+			competitors.get(curComp1).setLane(1);
+		} else if (channel == 3 && !laneTwoHasStarted) {
+			competitors.get(nextComp).start(time);
+			curComp2 = nextComp;
+			nextComp++;
+			competitors.get(curComp2).setLane(2);
+			laneTwoHasStarted = true;
+		} else if (channel == 2 && laneOneHasStarted) {
+			competitors.get(curComp1).end(time);
 			laneOneHasStarted = false;
-		}
-		else if(channel == 4 && laneTwoHasStarted){
-			end(channel, time);
+		} else if (channel == 4 && laneTwoHasStarted) {
+			competitors.get(curComp2).end(time);
 			laneTwoHasStarted = false;
 		}
 	}
@@ -92,8 +96,9 @@ public class ParaInd extends Race{
 			listOfCompetitors[i] = competitors.get(i).toString();
 		}
 		competitors.clear();
-		curStart = 0;
-		curFinish = 0;
+		curComp1 = -1;
+		curComp2 = -1;
+		nextComp = 0;
 		return listOfCompetitors;
 	}
 
@@ -105,11 +110,16 @@ public class ParaInd extends Race{
 	 * @return String - A formatted string that represents the competitor
 	 */
 	public String removeCompetitorByBib(int bib) {
-		for (int i = 0; i < competitors.size(); i++){
-			if (competitors.get(i).getBibNum() == bib){
-				if (curStart > i){
-					curStart--;
-					curFinish--;
+		for (int i = 0; i < competitors.size(); i++) {
+			if (competitors.get(i).getBibNum() == bib) {
+				if (nextComp > i) {
+					nextComp --;
+				}
+				if (curComp1 > i) {
+					curComp1 --;
+				}
+				if (curComp2 > i) {
+					curComp2 --;
 				}
 				return competitors.remove(i).toString();
 			}
@@ -128,7 +138,7 @@ public class ParaInd extends Race{
 		if (competitors.size() <= position) {
 			return null;
 		}
-		if (curStart > position){
+		if (curStart > position) {
 			curStart--;
 			curFinish--;
 		}
@@ -144,22 +154,21 @@ public class ParaInd extends Race{
 	 * @return String[] - A list of formatted strings that represents the
 	 *         competitors
 	 */
-	
+
 	/*
-	public String[] swapNext() {
-		// TODO
-	}
-	*/
+	 * public String[] swapNext() { // TODO }
+	 */
 
 	/**
 	 * indicates that the current competitor did not finish their run
 	 */
 	public void didNotFinish() {
 		competitors.get(curFinish).end(-1);
-		if(!competitors.get(curFinish).getStarted()){
+		if (!competitors.get(curFinish).getStarted()) {
 			competitors.get(curFinish).start(0);
 		}
-		if(curFinish == curStart) curStart++;
+		if (curFinish == curStart)
+			curStart++;
 		curFinish++;
 	}
 
@@ -199,7 +208,7 @@ public class ParaInd extends Race{
 	 * @return Time - the difference of time from the start to the finish
 	 */
 	public void end(long l) {
-		if(curFinish<=curStart){
+		if (curFinish <= curStart) {
 			competitors.get(curFinish).end(l);
 			curFinish++;
 		}
@@ -217,7 +226,8 @@ public class ParaInd extends Race{
 	 *            - the zero index position of the competitor to act on
 	 */
 	public void end(long t, int position) {
-		if(curFinish == position) curFinish++;
+		if (curFinish == position)
+			curFinish++;
 		competitors.get(position).end(t);
 	}
 
@@ -225,19 +235,18 @@ public class ParaInd extends Race{
 	 * resets the run of the current competitor, returns the start and end time
 	 * to a default value, the bib Number will remain intact
 	 * 
-	 * @return long[3] - a three element array of Long containing the start time,
-	 *         end time, and duration
+	 * @return long[3] - a three element array of Long containing the start
+	 *         time, end time, and duration
 	 */
 	public long[] reset() {
-		if(curStart == curFinish){
+		if (curStart == curFinish) {
 			curStart--;
 			curFinish--;
-		}
-		else{
+		} else {
 			curStart--;
 		}
 		Competitor c = competitors.get(curFinish);
-		
+
 		long comp[] = new long[3];
 		comp[0] = c.getStartTime();
 		comp[1] = c.getEndTime();
@@ -269,18 +278,18 @@ public class ParaInd extends Race{
 		// TODO
 		return null;
 	}
-	
+
 	/* FOLLOWING METHODS USED FOR TESTING ONLY */
-	
-	public ArrayList<Competitor> getCompetitors(){
+
+	public ArrayList<Competitor> getCompetitors() {
 		return competitors;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		String out = "";
-		for(int i = 0; i < competitors.size(); i++){
-			out = out +  "\t" + competitors.get(i).toString() + "\n";
+		for (int i = 0; i < competitors.size(); i++) {
+			out = out + "\t" + competitors.get(i).toString() + "\n";
 		}
 		return out;
 	}
