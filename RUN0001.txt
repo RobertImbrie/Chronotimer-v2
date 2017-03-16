@@ -8,14 +8,16 @@
         "startTime": -1,
         "endTime": -1,
         "started": false,
-        "finished": false
+        "finished": false,
+        "lane": 0
       },
       {
         "bibNum": 315,
         "startTime": -1,
         "endTime": -1,
         "started": false,
-        "finished": false
+        "finished": false,
+        "lane": 0
       }
     ]
   },
@@ -28,28 +30,32 @@
         "startTime": -1,
         "endTime": -1,
         "started": false,
-        "finished": false
+        "finished": false,
+        "lane": 0
       },
       {
         "bibNum": 166,
         "startTime": -1,
         "endTime": -1,
         "started": false,
-        "finished": false
+        "finished": false,
+        "lane": 0
       },
       {
         "bibNum": 200,
         "startTime": -1,
         "endTime": -1,
         "started": false,
-        "finished": false
+        "finished": false,
+        "lane": 0
       },
       {
         "bibNum": 201,
         "startTime": -1,
         "endTime": -1,
         "started": false,
-        "finished": false
+        "finished": false,
+        "lane": 0
       }
     ]
   }

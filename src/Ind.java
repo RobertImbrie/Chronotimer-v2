@@ -24,6 +24,7 @@ public class Ind extends Race{
 	 * @return ArrayList<String> - The list of formatted strings that represent
 	 *         the competitors
 	 */
+	@Override
 	public ArrayList<String> competitorList() {
 		ArrayList<String> comps = new ArrayList<String>();
 		for (int i = 0; i < competitors.size(); i++) {
@@ -40,6 +41,7 @@ public class Ind extends Race{
 	 *            the bib number of the competitor
 	 * @return true if the competitor was added, false otherwise
 	 */
+	@Override
 	public boolean addCompetitor(int bib) {
 		for (int i = 0; i < competitors.size(); i++) {
 			if (competitors.get(i).getBibNum() == bib)
@@ -56,6 +58,7 @@ public class Ind extends Race{
 	 * @return String[] - a formatted list of strings of the competitors that
 	 *         were in the list
 	 */
+	@Override
 	public String[] clear() {
 		String[] listOfCompetitors = new String[competitors.size()];
 		for (int i = 0; i < competitors.size(); i++) {
@@ -74,6 +77,7 @@ public class Ind extends Race{
 	 *            the bib number of the competitor
 	 * @return String - A formatted string that represents the competitor
 	 */
+	@Override
 	public String removeCompetitorByBib(int bib) {
 		for (int i = 0; i < competitors.size(); i++){
 			if (competitors.get(i).getBibNum() == bib){
@@ -94,6 +98,7 @@ public class Ind extends Race{
 	 *            - the zero indexed position of the competitor to be removed
 	 * @return String - A formatted string that represents the competitor
 	 */
+	@Override
 	public String removeCompetitorByPos(int position) {
 		if (competitors.size() <= position) {
 			return null;
@@ -124,6 +129,7 @@ public class Ind extends Race{
 	/**
 	 * indicates that the current competitor did not finish their run
 	 */
+	@Override
 	public void didNotFinish() {
 		competitors.get(curFinish).end(-1);
 		if(!competitors.get(curFinish).getStarted()){
@@ -140,6 +146,7 @@ public class Ind extends Race{
 	 *            - the time the trigger was fired
 	 * @return
 	 */
+	@Override
 	public void start(long l) {
 		competitors.get(curStart).start(l);
 		curStart++;
@@ -168,6 +175,7 @@ public class Ind extends Race{
 	 *            trigger was fired
 	 * @return Time - the difference of time from the start to the finish
 	 */
+	@Override
 	public void end(long l) {
 		if(curFinish<=curStart){
 			competitors.get(curFinish).end(l);
@@ -198,6 +206,7 @@ public class Ind extends Race{
 	 * @return long[3] - a three element array of Long containing the start time,
 	 *         end time, and duration
 	 */
+	@Override
 	public long[] reset() {
 		if(curStart == curFinish){
 			curStart--;
@@ -225,6 +234,7 @@ public class Ind extends Race{
 	 * @return Time - The total time of the run
 	 * @see
 	 */
+	@Override
 	public long runTime(int position) {
 		return competitors.get(position).runTime();
 	}
