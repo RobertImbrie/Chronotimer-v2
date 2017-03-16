@@ -8,38 +8,38 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Chronotimer{
-  ArrayList<Boolean> channels;
+  boolean[] channels = new boolean[8];
   long startTime, offsetTime;
-  ArrayList<Race> races;
+  ArrayList<Race> races = new ArrayList<Race>();
   boolean runStarted;
   String event;
   int currentRace;
-  String outputLocation = java.io.File.separator;
+  String outputLocation = ""; //java.io.File.separator;
   
   public Chronotimer(){
-	  channels = new ArrayList<Boolean>();
     for(int i=0; i<8; i++)
-      channels.add(false);
+      channels[i] = false;
     startTime = System.nanoTime();
     runStarted = false;
+    currentRace = -1;
   }
   
   public Chronotimer(long time){
     for(int i=0; i<8; i++)
-      channels.add(false);
+      channels[i] = false;
     startTime = time;
   }
   
   /** The TOG console/file command has a range from 1-8
    * This toggles the appropriate channel in the array from on (true) to off (false) or vice versa, from 0-7.*/
   public void toggle(int channel){
-	  channels.set(channel-1, !channels.get(channel-1));
+	  channels[channel-1] = !channels[channel-1];
   }
   
   /** If the channel is on and there's an active run,
    * start a new competitor if channel 1, end a competitor if channel 2. */
   public void trigger(int channel, long time){
-    if(channels.get(channel-1) && runStarted)
+    if(channel<channels.length && channels[channel-1] && runStarted)
 	    races.get(currentRace).trigger(channel, time - startTime);
   }
   
@@ -51,7 +51,7 @@ public class Chronotimer{
    */
   public void setEvent(String event){
 	  if(event.equalsIgnoreCase("IND") || event.equalsIgnoreCase("PARIND"))
-			  event = event;
+			  this.event = event;
   }
   
   /** If there's no current run and an event has been selected,
@@ -73,7 +73,8 @@ public class Chronotimer{
   
   /** Adds a competitor to run */
   public void addCompetitor(int bib){
-	  races.get(currentRace).addCompetitor(bib);
+	  if(runStarted)
+		  races.get(currentRace).addCompetitor(bib);
   }
   
   /** Returns a formatted String representing the run,
@@ -86,11 +87,11 @@ public class Chronotimer{
   public String print(){
 	  String outputPath = outputLocation + "RUN0001.txt";
 	  String outputPathJSON = outputLocation + "RUN0001.json";
-	  String outputPathPlainTxt = outputLocation + "RUN0001.json";
+	  String outputPathPlainTxt = outputLocation + "RUN0001PlainText.txt";
 	  //Gson g = new Gson();		//use for single line (not pretty)
 	  Gson g = new GsonBuilder().setPrettyPrinting().create(); //use for pretty
 	  
-	  String json = g.toJson(this);		//maybe change <this> to <races>
+	  String json = g.toJson(races);		//maybe change <this> to <races>
 	  String plainTxt = this.toString();
 	//return run.competitorList();
     //TODO
@@ -113,7 +114,7 @@ public class Chronotimer{
 	  }
 	  try{
 		  output = new BufferedWriter(new FileWriter(outputPathPlainTxt));
-		  output.write(json);
+		  output.write(plainTxt);
 		  output.close();
 	  }
 	  catch(Exception e){

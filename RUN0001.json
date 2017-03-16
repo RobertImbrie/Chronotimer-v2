@@ -1,0 +1,56 @@
+[
+  {
+    "curStart": 0,
+    "curFinish": 0,
+    "competitors": [
+      {
+        "bibNum": 234,
+        "startTime": -1,
+        "endTime": -1,
+        "started": false,
+        "finished": false
+      },
+      {
+        "bibNum": 315,
+        "startTime": -1,
+        "endTime": -1,
+        "started": false,
+        "finished": false
+      }
+    ]
+  },
+  {
+    "curStart": 0,
+    "curFinish": 0,
+    "competitors": [
+      {
+        "bibNum": 167,
+        "startTime": -1,
+        "endTime": -1,
+        "started": false,
+        "finished": false
+      },
+      {
+        "bibNum": 166,
+        "startTime": -1,
+        "endTime": -1,
+        "started": false,
+        "finished": false
+      },
+      {
+        "bibNum": 200,
+        "startTime": -1,
+        "endTime": -1,
+        "started": false,
+        "finished": false
+      },
+      {
+        "bibNum": 201,
+        "startTime": -1,
+        "endTime": -1,
+        "started": false,
+        "finished": false
+      }
+    ]
+  }
+]

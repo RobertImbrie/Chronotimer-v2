@@ -3,7 +3,7 @@ package src;
 import java.util.ArrayList;
 
 public class Ind extends Race{
-	ArrayList<Competitor> competitors;
+	//ArrayList<Competitor> competitors;
 	int curStart;
 	int curFinish;
 
