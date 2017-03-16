@@ -1,14 +1,24 @@
 package src;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Driver {
 	public static void main(String[] args) throws IOException {
+		String logPath = "debugLog.log";
+		BufferedWriter logWriter = null;
+		try{
+			logWriter = new BufferedWriter(new FileWriter(logPath));
+		}
+		catch(Exception e){
+			
+		}
 		CTController control = new CTController();
 		Scanner userPrompt = new Scanner(System.in);
 		boolean fileBeenRead = false;
@@ -38,4 +48,6 @@ public class Driver {
 			}
 		}
 	}
+	
+	
 }

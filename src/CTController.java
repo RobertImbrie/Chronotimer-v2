@@ -2,12 +2,30 @@ package src;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class CTController {
 	// For getting input if from console;
 	private Scanner input = new Scanner(System.in);
+	private BufferedWriter logWriter = null;
 
 	public CTController() {}
+	public CTController(BufferedWriter log) {
+		logWriter = log;
+	}
+	
+	private void debug(String s){
+		String msg = "CtController - " + s;
+		if(logWriter != null){
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public boolean controlFromFile() {
 		// Prompt for Entry

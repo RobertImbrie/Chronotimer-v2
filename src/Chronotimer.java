@@ -2,6 +2,7 @@ package src;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 //import com.google.gson.JsonElement;
@@ -15,6 +16,7 @@ public class Chronotimer{
   String event;
   int currentRace;
   String outputLocation = ""; //java.io.File.separator;
+  BufferedWriter logWriter = null;
   
   public Chronotimer(){
     for(int i=0; i<8; i++)
@@ -29,6 +31,34 @@ public class Chronotimer{
       channels[i] = false;
     startTime = time;
   }
+  
+  public Chronotimer(BufferedWriter log){
+    for(int i=0; i<8; i++)
+      channels[i] = false;
+    startTime = System.nanoTime();
+    runStarted = false;
+    currentRace = -1;
+    logWriter = log;
+  }
+  
+  public Chronotimer(long time, BufferedWriter log){
+    for(int i=0; i<8; i++)
+      channels[i] = false;
+    startTime = time;
+    logWriter = log;
+  }
+  
+  private void debug(String s){
+		String msg = "Chronotimer - " + s;
+		if(logWriter != null){
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
+	}
   
   /** The TOG console/file command has a range from 1-8
    * This toggles the appropriate channel in the array from on (true) to off (false) or vice versa, from 0-7.*/

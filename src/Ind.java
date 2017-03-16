@@ -1,11 +1,14 @@
 package src;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Ind extends Race{
 	//ArrayList<Competitor> competitors;
 	int curStart;
 	int curFinish;
+	BufferedWriter logWriter = null;
 
 	/**
 	 * the constructor that creates the run, with default values
@@ -14,6 +17,26 @@ public class Ind extends Race{
 		competitors = new ArrayList<Competitor>();
 		curStart = 0;
 		curFinish = 0;
+	}
+	
+	public Ind(BufferedWriter log) {
+		competitors = new ArrayList<Competitor>();
+		curStart = 0;
+		curFinish = 0;
+		logWriter = log;
+	}
+	
+	//@Override		//private methods are not inharited
+	private void debug(String s){
+		String msg = "Ind - " + s;
+		if(logWriter != null){
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

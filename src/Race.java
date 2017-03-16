@@ -1,13 +1,28 @@
 package src;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Race{
 	ArrayList<Competitor> competitors;
+	BufferedWriter logWriter = null;
 	
 	
 	public void trigger(int channel, long time){
 		
+	}
+	
+	private void debug(String s){
+		String msg = "Race - " + s;
+		if(logWriter != null){
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**

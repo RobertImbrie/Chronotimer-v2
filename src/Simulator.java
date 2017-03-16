@@ -1,15 +1,38 @@
 package src;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class Simulator{
   Chronotimer chronotimer;
   boolean powerOn, fileRead;
   long time;
+  BufferedWriter logWriter = null;
   
   public Simulator(boolean fileRead){
     chronotimer = new Chronotimer();
     powerOn = false;
     this.fileRead = fileRead;
   }
+  
+  public Simulator(boolean fileRead, BufferedWriter log){
+    chronotimer = new Chronotimer();
+    powerOn = false;
+    this.fileRead = fileRead;
+    logWriter = log;
+  }
+  
+  private void debug(String s){
+		String msg = "Simulator - " + s;
+		if(logWriter != null){
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
+	}
   
   /** Takes input from a file or console passed by Driver, and parses it into a method for use by the Chronotimer */
   public void input(String[] input){

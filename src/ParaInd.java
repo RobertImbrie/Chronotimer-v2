@@ -1,5 +1,7 @@
 package src;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -17,6 +19,30 @@ public class ParaInd extends Race {
 		curComp1 = -1;
 		curComp2 = -1;
 		nextComp = 0;
+	}
+	
+	/**
+	 * the constructor that creates the run, with default values, with log writer
+	 */
+	public ParaInd(BufferedWriter log) {
+		competitors = new ArrayList<Competitor>();
+		curComp1 = -1;
+		curComp2 = -1;
+		nextComp = 0;
+		logWriter = log;
+	}
+	
+	//@Override		//private methods are not inharited
+	private void debug(String s){
+		String msg = "ParaInd - " + s;
+		if(logWriter != null){
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

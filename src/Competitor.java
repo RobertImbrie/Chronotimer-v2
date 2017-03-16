@@ -1,5 +1,8 @@
 package src;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class Competitor {
 	private int bibNum;
 	private long startTime;
@@ -7,6 +10,7 @@ public class Competitor {
 	private boolean started; // True if started running false if not
 	private boolean finished; // True if finsihed false if still running or DNF
 	private int lane;
+	BufferedWriter logWriter = null;
 
 	/**
 	 * the constructor that creates the competitor, with a bib#. Sets the start
@@ -19,6 +23,28 @@ public class Competitor {
 		started = false;
 		finished = false;
 		setLane(0);
+	}
+	
+	public Competitor(int bib, BufferedWriter log) {
+		bibNum = bib;
+		startTime = -1;
+		endTime = -1;
+		started = false;
+		finished = false;
+		setLane(0);
+		logWriter = log;
+	}
+	
+	private void debug(String s){
+		String msg = "Competitor - " + s;
+		if(logWriter != null){
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
