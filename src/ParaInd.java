@@ -3,8 +3,6 @@ package src;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import org.junit.*;
-import static org.junit.Assert.*;
 
 public class ParaInd extends Race {
 	ArrayList<Competitor> competitors;
@@ -106,7 +104,7 @@ public class ParaInd extends Race {
 			if (competitors.get(i).getBibNum() == bib)
 				return false;
 		}
-		competitors.add(new Competitor(bib));
+		competitors.add(new Competitor(bib, logWriter));
 		return true;
 	}
 
