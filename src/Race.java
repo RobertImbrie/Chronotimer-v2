@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Race{
 	ArrayList<Competitor> competitors;
-	BufferedWriter logWriter = null;
+	transient BufferedWriter logWriter = null;
 	
 	
 	public void trigger(int channel, long time){
