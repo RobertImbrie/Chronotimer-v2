@@ -8,7 +8,6 @@ public class Ind extends Race{
 	//ArrayList<Competitor> competitors;
 	int curStart;
 	int curFinish;
-	BufferedWriter logWriter = null;
 
 	/**
 	 * the constructor that creates the run, with default values
@@ -70,7 +69,7 @@ public class Ind extends Race{
 			if (competitors.get(i).getBibNum() == bib)
 				return false;
 		}
-		competitors.add(new Competitor(bib));
+		competitors.add(new Competitor(bib, logWriter));
 		return true;
 	}
 
