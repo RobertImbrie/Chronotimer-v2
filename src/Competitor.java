@@ -10,7 +10,7 @@ public class Competitor {
 	private boolean started; // True if started running false if not
 	private boolean finished; // True if finsihed false if still running or DNF
 	private int lane;
-	BufferedWriter logWriter = null;
+	transient BufferedWriter logWriter;
 
 	/**
 	 * the constructor that creates the competitor, with a bib#. Sets the start
@@ -52,13 +52,10 @@ public class Competitor {
 	 * to true.
 	 */
 	public void start(long t) {
-		if (t < 0) {
-			startTime = -1;
-			started = false;
-			return;
+		if (t >= 0) {
+			this.startTime = t;
+			started = true;
 		}
-		this.startTime = t;
-		started = true;
 	}
 
 	/**
@@ -67,16 +64,7 @@ public class Competitor {
 	 * and sets finishing time to -1 and finished to false to signify DNF
 	 */
 	public void end(long time) {
-		if (!started) {
-			endTime = -1;
-			finished = false;
-		} else if (startTime > time) {
-			this.endTime = -1;
-			finished = false;
-		} else if (time < 0) {
-			endTime = -1;
-			finished = false;
-		} else {
+		if (started && !finished && startTime <= time && time >= 0) {
 			this.endTime = time;
 			finished = true;
 		}
@@ -146,20 +134,12 @@ public class Competitor {
 		return finished;
 	}
 
-	public void setStartedTrue() {
-		started = true;
+	public void setStarted(boolean b) {
+		started = b;
 	}
 
-	public void setFinishedTrue() {
-		finished = true;
-	}
-
-	public void setStartedFalse() {
-		started = false;
-	}
-
-	public void setFinishedFalse() {
-		finished = false;
+	public void setFinished(boolean b) {
+		finished = b;
 	}
 
 	public int getLane() {
