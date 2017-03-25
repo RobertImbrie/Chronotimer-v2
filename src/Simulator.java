@@ -16,7 +16,7 @@ public class Simulator{
   }
   
   public Simulator(boolean fileRead, BufferedWriter log){
-    chronotimer = new Chronotimer();
+    chronotimer = new Chronotimer(log);
     powerOn = false;
     this.fileRead = fileRead;
     logWriter = log;
