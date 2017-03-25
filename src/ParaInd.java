@@ -20,9 +20,10 @@ public class ParaInd extends Race {
 		curComp2 = -1;
 		nextComp = 0;
 	}
-	
+
 	/**
-	 * the constructor that creates the run, with default values, with log writer
+	 * the constructor that creates the run, with default values, with log
+	 * writer
 	 */
 	public ParaInd(BufferedWriter log) {
 		competitors = new ArrayList<Competitor>();
@@ -31,11 +32,11 @@ public class ParaInd extends Race {
 		nextComp = 0;
 		logWriter = log;
 	}
-	
-	//@Override		//private methods are not inharited
-	private void debug(String s){
+
+	// @Override //private methods are not inharited
+	private void debug(String s) {
 		String msg = "ParaInd - " + s;
-		if(logWriter != null){
+		if (logWriter != null) {
 			try {
 				logWriter.write(msg + "\n");
 			} catch (IOException e) {
@@ -139,13 +140,13 @@ public class ParaInd extends Race {
 		for (int i = 0; i < competitors.size(); i++) {
 			if (competitors.get(i).getBibNum() == bib) {
 				if (nextComp > i) {
-					nextComp --;
+					nextComp--;
 				}
 				if (curComp1 > i) {
-					curComp1 --;
+					curComp1--;
 				}
 				if (curComp2 > i) {
-					curComp2 --;
+					curComp2--;
 				}
 				return competitors.remove(i).toString();
 			}
@@ -163,10 +164,14 @@ public class ParaInd extends Race {
 	public String removeCompetitorByPos(int position) {
 		if (competitors.size() <= position) {
 			return null;
-		}
-		if (curStart > position) {
-			curStart--;
-			curFinish--;
+		} else {
+			competitors.remove(position);
+			if (position < curComp1) {
+				curComp1--;
+			}
+			if (position < curComp2) {
+				curComp2--;
+			}
 		}
 		String s = competitors.get(position).toString();
 		competitors.remove(position);
@@ -174,111 +179,17 @@ public class ParaInd extends Race {
 	}
 
 	/**
-	 * the current competitor is moved to the back of the queue, and the next
-	 * competitor becomes the current
-	 * 
-	 * @return String[] - A list of formatted strings that represents the
-	 *         competitors
-	 */
-
-	/*
-	 * public String[] swapNext() { // TODO }
-	 */
-
-	/**
 	 * indicates that the current competitor did not finish their run
+	 * 
+	 * @param i
+	 *            for lane
 	 */
-	public void didNotFinish() {
-		competitors.get(curFinish).end(-1);
-		if (!competitors.get(curFinish).getStarted()) {
-			competitors.get(curFinish).start(0);
+	public void didNotFinish(int lane) {
+		if (lane == 1) {
+			competitors.get(curComp1).end(-1);
+		} else if (lane == 2) {
+			competitors.get(curComp2).end(-1);
 		}
-		if (curFinish == curStart)
-			curStart++;
-		curFinish++;
-	}
-
-	/**
-	 * sets the start time of the current competitor
-	 * 
-	 * @param l
-	 *            - the time the trigger was fired
-	 * @return
-	 */
-	public void start(int channel, long l) {
-		competitors.get(curStart).start(l);
-		curStart++;
-	}
-
-	/**
-	 * sets the time of the competitor at a specified position
-	 * 
-	 * @param t
-	 *            - a newly created Time object containing the time the the
-	 *            trigger was fired
-	 * @param position
-	 *            - the zero index position of the competitor to act on
-	 */
-	public void start(long t, int position) {
-		competitors.get(position).start(t);
-	}
-
-	/**
-	 * ends the run of the current competitor, send in null for DNF, this will
-	 * return the duration of the run or null if the competitor did not finish,
-	 * or -1 if there is not start time(the end time will be recorded)
-	 * 
-	 * @param t
-	 *            - a newly created Time object containing the time the the
-	 *            trigger was fired
-	 * @return Time - the difference of time from the start to the finish
-	 */
-	public void end(long l) {
-		if (curFinish <= curStart) {
-			competitors.get(curFinish).end(l);
-			curFinish++;
-		}
-	}
-
-	/**
-	 * ends the run of the current specified, send in null for DNF, thsi will
-	 * return the duration of the run or null if the competitor did not finish,
-	 * or -1 if there is not start time(the end time will be recorded)
-	 * 
-	 * @param t
-	 *            - a newly created Time object containing the time the the
-	 *            trigger was fired
-	 * @param position
-	 *            - the zero index position of the competitor to act on
-	 */
-	public void end(long t, int position) {
-		if (curFinish == position)
-			curFinish++;
-		competitors.get(position).end(t);
-	}
-
-	/**
-	 * resets the run of the current competitor, returns the start and end time
-	 * to a default value, the bib Number will remain intact
-	 * 
-	 * @return long[3] - a three element array of Long containing the start
-	 *         time, end time, and duration
-	 */
-	public long[] reset() {
-		if (curStart == curFinish) {
-			curStart--;
-			curFinish--;
-		} else {
-			curStart--;
-		}
-		Competitor c = competitors.get(curFinish);
-
-		long comp[] = new long[3];
-		comp[0] = c.getStartTime();
-		comp[1] = c.getEndTime();
-		comp[2] = c.runTime();
-		c.reset();
-		return comp;
 	}
 
 	/**
@@ -292,17 +203,6 @@ public class ParaInd extends Race {
 	 */
 	public long runTime(int position) {
 		return competitors.get(position).runTime();
-	}
-
-	/**
-	 * provides the XML for this run
-	 * 
-	 * @return String - the XML that represents this run
-	 * @see Image
-	 */
-	public String toXML() {
-		// TODO
-		return null;
 	}
 
 	/* FOLLOWING METHODS USED FOR TESTING ONLY */
