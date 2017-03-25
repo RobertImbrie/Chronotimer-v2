@@ -136,6 +136,29 @@ public class TestInd {
 		assertEquals("Competitor: 111 --- DNF", r.getCompetitors().get(0).toString());
 		assertEquals("Competitor: 222 --- DNF", r.getCompetitors().get(1).toString());
 		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
+	
+	
+	}
+	
+	@Test
+	public void testEnd(){
+		Ind r = new Ind();
+		r.addCompetitor(111);
+		r.addCompetitor(222);
+		r.addCompetitor(333);
+		r.addCompetitor(444);
+		r.start(1000000000L);
+		r.start(2000000000L);
+		r.start(3000000000L);
+		r.start(4000000000L);
+		r.end(5000000000L);
+		r.end(5000000000L);
+		r.end(5000000000L);
+		r.end(5000000000L);
+		assertEquals("Competitor: 111 --- 4 Seconds", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 222 --- 3 Seconds", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
+		assertEquals("Competitor: 444 --- 1 Seconds", r.getCompetitors().get(3).toString());		
 	}
 	
 	@Test
@@ -145,12 +168,11 @@ public class TestInd {
 		r.addCompetitor(222);
 		r.addCompetitor(333);
 		r.addCompetitor(444);
-		r.start(1000000000); 		//111 Start 1s
-		r.end(2000000000);			
+		r.start(1000000000L); 		//111 Start 1s			
 		r.start(3000000000L);   	//222 Start	3s
 		r.end(4000000000L, 1);		//222 End 4s
 		r.start(5000000000L);		//333 Start 5s
-		r.end(6000000000L);			//333 End 6s
+		r.end(6000000000L, 2);		//333 End 6s
 		r.start(7000000000L);		//444 Start 7s
 		r.end(8000000000L, 3);		//444 End 8s
 		r.end(3000000000L, 0);		//111 End 3s
@@ -332,6 +354,3 @@ public class TestInd {
     */
     
 }
-
-	
-
