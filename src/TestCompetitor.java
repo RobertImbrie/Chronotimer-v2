@@ -42,13 +42,13 @@ public class TestCompetitor {
 		c.end(6000000789L);
 		assertEquals("Competitor: 999 --- 5 Seconds", c.toString());
 		
-		c.setStartedFalse();
+		c.setStarted(false);
 		assertEquals("Competitor: 999 --- Has Not Started", c.toString());
 		
-		c.setStartedTrue();
+		c.setStarted(true);
 		assertEquals("Competitor: 999 --- 5 Seconds", c.toString());
 		
-		c.setFinishedFalse();
+		c.setFinished(false);
 		assertEquals("Competitor: 999 --- DNF", c.toString());
 		
 		Competitor d = new Competitor(758);
@@ -56,6 +56,7 @@ public class TestCompetitor {
 		d.end(1000000000);
 		assertEquals("Competitor: 758 --- DNF", d.toString());
 		
+		d = new Competitor(758);
 		d.start(-1);
 		d.end(1000000000);
 		assertEquals("Competitor: 758 --- Has Not Started", d.toString());
@@ -70,7 +71,7 @@ public class TestCompetitor {
 
 		Competitor b = new Competitor(2);
 		b.start(1000);
-		b.setStartedFalse();
+		b.setStarted(false);
 		b.end(2000);
 		assertEquals(b.runTime(), -1);
 
@@ -86,13 +87,13 @@ public class TestCompetitor {
 
 		Competitor e = new Competitor(5);
 		e.start(-1);
-		e.setStartedFalse();
+		e.setStarted(false);
 		e.end(2000);
 		assertEquals(d.runTime(), -1);
 
 		Competitor f = new Competitor(6);
 		f.start(1000);
-		f.setStartedFalse();
+		f.setStarted(false);
 		f.end(-1);
 		assertEquals(f.runTime(), -1);
 
