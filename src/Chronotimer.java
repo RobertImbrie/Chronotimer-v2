@@ -16,7 +16,7 @@ public class Chronotimer{
   String event;
   int currentRace;
   String outputLocation = ""; //java.io.File.separator;
-  BufferedWriter logWriter = null;
+  transient BufferedWriter logWriter;
   
   public Chronotimer(){
     for(int i=0; i<8; i++)
@@ -90,9 +90,9 @@ public class Chronotimer{
   public void newRun(){
 	  if(!runStarted && event != null){
 		  if(event.equalsIgnoreCase("IND"))
-			  races.add(new Ind());
+			  races.add(new Ind(logWriter));
 		  else
-			  races.add(new ParaInd());
+			  races.add(new ParaInd(logWriter));
 		  runStarted = true;
 		  currentRace++;
 	  }
@@ -120,9 +120,9 @@ public class Chronotimer{
 	  String outputPathPlainTxt = outputLocation + "RUN0001PlainText.txt";
 	  //Gson g = new Gson();		//use for single line (not pretty)
 	  Gson g = new GsonBuilder().setPrettyPrinting().create(); //use for pretty
-	  
 	  String json = g.toJson(races);		//maybe change <this> to <races>
 	  String plainTxt = this.toString();
+	  System.out.println(plainTxt);
 	//return run.competitorList();
     //TODO
 	  BufferedWriter output = null;
@@ -161,4 +161,6 @@ public class Chronotimer{
 	  }
 	  return out;
   }
+  
+  
 }
