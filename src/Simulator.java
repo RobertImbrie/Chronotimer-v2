@@ -9,17 +9,19 @@ public class Simulator{
   long time;
   BufferedWriter logWriter = null;
   
-  public Simulator(boolean fileRead){
-    chronotimer = new Chronotimer();
+  public Simulator(BufferedWriter log){
+	chronotimer = new Chronotimer(System.nanoTime(), log);
     powerOn = false;
-    this.fileRead = fileRead;
+    fileRead = false;
+    logWriter = log;
   }
   
-  public Simulator(boolean fileRead, BufferedWriter log){
-    chronotimer = new Chronotimer(log);
+  public Simulator(String[] nextLine, BufferedWriter log){
+	chronotimer = new Chronotimer(parseTime(nextLine[0]), log);
     powerOn = false;
-    this.fileRead = fileRead;
+    fileRead = true;
     logWriter = log;
+    input(nextLine);
   }
   
   private void debug(String s){
@@ -42,7 +44,6 @@ public class Simulator{
       System.arraycopy(input, 1, input, 0, input.length - 1);
     } else
       time = System.nanoTime();
-    
     //If power is on, turn it off, and vice versa
     if(input[0].equalsIgnoreCase("POWER"))
       powerOn = !powerOn;
@@ -57,7 +58,7 @@ public class Simulator{
         chronotimer.setTime( parseTime(input[1]));
       
       else if(input[0].equalsIgnoreCase("TRIG"))
-        chronotimer.trigger( Integer.parseInt(input[1]), time);
+    	chronotimer.trigger( Integer.parseInt(input[1]), time);
       
       else if(input[0].equalsIgnoreCase("EVENT"))
         chronotimer.setEvent(input[1]);
