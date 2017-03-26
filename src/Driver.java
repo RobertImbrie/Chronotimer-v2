@@ -24,7 +24,7 @@ public class Driver {
 		boolean fileBeenRead = false;
 
 		if (!control.controlFromFile()) { //controlFromFile returns false if the user select to read from console
-			Simulator simulator = new Simulator(false);
+			Simulator simulator = new Simulator(logWriter);
 			for (String nextLine = userPrompt.nextLine(); !nextLine.equalsIgnoreCase("EXIT"); nextLine = userPrompt
 					.nextLine())
 				simulator.input(nextLine.split("\\s+")); //Until EXIT is entered, pass it as an array to simulator split by whitespace
@@ -35,7 +35,7 @@ public class Driver {
 				
 				try {
 					BufferedReader reader = new BufferedReader(new FileReader(userPrompt.nextLine()));
-					Simulator simulator = new Simulator(true);
+					Simulator simulator = new Simulator(reader.readLine().split("\\s+"), logWriter);
 
 					for (String nextLine = reader.readLine(); nextLine != null && !nextLine.equalsIgnoreCase("EXIT"); nextLine = reader.readLine())
 						simulator.input(nextLine.split("\\s+"));
