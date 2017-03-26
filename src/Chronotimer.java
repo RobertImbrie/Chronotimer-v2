@@ -18,34 +18,12 @@ public class Chronotimer{
   String outputLocation = ""; //java.io.File.separator;
   transient BufferedWriter logWriter;
   
-  public Chronotimer(){
-    for(int i=0; i<8; i++)
-      channels[i] = false;
-    startTime = System.nanoTime();
-    runStarted = false;
-    currentRace = -1;
-  }
-  
-  public Chronotimer(long time){
-    for(int i=0; i<8; i++)
-      channels[i] = false;
-    startTime = time;
-  }
-  
-  public Chronotimer(BufferedWriter log){
-    for(int i=0; i<8; i++)
-      channels[i] = false;
-    startTime = System.nanoTime();
-    runStarted = false;
-    currentRace = -1;
-    logWriter = log;
-  }
-  
   public Chronotimer(long time, BufferedWriter log){
     for(int i=0; i<8; i++)
       channels[i] = false;
     startTime = time;
     logWriter = log;
+    currentRace = -1;
   }
   
   private void debug(String s){
@@ -67,7 +45,7 @@ public class Chronotimer{
   }
   
   /** If the channel is on and there's an active run,
-   * start a new competitor if channel 1, end a competitor if channel 2. */
+   * trigger the channel in the current race */
   public void trigger(int channel, long time){
     if(channel<channels.length && channels[channel-1] && runStarted)
 	    races.get(currentRace).trigger(channel, time - startTime);
