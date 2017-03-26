@@ -52,7 +52,7 @@ public class Competitor {
 	 * to true.
 	 */
 	public void start(long t) {
-		if (t >= 0) {
+		if (t >= 0L) {
 			this.startTime = t;
 			started = true;
 		}
@@ -65,7 +65,7 @@ public class Competitor {
 	 */
 	public void end(long time) {
 		if (started && !finished && startTime <= time && time >= 0) {
-			this.endTime = time;
+			endTime = time;
 			finished = true;
 		}
 	}
