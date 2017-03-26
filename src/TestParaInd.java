@@ -16,7 +16,7 @@ public class TestParaInd {
 		run.trigger(1, 3);
 		run.trigger(2, 5);
 		run.trigger(3, 6);
-		run.trigger(3, 7);
+		run.trigger(4, 7);
 		assertEquals(2, run.competitors.get(1).runTime());
 		assertEquals(1, run.competitors.get(2).runTime());
 		run.addCompetitor(444);
@@ -59,8 +59,8 @@ public class TestParaInd {
 		run.trigger(1, 2);
 		run.trigger(2, 3);
 		run.trigger(2, 4);
-		assertEquals(1, run.competitors.get(5).runTime());
-		assertEquals(-1, run.competitors.get(6).runTime());
+		assertEquals(2, run.competitors.get(9).runTime());
+		assertEquals(-1, run.competitors.get(10).runTime());
 	}
 	
 	@Test
@@ -185,8 +185,8 @@ public class TestParaInd {
 		r.addCompetitor(111);
 		r.addCompetitor(222);
 		r.addCompetitor(333);
-		r.trigger(3, 1000000000);
-		r.trigger(4, 2000000000);
+		r.trigger(3, 1000000000L);
+		r.trigger(4, 2000000000L);
 		r.trigger(3, 3000000000L);
 		r.trigger(4, 5000000000L);
 		assertEquals("Competitor: 222 --- 2 Seconds", r.removeCompetitorByPos(1));
@@ -217,8 +217,10 @@ public class TestParaInd {
 		r.didNotFinish(2);
 		r.trigger(1, 2000000000);
 		r.trigger(2, 4000000000L);
+		r.trigger(1, 2000000000);
+		r.trigger(2, 4000000000L);
 		assertEquals("Competitor: 111 --- DNF", r.getCompetitors().get(0).toString());
-		assertEquals("Competitor: 222 --- DNF", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 222 --- 2 Seconds", r.getCompetitors().get(1).toString());
 		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
 	}
 	
@@ -250,7 +252,7 @@ public class TestParaInd {
 		r.trigger(1, 7000000000L);	
 		r.trigger(2, 8000000000L);		
 		r.trigger(4, 3000000000L);	
-		assertEquals("Competitor: 111 --- 2 Seconds", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 111 --- 1 Seconds", r.getCompetitors().get(0).toString());
 		assertEquals("Competitor: 222 --- 1 Seconds", r.getCompetitors().get(1).toString());
 		assertEquals("Competitor: 333 --- 1 Seconds", r.getCompetitors().get(2).toString());
 		assertEquals("Competitor: 444 --- 1 Seconds", r.getCompetitors().get(3).toString());
@@ -275,8 +277,8 @@ public class TestParaInd {
 		r.trigger(1, 8000000000L);		
 		r.trigger(2, 10000000000L);		
 		assertEquals("Competitor: 111 --- 1 Seconds", r.getCompetitors().get(0).toString());
-		assertEquals("Competitor: 222 --- 1 Seconds", r.getCompetitors().get(1).toString());
-		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
+		assertEquals("Competitor: 222 --- 2 Seconds", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 333 --- Has Not Started", r.getCompetitors().get(2).toString());
 		r.reset();
 		assertEquals("Competitor: 333 --- Has Not Started", r.getCompetitors().get(2).toString());
 	}

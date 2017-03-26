@@ -48,28 +48,32 @@ public class ParaInd extends Race {
 	 * calls start if channel 1 or 3, and the appropriate lane has not started
 	 * calls end if channel 2 or 4, and the appropriate lane has started
 	 *
-	 * @param channel
+	 * @param channels
 	 *            the channel that was triggered
 	 * @param time
 	 *            the time that the sensor was triggered
 	 */
 	public void trigger(int channel, long time) {
-		if (channel == 1 && !laneOneHasStarted) {
-			competitors.get(nextComp).start(time);
-			curComp1 = nextComp;
-			nextComp++;
-			laneOneHasStarted = true;
-			competitors.get(curComp1).setLane(1);
-		} else if (channel == 3 && !laneTwoHasStarted) {
-			competitors.get(nextComp).start(time);
-			curComp2 = nextComp;
-			nextComp++;
-			competitors.get(curComp2).setLane(2);
-			laneTwoHasStarted = true;
-		} else if (channel == 2 && laneOneHasStarted) {
+		if (nextComp + 1 < competitors.size() + 1) {
+			if (channel == 1 && !laneOneHasStarted) {
+				competitors.get(nextComp).start(time);
+				curComp1 = nextComp;
+				nextComp++;
+				laneOneHasStarted = true;
+				competitors.get(curComp1).setLane(1);
+			} else if (channel == 3 && !laneTwoHasStarted) {
+				competitors.get(nextComp).start(time);
+				curComp2 = nextComp;
+				nextComp++;
+				competitors.get(curComp2).setLane(2);
+				laneTwoHasStarted = true;
+			}
+		}
+
+		if (channel == 2 && laneOneHasStarted && curComp1 < competitors.size() && curComp1 > -1) {
 			competitors.get(curComp1).end(time);
 			laneOneHasStarted = false;
-		} else if (channel == 4 && laneTwoHasStarted) {
+		} else if (channel == 4 && laneTwoHasStarted && curComp2 < competitors.size() && curComp2 > -1) {
 			competitors.get(curComp2).end(time);
 			laneTwoHasStarted = false;
 		}
@@ -124,6 +128,8 @@ public class ParaInd extends Race {
 		curComp1 = -1;
 		curComp2 = -1;
 		nextComp = 0;
+		laneOneHasStarted = false; 
+		laneTwoHasStarted = false;
 		return listOfCompetitors;
 	}
 
@@ -160,20 +166,42 @@ public class ParaInd extends Race {
 	 * @return String - A formatted string that represents the competitor
 	 */
 	public String removeCompetitorByPos(int position) {
-		if (competitors.size() <= position) {
+		if(competitors.size()-1 == 0){
+			String s = competitors.get(0).toString();
+			competitors.remove(position);
+			this.clear();
+			return s;
+		} else if (competitors.size() < position) {
 			return null;
 		} else {
-			competitors.remove(position);
 			if (position < curComp1) {
 				curComp1--;
 			}
 			if (position < curComp2) {
 				curComp2--;
 			}
+			if(position < nextComp){
+				nextComp--;
+			}
 		}
 		String s = competitors.get(position).toString();
 		competitors.remove(position);
 		return s;
+	}
+	
+	/**
+	 * 
+	 */
+	public long[] reset(){
+		for(int i = 0; i < competitors.size(); i++){
+			competitors.get(i).reset();
+		}
+		curComp1 = -1;
+		curComp2 = -1;
+		nextComp = 0;
+		laneOneHasStarted = false;
+		laneTwoHasStarted = false;
+		return null;
 	}
 
 	/**
@@ -181,11 +209,13 @@ public class ParaInd extends Race {
 	 * 
 	 * @param i
 	 *            for lane
+	 * @return 
 	 */
+
 	public void didNotFinish(int lane) {
-		if (lane == 1) {
+		if (lane == 1 && curComp1 > -1 && curComp1 < competitors.size()) {
 			competitors.get(curComp1).end(-1);
-		} else if (lane == 2) {
+		} else if (lane == 2 && curComp2 > -1 && curComp2 < competitors.size()) {
 			competitors.get(curComp2).end(-1);
 		}
 	}
