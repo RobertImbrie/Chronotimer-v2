@@ -25,7 +25,17 @@ public class Ind extends Race{
 		logWriter = log;
 	}
 	
-	//@Override		//private methods are not inharited
+	@Override
+	public void trigger(int channel, long time){
+		if(channel == 1){
+			start(time);
+		}
+		else if(channel == 2){
+			end(time);
+		}
+	}
+	
+	//@Override		//private methods are not inherited
 	private void debug(String s){
 		String msg = "Ind - " + s;
 		if(logWriter != null){
@@ -169,8 +179,8 @@ public class Ind extends Race{
 	 * @return
 	 */
 	@Override
-	public void start(long l) {
-		competitors.get(curStart).start(l);
+	public void start(long time) {
+		competitors.get(curStart).start(time);
 		curStart++;
 	}
 
