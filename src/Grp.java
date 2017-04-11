@@ -5,16 +5,38 @@ import java.util.ArrayList;
 
 public class grp extends Race{
 	ArrayList<Competitor> competitors;
-  Queue<Competitor> finishes;
+  	Queue<Competitor> finishes;
+	boolean hasStarted;
+	long startTime;
+	int CurComp;
   
 	transient BufferedWriter logWriter = null;
 	
-  public grp(){
-    //TODO
+  public grp() {
+	  //TODO
+	  competitors = new ArrayList<Competitor>();
+	  hasStarted = false;
+	  startTime = -1;
+	  finishes = new Queue<Competitor>();
+	  curComp = 0;
   }
 	
 	public void trigger(int channel, long time){
-		//TODO
+		if(channel == 1 && !hasStarted){
+			startTime = time;
+			hasStarted = true;
+		} else if(channel == 1 && hasStarted){
+			//TODO
+		} else if (channel == 2 && hasStarted) {
+			if(curComp < 9999){
+				Competitor temp = new Competitor(sprintf("%04d", curComp+1));
+				temp.setStart(startTime);
+				temp.setFinish(time);
+				curComp++;
+			}
+		} else {
+			return();	
+		}
 	}
 	
 	private void debug(String s){
@@ -30,23 +52,19 @@ public class grp extends Race{
 	}
 	
 	public ArrayList<String> competitorList() {
-    //TODO
-	}
-	
-	public boolean addCompetitor(int bib) {
-    //TODO
+    		//TODO
 	}
 	
 	public String[] clear() {
-    //TODO
+    		//TODO
 	}
 	
 	public String removeCompetitorByBib(int bib) {
-    //TODO
+    		//TODO
 	}
 	
 	public String removeCompetitorByPos(int position) {
-    //TODO
+    		//TODO
 	}
 	
 	public void didNotFinish() {
