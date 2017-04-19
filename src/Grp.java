@@ -12,27 +12,27 @@ public class grp extends Race{
   
 	transient BufferedWriter logWriter = null;
 	
-  public grp() {
-	  //TODO
-	  competitors = new ArrayList<Competitor>();
-	  hasStarted = false;
-	  startTime = -1;
-	  finishes = new Queue<Competitor>();
-	  curComp = 0;
-  }
+  	public grp() {
+	  	//TODO
+	  	competitors = new ArrayList<Competitor>();
+	  	hasStarted = false;
+	  	startTime = -1;
+	  	finishes = new Queue<Competitor>();
+	  	curComp = 0;
+  	}
 	
 	public void trigger(int channel, long time){
 		if(channel == 1 && !hasStarted){
 			startTime = time;
-			hasStarted = true;
-		} else if(channel == 1 && hasStarted){
-			//TODO
+			hasStarted = true;			
 		} else if (channel == 2 && hasStarted) {
 			if(curComp < 9999){
-				Competitor temp = new Competitor(sprintf("%04d", curComp+1));
+				Competitor temp = new Competitor(sprintf("%04d", curComp));
 				temp.setStart(startTime);
 				temp.setFinish(time);
 				curComp++;
+				competitors.add(temp);
+  				finishes.put(temp);
 			}
 		} else {
 			return();	
@@ -52,15 +52,23 @@ public class grp extends Race{
 	}
 	
 	public ArrayList<String> competitorList() {
-    		//TODO
+    		
+	}
+	
+	//IN GROUP USED TO ASSIGN BIBS TO FINISHES SINCE COMPETITORS ARE MADE AS FINISHES ARE ENTERED
+	public boolean addCompetitor(int bib) {
+		if(!finishes.empty()){
+			competitor temp = finishes.pop()
+    			temp.setBib(bib);
+		}
 	}
 	
 	public String[] clear() {
-    		//TODO
-	}
-	
-	public String removeCompetitorByBib(int bib) {
-    		//TODO
+		for(int i = 0; i < competitors.size(); i++){
+			
+		}
+    		competitors.clear();
+  		finishes.clear();
 	}
 	
 	public String removeCompetitorByPos(int position) {
@@ -68,18 +76,6 @@ public class grp extends Race{
 	}
 	
 	public void didNotFinish() {
-		//TODO
-	}
-	
-	public void end(long l) {
-		//TODO
-	}
-
-	public void start(long t) {
-		//TODO
-	}
-	
-	public long[] reset() {
 		//TODO
 	}
 	
