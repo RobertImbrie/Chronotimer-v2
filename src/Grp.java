@@ -3,22 +3,24 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class grp extends Race{
+import sun.misc.Queue;
+
+public class Grp extends Race{
 	ArrayList<Competitor> competitors;
   	Queue<Competitor> finishes;
 	boolean hasStarted;
 	long startTime;
-	int CurComp;
+	int curComp;
   
 	transient BufferedWriter logWriter = null;
 	
-  	public grp() {
+  	public Grp() {
 	  	//TODO
 	  	competitors = new ArrayList<Competitor>();
 	  	hasStarted = false;
 	  	startTime = -1;
 	  	finishes = new Queue<Competitor>();
-	  	curComp = 0;
+	  	int curComp = 0;
   	}
 	
 	public void trigger(int channel, long time){
@@ -58,7 +60,7 @@ public class grp extends Race{
 	//IN GROUP USED TO ASSIGN BIBS TO FINISHES SINCE COMPETITORS ARE MADE AS FINISHES ARE ENTERED
 	public boolean addCompetitor(int bib) {
 		if(!finishes.empty()){
-			competitor temp = finishes.pop()
+			Competitor temp = finishes.pop()
     			temp.setBib(bib);
 		}
 	}
