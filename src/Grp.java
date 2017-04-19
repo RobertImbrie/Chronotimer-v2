@@ -15,7 +15,6 @@ public class Grp extends Race{
 	transient BufferedWriter logWriter = null;
 	
   	public Grp() {
-	  	//TODO
 	  	competitors = new ArrayList<Competitor>();
 	  	hasStarted = false;
 	  	startTime = -1;
@@ -54,35 +53,33 @@ public class Grp extends Race{
 	}
 	
 	public ArrayList<String> competitorList() {
-    		
+    		return competitors;
 	}
 	
 	//IN GROUP USED TO ASSIGN BIBS TO FINISHES SINCE COMPETITORS ARE MADE AS FINISHES ARE ENTERED
 	public boolean addCompetitor(int bib) {
-		if(!finishes.empty()){
-			Competitor temp = finishes.pop()
+		if(!finishes.empty()) {
+			Competitor temp = finishes.pop();
     			temp.setBib(bib);
 		}
 	}
 	
 	public String[] clear() {
+		String[] result;
 		for(int i = 0; i < competitors.size(); i++){
-			
+			result[i] = competitors.get(i).toString();
 		}
     		competitors.clear();
   		finishes.clear();
-	}
-	
-	public String removeCompetitorByPos(int position) {
-    		//TODO
-	}
-	
-	public void didNotFinish() {
-		//TODO
+		return result;
 	}
 	
 	public long runTime(int position) {
-		//TODO
+		Competitor temp = competitors.get(i)
+		if(temp.hasStarted() && temp.hasFinished){
+			return (temp.getFinishTime - temp.getStartTime);
+		}
+		return -1;
 	}
 	
 	@Override
