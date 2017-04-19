@@ -1,0 +1,44 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.Scene{
+	-fx-padding: 20;
+	-fx-spacing: 20;
+}
+#front_layout{
+    -fx-border-color: #2e8b57;
+    -fx-border-width: 5px;
+	-fx-padding: 20;
+	-fx-spacing: 20;
+}
+
+.button{
+	-fx-font-weight: bolder;
+	-fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+    -fx-font-size: 16pt;
+    -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
+}
+.label{
+	-fx-font-weight: bolder;
+    -fx-font-size: 16pt;
+}
+
+.grid{
+	-fx-spacing: 20;
+}
+
+#backView{
+	-fx-background-color: grey;
+	-fx-padding: 20;
+	-fx-spacing: 20;
+    -fx-font-size: 16pt;
+}
+
+.textarea{
+	-fx-font-size: 14pt;
+}
+
+.textfield{
+	-fx-font-size: 16pt;
+}

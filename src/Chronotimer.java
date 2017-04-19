@@ -25,6 +25,12 @@ public class Chronotimer{
     logWriter = log;
     currentRace = -1;
   }
+  public Chronotimer(long time){
+	    for(int i=0; i<8; i++)
+	      channels[i] = false;
+	    startTime = time;
+	    currentRace = -1;
+	  }
   
   private void debug(String s){
 		String msg = "Chronotimer - " + s;
