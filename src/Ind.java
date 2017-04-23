@@ -4,10 +4,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Ind extends Race{
-	//ArrayList<Competitor> competitors;
+public class Ind extends Race {
+	// ArrayList<Competitor> competitors;
 	int curStart;
 	int curFinish;
+	Time t;
 
 	/**
 	 * the constructor that creates the run, with default values
@@ -17,28 +18,27 @@ public class Ind extends Race{
 		curStart = 0;
 		curFinish = 0;
 	}
-	
+
 	public Ind(BufferedWriter log) {
 		competitors = new ArrayList<Competitor>();
 		curStart = 0;
 		curFinish = 0;
 		logWriter = log;
 	}
-	
+
 	@Override
-	public void trigger(int channel, long time){
-		if(channel == 1){
+	public void trigger(int channel, long time) {
+		if (channel == 1) {
 			start(time);
-		}
-		else if(channel == 2){
+		} else if (channel == 2) {
 			end(time);
 		}
 	}
-	
-	//@Override		//private methods are not inherited
-	private void debug(String s){
+
+	// @Override //private methods are not inherited
+	private void debug(String s) {
 		String msg = "Ind - " + s;
-		if(logWriter != null){
+		if (logWriter != null) {
 			try {
 				logWriter.write(msg + "\n");
 			} catch (IOException e) {
@@ -111,9 +111,9 @@ public class Ind extends Race{
 	 */
 	@Override
 	public String removeCompetitorByBib(int bib) {
-		for (int i = 0; i < competitors.size(); i++){
-			if (competitors.get(i).getBibNum() == bib){
-				if (curStart > i){
+		for (int i = 0; i < competitors.size(); i++) {
+			if (competitors.get(i).getBibNum() == bib) {
+				if (curStart > i) {
 					curStart--;
 					curFinish--;
 				}
@@ -135,7 +135,7 @@ public class Ind extends Race{
 		if (competitors.size() <= position) {
 			return null;
 		}
-		if (curStart > position){
+		if (curStart > position) {
 			curStart--;
 			curFinish--;
 		}
@@ -145,29 +145,16 @@ public class Ind extends Race{
 	}
 
 	/**
-	 * the current competitor is moved to the back of the queue, and the next
-	 * competitor becomes the current
-	 * 
-	 * @return String[] - A list of formatted strings that represents the
-	 *         competitors
-	 */
-	
-	/*
-	public String[] swapNext() {
-		// TODO
-	}
-	*/
-
-	/**
 	 * indicates that the current competitor did not finish their run
 	 */
 	@Override
 	public void didNotFinish() {
 		competitors.get(curFinish).end(-1);
-		if(!competitors.get(curFinish).getStarted()){
+		if (!competitors.get(curFinish).getStarted()) {
 			competitors.get(curFinish).start(0);
 		}
-		if(curFinish == curStart) curStart++;
+		if (curFinish == curStart)
+			curStart++;
 		curFinish++;
 	}
 
@@ -209,7 +196,7 @@ public class Ind extends Race{
 	 */
 	@Override
 	public void end(long l) {
-		if(curFinish<=curStart){
+		if (curFinish <= curStart) {
 			competitors.get(curFinish).end(l);
 			curFinish++;
 		}
@@ -227,7 +214,8 @@ public class Ind extends Race{
 	 *            - the zero index position of the competitor to act on
 	 */
 	public void end(long t, int position) {
-		if(curFinish == position) curFinish++;
+		if (curFinish == position)
+			curFinish++;
 		competitors.get(position).end(t);
 	}
 
@@ -235,20 +223,19 @@ public class Ind extends Race{
 	 * resets the run of the current competitor, returns the start and end time
 	 * to a default value, the bib Number will remain intact
 	 * 
-	 * @return long[3] - a three element array of Long containing the start time,
-	 *         end time, and duration
+	 * @return long[3] - a three element array of Long containing the start
+	 *         time, end time, and duration
 	 */
 	@Override
 	public long[] reset() {
-		if(curStart == curFinish){
+		if (curStart == curFinish) {
 			curStart--;
 			curFinish--;
-		}
-		else{
+		} else {
 			curStart--;
 		}
 		Competitor c = competitors.get(curFinish);
-		
+
 		long comp[] = new long[3];
 		comp[0] = c.getStartTime();
 		comp[1] = c.getEndTime();
@@ -271,28 +258,49 @@ public class Ind extends Race{
 		return competitors.get(position).runTime();
 	}
 
-	/**
-	 * provides the XML for this run
-	 * 
-	 * @return String - the XML that represents this run
-	 * @see Image
-	 */
-	public String toXML() {
-		// TODO
-		return null;
-	}
-	
-	/* FOLLOWING METHODS USED FOR TESTING ONLY */
-	
-	public ArrayList<Competitor> getCompetitors(){
+	public ArrayList<Competitor> getCompetitors() {
 		return competitors;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		String out = "";
-		for(int i = 0; i < competitors.size(); i++){
-			out = out +  "\t" + competitors.get(i).toString() + "\n";
+		for (int i = 0; i < competitors.size(); i++) {
+			out = out + "\t" + competitors.get(i).toString() + "\n";
+		}
+		return out;
+	}
+
+	@Override
+	public String toDisplay(long currentTime) {
+		// GET HEADER
+		String out = "CURRENTLY RUNNING RACE: INDIVIDUAL";
+		// DISPLAY START TIME OF RACE
+		if (competitors.isEmpty() && !competitors.get(0).getStarted()) {
+			out = out + "\n\n\t Race has not started yet.";
+		} else {
+			out = out + "\n\tRace Start Time: " + Time.parseTime(competitors.get(0).getStartTime());
+			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime);
+		}
+		if (curStart < competitors.size()) {
+			out = out + "\n\n\tNext Start: " + competitors.get(curStart).getBibNum();
+		} else {
+			out = out + "\n\n\tNext Racer: No Racer next.";
+		}
+
+		if (curFinish < competitors.size()) {
+			out = out + "\n\n\tCurrent racer: " + competitors.get(curFinish).getBibNum();
+		} else {
+			out = out + "\n\n\tCurrent racer: No racer to finish.";
+		}
+
+		if (curFinish - 1 < competitors.size() && (curFinish - 1 > 0)) {
+			out = out + "\n\n\tMost recent finish: " + competitors.get(curFinish - 1).getBibNum();
+			out = out + "\n\n\t\tTime: " + Time.parseTime(competitors.get(curFinish - 1).runTime());
+		} else {
+			out = out + "\n\n\tMost recent finish: No racer to finish.";
+			out = out + "\n\n\t\tTime: NA";
+
 		}
 		return out;
 	}

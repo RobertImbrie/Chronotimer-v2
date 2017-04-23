@@ -32,6 +32,7 @@ public class ParaInd extends Race {
 	}
 
 	// @Override //private methods are not inharited
+	@SuppressWarnings("unused")
 	private void debug(String s) {
 		String msg = "ParaInd - " + s;
 		if (logWriter != null) {
@@ -128,7 +129,7 @@ public class ParaInd extends Race {
 		curComp1 = -1;
 		curComp2 = -1;
 		nextComp = 0;
-		laneOneHasStarted = false; 
+		laneOneHasStarted = false;
 		laneTwoHasStarted = false;
 		return listOfCompetitors;
 	}
@@ -166,7 +167,7 @@ public class ParaInd extends Race {
 	 * @return String - A formatted string that represents the competitor
 	 */
 	public String removeCompetitorByPos(int position) {
-		if(competitors.size()-1 == 0){
+		if (competitors.size() - 1 == 0) {
 			String s = competitors.get(0).toString();
 			competitors.remove(position);
 			this.clear();
@@ -180,7 +181,7 @@ public class ParaInd extends Race {
 			if (position < curComp2) {
 				curComp2--;
 			}
-			if(position < nextComp){
+			if (position < nextComp) {
 				nextComp--;
 			}
 		}
@@ -188,12 +189,12 @@ public class ParaInd extends Race {
 		competitors.remove(position);
 		return s;
 	}
-	
+
 	/**
 	 * 
 	 */
-	public long[] reset(){
-		for(int i = 0; i < competitors.size(); i++){
+	public long[] reset() {
+		for (int i = 0; i < competitors.size(); i++) {
 			competitors.get(i).reset();
 		}
 		curComp1 = -1;
@@ -209,7 +210,7 @@ public class ParaInd extends Race {
 	 * 
 	 * @param i
 	 *            for lane
-	 * @return 
+	 * @return
 	 */
 
 	public void didNotFinish(int lane) {
@@ -244,6 +245,51 @@ public class ParaInd extends Race {
 		String out = "";
 		for (int i = 0; i < competitors.size(); i++) {
 			out = out + "\t" + competitors.get(i).toString() + "\n";
+		}
+		return out;
+	}
+
+	public String toDisplay(long currentTime) {
+		// GET HEADER
+		String out = "CURRENTLY RUNNING RACE: PARALELL INDIVIDUAL";
+		// DISPLAY START TIME OF RACE
+		if (competitors.isEmpty() && !competitors.get(0).getStarted()) {
+			out = out + "\n\n\t Race has not started yet.";
+		} else {
+			out = out + "\n\tRace Start Time: " + Time.parseTime(competitors.get(0).getStartTime());
+			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime);
+		}
+		if (nextComp < competitors.size()) {
+			out = out + "\n\n\tNext Start: " + competitors.get(nextComp).getBibNum();
+		} else {
+			out = out + "\n\n\tNext Racer: No Racer next.";
+		}
+
+		if (curComp1 < competitors.size()) {
+			out = out + "\n\n\tCurrent racer lane 1: " + competitors.get(curComp1).getBibNum();
+		} else {
+			out = out + "\n\n\tCurrent racer lane 1: No racer to finish.";
+		}
+
+		if (curComp2 < competitors.size()) {
+			out = out + "\n\n\tCurrent racer lane 2: " + competitors.get(curComp2).getBibNum();
+		} else {
+			out = out + "\n\n\tCurrent racer lane 2: No racer to finish.";
+		}
+
+		if (curComp1 - 1 < competitors.size() && (curComp1 - 1 > 0)) {
+			out = out + "\n\n\tMost recent finish in lane 1: " + competitors.get(curComp1 - 1).getBibNum();
+			out = out + "\n\n\t\tTime: " + Time.parseTime(competitors.get(curComp1 - 1).runTime());
+		} else {
+			out = out + "\n\n\tMost recent finish in lane 1: No racer to finish.";
+			out = out + "\n\n\t\tTime: NA";
+		}
+		if (curComp2 - 1 < competitors.size() && (curComp2 - 1 > 0)) {
+			out = out + "\n\n\tMost recent finish in lane 2: " + competitors.get(curComp2 - 1).getBibNum();
+			out = out + "\n\n\t\tTime: " + Time.parseTime(competitors.get(curComp2 - 1).runTime());
+		} else {
+			out = out + "\n\n\tMost recent finish in lane 2: No racer to finish.";
+			out = out + "\n\n\t\tTime: NA";
 		}
 		return out;
 	}

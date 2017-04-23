@@ -149,4 +149,8 @@ public class Competitor {
 	public void setLane(int lane) {
 		this.lane = lane;
 	}
+	
+	public void setBib(int i){
+		bibNum = i;
+	}
 }

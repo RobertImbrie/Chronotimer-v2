@@ -25,6 +25,14 @@ public class Race{
 		}
 	}
 	
+	/*
+	 * toDisplay takes in a current time and returns a string to be displayed by the UI during races. The
+	 * returned string is dependant on race, and therefore will change for each case. 
+	 */
+	public String toDisplay(long currentTime){
+		return null;
+	}
+	
 	/**
 	 * provides a list of the competitors for this race
 	 * 
