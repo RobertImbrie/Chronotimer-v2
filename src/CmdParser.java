@@ -12,7 +12,6 @@ public class CmdParser{
   public CmdParser(BufferedWriter log){
 	chronotimer = new Chronotimer(System.nanoTime(), log);
     powerOn = false;
-    fileRead = false;
     logWriter = log;
   }
   
