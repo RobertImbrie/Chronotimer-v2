@@ -50,6 +50,7 @@ public class ChronoUI extends Application
 	static UIController c;	//Class to be made
 	static BufferedWriter logWriter;
 	static TextArea screenArea;
+	static TextArea printArea;
 	boolean printerPWR = false;
 	
 	public static void main(String[] args) 
@@ -75,26 +76,24 @@ public class ChronoUI extends Application
 	{
 		stage.setTitle("CHRONOTIMER 1009");
         addLayout(stage);
-        
-//        final Task task;
-//        task = new Task<Void>() {
-//            @Override
-//            protected Void call() throws Exception {
-//                int i = 0;
-//                while(true){
-//                	if (i == Integer.MAX_VALUE-100)
-//                		i = 0;
-//                	//screenArea.setText("" + i);
-//                	i++;
-//                }
-//                //return null;
-//            }
-//        };
+
         stage.show();
 	}
 	public void updateEnterBox(TextField txt){
 		//txt.setText(commandList[commandInt] + " " + enterNum);
 		txt.setText(commandMatrix[comX][comY] + " " + enterNum);
+	}
+	
+	private void debug(String s){
+		String msg = "ChronoUI - " + s;
+		if(logWriter != null){
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void addLayout(Stage primaryStage){
@@ -240,7 +239,7 @@ public class ChronoUI extends Application
 		printBox.setDisable(true);
 		Button btnPrint = new Button("PrintPWR");
 		printBox.getChildren().add(btnPrint);
-		TextArea printArea = new TextArea();
+		printArea = new TextArea();
 		btnPrint.setOnAction((e) ->{
 			if (printerPWR){
 				printerPWR = false;
@@ -252,7 +251,7 @@ public class ChronoUI extends Application
 		printBox.getChildren().add(printArea);
 		mainGrid.add(printBox, 2, 0);
 		
-		//adds the section with the directional and swap buttons
+		//adds the section with the directional and swap buttons, handlers further down
 		VBox controlBox = new VBox();
 		controlBox.setPadding(new Insets(10));
 		controlBox.setSpacing(8);
@@ -303,19 +302,16 @@ public class ChronoUI extends Application
         
         // adds the section with the screen and command bar
 		VBox screenBox = new VBox();
-//		TextArea screenArea = new TextArea();
 		screenArea = new TextArea();
 		//screenArea.textProperty().bind(task.messageProperty());
 		screenBox.getChildren().add(screenArea);
 		TextField enterBox= new TextField();
-//		screenArea.setDisable(true);
-//		enterBox.setDisable(true);
 		enterBox.setEditable(false);
 		screenArea.setEditable(false);
 		screenBox.getChildren().add(enterBox);
 		mainGrid.add(screenBox, 1, 1);
 		
-		
+		// adds the event handlers for the directional buttons
 		btnLeft.setOnAction((e) ->{
 			//enterBox.setText(enterBox.getText() + "1");
 //			if (commandInt == commandList.length -1)
@@ -452,10 +448,15 @@ public class ChronoUI extends Application
 			comY = 0;
 			updateEnterBox(enterBox);
 			//screenArea.setText(screenArea.getText() + com + "\n");
-//			simulator.input(com.split(" "));
 			String returnTxt = c.command(com, System.nanoTime());	// this will send the command into the system once the controlller is created
-			if(returnTxt != null){}
-			//screenArea.setText(screenArea.getText() + "--" + returnTxt + "\n");
+			if(returnTxt != null){
+				if (returnTxt.toUpperCase().contains("ERROR")){
+					debug(returnTxt);
+				}
+				else{
+					printArea.setText(printArea.getText() + returnTxt + "\n");
+				}
+			}
 		});
 		
 		numGrid.add(btn1, 0, 0);
@@ -473,6 +474,7 @@ public class ChronoUI extends Application
 		
 		mainGrid.add(numGrid, 2, 1);
 		
+		// adds the section to "plug in" sensors to the "back" of the chronotimer
 		HBox backView = new HBox();
 		backView.setId("backView");
 		GridPane channelGrid = new GridPane();
@@ -486,9 +488,7 @@ public class ChronoUI extends Application
 		Label lblChan8 = new Label("8");
 		Label lblChannel = new Label("Channel");
 		
-//		Label lb = new Label("left check");
-//		lb.setGraphic(new CheckBox());
-//		lb.setContentDisplay(ContentDisplay.RIGHT); //You can choose RIGHT,LEFT,TOP,BOTTOM
+
 		CheckBox chkChan1 = new CheckBox();
 		chkChan1.setOnAction((e) ->{
 			String s = "";
@@ -761,7 +761,6 @@ public class ChronoUI extends Application
 			if(powerOn){}
 				//screenArea.setText(screenArea.getText() + "\n" + s);
 		});
-		//chkChan8.setText("CHAN 8");
 		
 		channelGrid.add(lblChannel, 0, 0);
 		channelGrid.add(lblChan1, 1, 0);
@@ -783,6 +782,7 @@ public class ChronoUI extends Application
 		
 		backView.getChildren().add(channelGrid);
 		
+		// adds a button to enter a file to run, this can also be done on start as a commandline argument
 		Button btnFile = new Button("Run From File");
 		btnFile.setOnAction((e) ->{
 			String s = "";
@@ -823,7 +823,6 @@ public class ChronoUI extends Application
 	    		powerOn = false;
 	    		screenArea.textProperty().unbind();
 	    		screenArea.textProperty().set("");
-	    		//new Thread(task).start();
 	    	}
 	    	else{
 	    		trigGrid.setDisable(false);
@@ -840,6 +839,7 @@ public class ChronoUI extends Application
 	    	String s = c.togglePower();
 	    	//screenArea.setText(screenArea.getText() + "\n" + s);
 	    	
+	    	// saves the log file when the program exits
 	    	primaryStage.setOnCloseRequest(event -> {
 	    	    System.out.println("Stage is closing");
 	    	    try {
@@ -852,48 +852,6 @@ public class ChronoUI extends Application
 		});
 	}
 		
-
-		
-		
-	    
-	    //---------------------------------
-		
-//		final Text actiontarget = new Text();
-//        mainGrid.add(actiontarget, 1, 6);
-//
-////		Scene scene = new Scene(mainGrid, 300, 275);
-////		primaryStage.setScene(scene);
-//		
-//		Text scenetitle = new Text("Welcome");
-//		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-//		mainGrid.add(scenetitle, 0, 0, 2, 1);
-//
-//		Label userName = new Label("User Name:");
-//		mainGrid.add(userName, 0, 1);
-//
-//		TextField userTextField = new TextField();
-//		mainGrid.add(userTextField, 1, 1);
-//
-//		Label pw = new Label("Password:");
-//		mainGrid.add(pw, 0, 2);
-//
-//		PasswordField pwBox = new PasswordField();
-//		mainGrid.add(pwBox, 1, 2);
-//		
-//		Button btn = new Button("Sign in");
-//		HBox hbBtn = new HBox(10);
-//		hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-//		hbBtn.getChildren().add(btn);
-//		mainGrid.add(hbBtn, 1, 4);
-//		
-//		btn.setOnAction(new EventHandler<ActionEvent>() {
-//			 
-//		    @Override
-//		    public void handle(ActionEvent e) {
-//		        actiontarget.setFill(Color.FIREBRICK);
-//		        actiontarget.setText("Sign in button pressed");
-//		    }
-//		});
 	
 	public void numPad(ActionEvent e){
 		System.out.println("button pushed");
