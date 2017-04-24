@@ -1,6 +1,8 @@
 package src;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class TestGrp {
@@ -47,6 +49,20 @@ public class TestGrp {
 	@Test 
 	public void testCompetitorList(){
 		
+		Grp g = new Grp();
+		g.trigger(1, 0);
+		assertEquals(null, g.competitorList());
+		g.trigger(2, 1000000000);
+		g.trigger(2, 2000000000);
+		g.trigger(2, 3000000000L);
+		g.addCompetitor(111);
+		g.addCompetitor(222);
+		g.addCompetitor(333);
+		ArrayList<String> temp = new ArrayList<String>();
+		temp.add("Competitor: 111 --- 1 Seconds");
+		temp.add("Competitor: 222 --- 2 Seconds");
+		temp.add("Competitor: 333 --- 3 Seconds");
+		assertEquals(temp, g.competitorList());
 	}
 	
 	@Test 
