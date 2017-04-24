@@ -3,20 +3,20 @@ package src;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class Simulator{
+public class CmdParser{
   Chronotimer chronotimer;
   boolean powerOn, fileRead;
   long time;
   BufferedWriter logWriter = null;
   
-  public Simulator(BufferedWriter log){
+  public CmdParser(BufferedWriter log){
 	chronotimer = new Chronotimer(System.nanoTime(), log);
     powerOn = false;
     fileRead = false;
     logWriter = log;
   }
   
-  public Simulator(String[] nextLine, BufferedWriter log){
+  public CmdParser(String[] nextLine, BufferedWriter log){
 	chronotimer = new Chronotimer(parseTime(nextLine[0]), log);
     powerOn = false;
     fileRead = true;
@@ -25,7 +25,7 @@ public class Simulator{
   }
   
   private void debug(String s){
-		String msg = "Simulator - " + s;
+		String msg = "CmdParser - " + s;
 		if(logWriter != null){
 			try {
 				logWriter.write(msg + "\n");
