@@ -37,13 +37,10 @@ public class CmdParser{
 	}
   
   /** Takes input from a file or console passed by Driver, and parses it into a method for use by the Chronotimer */
-  public void input(String[] input){
+  public String input(String[] input){
     //Special case for a file read - instead of using system time, parses and stores the time prefixing the commands in the file
-    if(fileRead){ 
-      time = parseTime(input[0]);         
-      System.arraycopy(input, 1, input, 0, input.length - 1);
-    } else
-      time = System.nanoTime();
+    time = parseTime(input[0]);         
+    System.arraycopy(input, 1, input, 0, input.length - 1);
     //If power is on, turn it off, and vice versa
     if(input[0].equalsIgnoreCase("POWER"))
       powerOn = !powerOn;
@@ -74,6 +71,9 @@ public class CmdParser{
       
       else if(input[0].equalsIgnoreCase("PRINT"))
         System.out.println( chronotimer.print());
+	    
+      else
+	  debug("Invalid command");
     }
   }
   
