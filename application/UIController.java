@@ -9,7 +9,7 @@ public class UIController {
 	
 	UIController(BufferedWriter b){
 		logWriter = b;
-		Chronotimer c = new Chronotimer(System.nanoTime());
+		Chronotimer c = new Chronotimer(System.nanoTime(), logWriter);
 	}
 	public String command(String c, long l){
 		debug("command called");

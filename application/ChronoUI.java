@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 public class ChronoUI extends Application
 {
 	//String command = "";
+	boolean update = false;
 	String[] commandList = {"", "TOG", "TIME", "TRIG", "EVENT", "NEWRUN", "ENDRUN", "NUM", "PRINT"};
 	String[][] commandMatrix = {
 							{""}, 
@@ -49,6 +50,7 @@ public class ChronoUI extends Application
 	static UIController c;	//Class to be made
 	static BufferedWriter logWriter;
 	static TextArea screenArea;
+	boolean printerPWR = false;
 	
 	public static void main(String[] args) 
 	{
@@ -61,6 +63,9 @@ public class ChronoUI extends Application
 			
 		}
 		c = new UIController(logWriter);
+		if (args.length > 0){
+			c.runFile(args[0]);
+		}
 		Application.launch(args);
 		
 	}
@@ -93,6 +98,7 @@ public class ChronoUI extends Application
 	}
 	
 	public void addLayout(Stage primaryStage){
+		// sets up the main components of the UI
 		GridPane mainGrid = new GridPane();
 		mainGrid.setAlignment(Pos.CENTER);
 		mainGrid.setHgap(10);
@@ -112,8 +118,7 @@ public class ChronoUI extends Application
 		scene.getStylesheets().add(css);
 		primaryStage.setScene(scene);
 		
-		//mainGrid.getStylesheets().add(css);
-		
+		// adds the section with the power button
 		VBox powerBox = new VBox();
 		powerBox.setPadding(new Insets(10));
 		powerBox.setSpacing(8);
@@ -122,6 +127,7 @@ public class ChronoUI extends Application
 	    powerBox.getChildren().add(btnPower);
 	    mainGrid.add(powerBox, 0, 0);
 	    
+	    // adds the section with the channel triggers
 	    GridPane trigGrid = new GridPane();
 		trigGrid.setAlignment(Pos.CENTER);
 		trigGrid.setHgap(10);
@@ -150,6 +156,29 @@ public class ChronoUI extends Application
 		CheckBox chkEn7 = new CheckBox();
 		trigGrid.add(chkEn7, 4, 1);
 		
+		// handlers for the trigger buttons
+		btnTrig1.setOnAction((e) ->{
+			if (chkEn1.isSelected()){
+				c.trig(1, System.nanoTime());
+			}
+		});
+		btnTrig3.setOnAction((e) ->{
+			if (chkEn3.isSelected()){
+				c.trig(3, System.nanoTime());
+			}
+		});
+		btnTrig5.setOnAction((e) ->{
+			if (chkEn5.isSelected()){
+				c.trig(5, System.nanoTime());
+			}
+		});
+		btnTrig7.setOnAction((e) ->{
+			if (chkEn7.isSelected()){
+				c.trig(7, System.nanoTime());
+			}
+		});
+		
+		
 		Label lblFinish = new Label("Finish");
 		trigGrid.add(lblFinish, 0, 2);
 		Button btnTrig2 = new Button("2");
@@ -172,6 +201,27 @@ public class ChronoUI extends Application
 		CheckBox chkEn8 = new CheckBox();
 		trigGrid.add(chkEn8, 4, 3);
 		
+		btnTrig2.setOnAction((e) ->{
+			if (chkEn2.isSelected()){
+				c.trig(2, System.nanoTime());
+			}
+		});
+		btnTrig4.setOnAction((e) ->{
+			if (chkEn4.isSelected()){
+				c.trig(4, System.nanoTime());
+			}
+		});
+		btnTrig6.setOnAction((e) ->{
+			if (chkEn6.isSelected()){
+				c.trig(6, System.nanoTime());
+			}
+		});
+		btnTrig8.setOnAction((e) ->{
+			if (chkEn8.isSelected()){
+				c.trig(8, System.nanoTime());
+			}
+		});
+		
 		chkEn1.setDisable(true);
 		chkEn2.setDisable(true);
 		chkEn3.setDisable(true);
@@ -183,15 +233,26 @@ public class ChronoUI extends Application
 		
 		mainGrid.add(trigGrid, 1, 0);
 		
+		// adds the printer section
 		VBox printBox = new VBox();
 		printBox.setPadding(new Insets(10));
 		printBox.setSpacing(8);
+		printBox.setDisable(true);
 		Button btnPrint = new Button("PrintPWR");
 		printBox.getChildren().add(btnPrint);
 		TextArea printArea = new TextArea();
+		btnPrint.setOnAction((e) ->{
+			if (printerPWR){
+				printerPWR = false;
+				printArea.setText("");
+			}
+			else
+				printerPWR = true;
+		});
 		printBox.getChildren().add(printArea);
 		mainGrid.add(printBox, 2, 0);
 		
+		//adds the section with the directional and swap buttons
 		VBox controlBox = new VBox();
 		controlBox.setPadding(new Insets(10));
 		controlBox.setSpacing(8);
@@ -210,6 +271,9 @@ public class ChronoUI extends Application
 		dPadBox.getChildren().add(btnUp);
 		controlBox.getChildren().add(dPadBox);
 		Button btnSwap = new Button("Swap");
+		btnSwap.setOnAction((e) ->{
+			c.swap(System.nanoTime());
+		});
 		controlBox.getChildren().add(btnSwap);
 		
 		mainGrid.add(controlBox, 0, 1);
@@ -227,17 +291,21 @@ public class ChronoUI extends Application
                 		i = 0;
                 	//screenArea.setText("" + i);
                 	i++;
-                	updateMessage(String.valueOf(i));
+//                	updateMessage(String.valueOf(i));
+                	if (update){
+                		updateMessage(c.updateDisplay);
+                	}
                 	Thread.sleep(100);
                 }
                 //return null;
             }
         };
         
+        // adds the section with the screen and command bar
 		VBox screenBox = new VBox();
 //		TextArea screenArea = new TextArea();
 		screenArea = new TextArea();
-		screenArea.textProperty().bind(task.messageProperty());
+		//screenArea.textProperty().bind(task.messageProperty());
 		screenBox.getChildren().add(screenArea);
 		TextField enterBox= new TextField();
 //		screenArea.setDisable(true);
@@ -298,6 +366,7 @@ public class ChronoUI extends Application
 			updateEnterBox(enterBox);
 		});
 		
+		// adds the section with the number buttons
 		GridPane numGrid = new GridPane();
 		numGrid.setAlignment(Pos.CENTER);
 		numGrid.setHgap(10);
@@ -379,8 +448,11 @@ public class ChronoUI extends Application
 			String com = commandList[commandInt] + " " + enterNum;
 			enterNum = "";
 			commandInt = 0;
+			comX = 0;
+			comY = 0;
 			updateEnterBox(enterBox);
 			//screenArea.setText(screenArea.getText() + com + "\n");
+//			simulator.input(com.split(" "));
 			String returnTxt = c.command(com, System.nanoTime());	// this will send the command into the system once the controlller is created
 			if(returnTxt != null){}
 			//screenArea.setText(screenArea.getText() + "--" + returnTxt + "\n");
@@ -419,101 +491,241 @@ public class ChronoUI extends Application
 //		lb.setContentDisplay(ContentDisplay.RIGHT); //You can choose RIGHT,LEFT,TOP,BOTTOM
 		CheckBox chkChan1 = new CheckBox();
 		chkChan1.setOnAction((e) ->{
-			String s;
+			String s = "";
 			if (chkChan1.isSelected()){
-				chkEn1.setDisable(false);
-				s = c.toggleChannel(1, true, System.nanoTime());
+				ArrayList<String> choices = new ArrayList<>();
+				choices.add("EYE");
+				choices.add("GATE");
+				choices.add("PAD");
+
+				ChoiceDialog<String> dialog = new ChoiceDialog<>("EYE", choices);
+				dialog.setTitle("SENSOR");
+				dialog.setHeaderText("Select Sensor");
+				dialog.setContentText("Select a sensor type:");
+
+				// Traditional way to get the response value.
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+					chkEn1.setDisable(false);
+				    System.out.println("Your choice: " + result.get());
+				//s = c.toggleChannel(1, true, System.nanoTime());
+				    s= c.conn(1, result.get(), System.nanoTime());
+				}
+				else
+					chkChan1.setSelected(false);
 			}
 			else{
 				chkEn1.setDisable(true);
 				chkEn1.setSelected(false);
-				s = c.toggleChannel(1, false, System.nanoTime());
+				//s = c.toggleChannel(1, false, System.nanoTime());
+				s = c.disc(1,  System.nanoTime());
 			}
-			//screenArea.setText(screenArea.getText() + "\n" + s);
+			if(powerOn){}
+				//screenArea.setText(screenArea.getText() + "\n" + s);
 		});
 		CheckBox chkChan2 = new CheckBox();
 		chkChan2.setOnAction((e) ->{
-			String s;
+			String s = "";
 			if (chkChan2.isSelected()){
-				chkEn2.setDisable(false);
-				s= c.toggleChannel(2, true, System.nanoTime());
+				ArrayList<String> choices = new ArrayList<>();
+				choices.add("EYE");
+				choices.add("GATE");
+				choices.add("PAD");
+
+				ChoiceDialog<String> dialog = new ChoiceDialog<>("EYE", choices);
+				dialog.setTitle("SENSOR");
+				dialog.setHeaderText("Select Sensor");
+				dialog.setContentText("Select a sensor type:");
+
+				// Traditional way to get the response value.
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+					chkEn2.setDisable(false);
+				    System.out.println("Your choice: " + result.get());
+				//s = c.toggleChannel(2, true, System.nanoTime());
+				    s= c.conn(2, result.get(), System.nanoTime());
+				}
+				else
+					chkChan2.setSelected(false);
 			}
 			else{
 				chkEn2.setDisable(true);
 				chkEn2.setSelected(false);
-				s = c.toggleChannel(2, false, System.nanoTime());
+				//s = c.toggleChannel(2, false, System.nanoTime());
+				s = c.disc(2,  System.nanoTime());
 			}
-			//screenArea.setText(screenArea.getText() + "\n" + s);
+			if(powerOn){}
+				//screenArea.setText(screenArea.getText() + "\n" + s);
 		});
 		CheckBox chkChan3 = new CheckBox();
 		chkChan3.setOnAction((e) ->{
-			String s;
+			String s = "";
 			if (chkChan3.isSelected()){
-				chkEn3.setDisable(false);
-				s = c.toggleChannel(3, true, System.nanoTime());
+				ArrayList<String> choices = new ArrayList<>();
+				choices.add("EYE");
+				choices.add("GATE");
+				choices.add("PAD");
+
+				ChoiceDialog<String> dialog = new ChoiceDialog<>("EYE", choices);
+				dialog.setTitle("SENSOR");
+				dialog.setHeaderText("Select Sensor");
+				dialog.setContentText("Select a sensor type:");
+
+				// Traditional way to get the response value.
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+					chkEn3.setDisable(false);
+				    System.out.println("Your choice: " + result.get());
+				//s = c.toggleChannel(3, true, System.nanoTime());
+				    s= c.conn(3, result.get(), System.nanoTime());
+				}
+				else
+					chkChan3.setSelected(false);
 			}
 			else{
 				chkEn3.setDisable(true);
 				chkEn3.setSelected(false);
-				s = c.toggleChannel(3, false, System.nanoTime());
+				//s = c.toggleChannel(3, false, System.nanoTime());
+				s = c.disc(3,  System.nanoTime());
 			}
-			//screenArea.setText(screenArea.getText() + "\n" + s);
+			if(powerOn){}
+				//screenArea.setText(screenArea.getText() + "\n" + s);
 		});
 		CheckBox chkChan4 = new CheckBox();
 		chkChan4.setOnAction((e) ->{
-			String s;
+			String s = "";
 			if (chkChan4.isSelected()){
-				chkEn4.setDisable(false);
-				s = c.toggleChannel(4, true, System.nanoTime());
+				ArrayList<String> choices = new ArrayList<>();
+				choices.add("EYE");
+				choices.add("GATE");
+				choices.add("PAD");
+
+				ChoiceDialog<String> dialog = new ChoiceDialog<>("EYE", choices);
+				dialog.setTitle("SENSOR");
+				dialog.setHeaderText("Select Sensor");
+				dialog.setContentText("Select a sensor type:");
+
+				// Traditional way to get the response value.
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+					chkEn4.setDisable(false);
+				    System.out.println("Your choice: " + result.get());
+				//s = c.toggleChannel(4, true, System.nanoTime());
+				    s= c.conn(4, result.get(), System.nanoTime());
+				}
+				else
+					chkChan4.setSelected(false);
 			}
 			else{
 				chkEn4.setDisable(true);
 				chkEn4.setSelected(false);
-				s = c.toggleChannel(4, false, System.nanoTime());
+				//s = c.toggleChannel(4, false, System.nanoTime());
+				s = c.disc(4,  System.nanoTime());
 			}
-			//screenArea.setText(screenArea.getText() + "\n" + s);
+			if(powerOn){}
+				//screenArea.setText(screenArea.getText() + "\n" + s);
 		});
 		CheckBox chkChan5 = new CheckBox();
 		chkChan5.setOnAction((e) ->{
-			String s;
+			String s = "";
 			if (chkChan5.isSelected()){
-				chkEn5.setDisable(false);
-				s = c.toggleChannel(5, true, System.nanoTime());
+				ArrayList<String> choices = new ArrayList<>();
+				choices.add("EYE");
+				choices.add("GATE");
+				choices.add("PAD");
+
+				ChoiceDialog<String> dialog = new ChoiceDialog<>("EYE", choices);
+				dialog.setTitle("SENSOR");
+				dialog.setHeaderText("Select Sensor");
+				dialog.setContentText("Select a sensor type:");
+
+				// Traditional way to get the response value.
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+					chkEn5.setDisable(false);
+				    System.out.println("Your choice: " + result.get());
+				//s = c.toggleChannel(5, true, System.nanoTime());
+				    s= c.conn(5, result.get(), System.nanoTime());
+				}
+				else
+					chkChan5.setSelected(false);
 			}
 			else{
 				chkEn5.setDisable(true);
 				chkEn5.setSelected(false);
-				s = c.toggleChannel(5, false, System.nanoTime());
+				//s = c.toggleChannel(5, false, System.nanoTime());
+				s = c.disc(5,  System.nanoTime());
 			}
-			//screenArea.setText(screenArea.getText() + "\n" + s);
+			if(powerOn){}
+				//screenArea.setText(screenArea.getText() + "\n" + s);
 		});
 		CheckBox chkChan6 = new CheckBox();
 		chkChan6.setOnAction((e) ->{
-			String s;
+			String s = "";
 			if (chkChan6.isSelected()){
-				chkEn6.setDisable(false);
-				s = c.toggleChannel(6, true, System.nanoTime());
+				ArrayList<String> choices = new ArrayList<>();
+				choices.add("EYE");
+				choices.add("GATE");
+				choices.add("PAD");
+
+				ChoiceDialog<String> dialog = new ChoiceDialog<>("EYE", choices);
+				dialog.setTitle("SENSOR");
+				dialog.setHeaderText("Select Sensor");
+				dialog.setContentText("Select a sensor type:");
+
+				// Traditional way to get the response value.
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+					chkEn6.setDisable(false);
+				    System.out.println("Your choice: " + result.get());
+				//s = c.toggleChannel(6, true, System.nanoTime());
+				    s= c.conn(6, result.get(), System.nanoTime());
+				}
+				else
+					chkChan6.setSelected(false);
 			}
 			else{
 				chkEn6.setDisable(true);
 				chkEn6.setSelected(false);
-				s = c.toggleChannel(6, false, System.nanoTime());
+				//s = c.toggleChannel(6, false, System.nanoTime());
+				s = c.disc(6,  System.nanoTime());
 			}
-			//screenArea.setText(screenArea.getText() + "\n" + s);
+			if(powerOn){}
+				//screenArea.setText(screenArea.getText() + "\n" + s);
 		});
 		CheckBox chkChan7 = new CheckBox();
 		chkChan7.setOnAction((e) ->{
-			String s;
+			String s = "";
 			if (chkChan7.isSelected()){
-				chkEn7.setDisable(false);
-				s = c.toggleChannel(7, true, System.nanoTime());
+				ArrayList<String> choices = new ArrayList<>();
+				choices.add("EYE");
+				choices.add("GATE");
+				choices.add("PAD");
+
+				ChoiceDialog<String> dialog = new ChoiceDialog<>("EYE", choices);
+				dialog.setTitle("SENSOR");
+				dialog.setHeaderText("Select Sensor");
+				dialog.setContentText("Select a sensor type:");
+
+				// Traditional way to get the response value.
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+					chkEn7.setDisable(false);
+				    System.out.println("Your choice: " + result.get());
+				//s = c.toggleChannel(7, true, System.nanoTime());
+				    s= c.conn(7, result.get(), System.nanoTime());
+				}
+				else
+					chkChan7.setSelected(false);
 			}
 			else{
 				chkEn7.setDisable(true);
 				chkEn7.setSelected(false);
-				s = c.toggleChannel(7, false, System.nanoTime());
+				//s = c.toggleChannel(7, false, System.nanoTime());
+				s = c.disc(7,  System.nanoTime());
 			}
-			//screenArea.setText(screenArea.getText() + "\n" + s);
+			if(powerOn){}
+				//screenArea.setText(screenArea.getText() + "\n" + s);
 		});
 		CheckBox chkChan8 = new CheckBox();
 		chkChan8.setOnAction((e) ->{
@@ -570,6 +782,23 @@ public class ChronoUI extends Application
 		channelGrid.add(chkChan8, 4, 3);
 		
 		backView.getChildren().add(channelGrid);
+		
+		Button btnFile = new Button("Run From File");
+		btnFile.setOnAction((e) ->{
+			String s = "";
+
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("File");
+			dialog.setHeaderText("Run From File");
+			dialog.setContentText("Enter the path of a :");
+
+			Optional<String> result = dialog.showAndWait();
+			if (result.isPresent()){
+				c.runFile(result);
+			}
+		});
+		
+		backView.getChildren().add(btnFile);
 		uiBox.getChildren().add(backView);
 		
 		
@@ -592,7 +821,9 @@ public class ChronoUI extends Application
 	    		//screenArea.setText("");
 	    		enterBox.setText("");
 	    		powerOn = false;
-	    		new Thread(task).start();
+	    		screenArea.textProperty().unbind();
+	    		screenArea.textProperty().set("");
+	    		//new Thread(task).start();
 	    	}
 	    	else{
 	    		trigGrid.setDisable(false);
@@ -603,6 +834,8 @@ public class ChronoUI extends Application
 	    		commandInt = 0;
 	    		enterNum = "";
 	    		powerOn = true;
+	    		screenArea.textProperty().bind(task.messageProperty());
+	    		new Thread(task).start();
 	    	}
 	    	String s = c.togglePower();
 	    	//screenArea.setText(screenArea.getText() + "\n" + s);
