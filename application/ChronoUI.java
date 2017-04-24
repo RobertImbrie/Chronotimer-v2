@@ -30,7 +30,7 @@ public class ChronoUI extends Application
 {
 	//String command = "";
 	boolean update = false;
-	String[] commandList = {"", "TOG", "TIME", "TRIG", "EVENT", "NEWRUN", "ENDRUN", "NUM", "PRINT"};
+	//String[] commandList = {"", "TOG", "TIME", "TRIG", "EVENT", "NEWRUN", "ENDRUN", "NUM", "PRINT"};
 	String[][] commandMatrix = {
 							{""}, 
 							{"TOG"}, 
@@ -292,7 +292,7 @@ public class ChronoUI extends Application
                 	i++;
 //                	updateMessage(String.valueOf(i));
                 	if (update){
-                		updateMessage(c.updateDisplay);
+                		updateMessage(c.updateDisplay(System.nanoTime()));
                 	}
                 	Thread.sleep(100);
                 }
@@ -441,7 +441,8 @@ public class ChronoUI extends Application
 		});
 		btnPound.setOnAction((e) ->{
 			//ENTER
-			String com = commandList[commandInt] + " " + enterNum;
+			//String com = commandList[commandInt] + " " + enterNum;
+			String com = commandMatrix[comX][comY] + " " + enterNum;
 			enterNum = "";
 			commandInt = 0;
 			comX = 0;
@@ -794,7 +795,8 @@ public class ChronoUI extends Application
 
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()){
-				c.runFile(result);
+				String res = result.toString();
+				c.runFile(res);
 			}
 		});
 		

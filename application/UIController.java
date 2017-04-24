@@ -1,8 +1,12 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import src.Chronotimer;
+import src.CmdParser;
 
 public class UIController {
 	BufferedWriter logWriter;
@@ -15,7 +19,7 @@ public class UIController {
 	}
 	public String command(String c, long l){
 		debug("command called");
-		c = l.toString() + c;
+		c = String.valueOf(l) + c;
 		String result = commandParser.input( c.split(" ") );
 		return "'" + c + "' was called at " + l;
 	}
@@ -46,18 +50,24 @@ public class UIController {
 		while (!fileBeenRead) { //loops until user enters a valid filepath
 			try {
 				BufferedReader reader = new BufferedReader(new FileReader(filePath));
-				for (String nextLine = reader.readLine(); nextLine != null && !nextLine.equalsIgnoreCase("EXIT"); nextLine = reader.readLine())
-					String[] command = nextLine.split("\\s+");
+				String nextLine;
+				for (nextLine = reader.readLine(); nextLine != null && !nextLine.equalsIgnoreCase("EXIT"); nextLine = reader.readLine()){
+					String command[] = nextLine.split("\\s+");
 					long time = parseTime(command[0]);
-					for(i = 1; i<command.length; i++)
+					for(int i = 1; i<command.length; i++)
 						nextLine += command[i];
 					command( nextLine, time);
 				}
 				reader.close();
 			}
-			catch (FileNotFoundException e)
+			catch (FileNotFoundException e){
 				System.out.println("Invalid filepath");
+			}
+			catch(IOException e){
+				System.out.println("IO Problem");
+			}
 
+	}
 	}
 
 	  /** Turns time formatted in HH:MM:SS.S to a long */
@@ -69,6 +79,10 @@ public class UIController {
   		 + Long.parseLong(timeString[3]))
  		 * 100000000L;
  	}
+  	
+  	public String updateDisplay(long t){
+  		return commandParser.updateDisplay(t);
+  	}
 	 
 	 //----------
 	 private void debug(String s){

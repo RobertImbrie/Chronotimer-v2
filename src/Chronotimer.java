@@ -137,6 +137,10 @@ public class Chronotimer{
 	  return json;
   }
   
+  public String updateDisplay(long t){
+	  return races.get(currentRace).toDisplay(t);
+  }
+  
   @Override
   public String toString(){
 	  String out = "\t\tRecipt\n\n\t**********\n\n";
