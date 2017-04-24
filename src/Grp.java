@@ -67,6 +67,11 @@ public class Grp extends Race {
 	// FINISHES ARE ENTERED
 	public boolean addCompetitor(int bib) {
 		if (!finishes.isEmpty()) {
+			for(int i = 0; i < competitors.size(); i++){
+				if(competitors.get(i).getBibNum() == bib){
+					return false;
+				}
+			}
 			Competitor temp = null;
 			try {
 				temp = finishes.dequeue();
@@ -103,6 +108,7 @@ public class Grp extends Race {
 		}
 		return out;
 	}
+	
 	@Override
 	public String toDisplay(long currentTime) {
 		//GET HEADER
