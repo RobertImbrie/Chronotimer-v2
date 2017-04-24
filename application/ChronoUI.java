@@ -25,11 +25,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.*;
 import javafx.stage.Stage;
+import java.util.*;
 
 public class ChronoUI extends Application
 {
 	//String command = "";
-	boolean update = false;
+	boolean update = true;
 	//String[] commandList = {"", "TOG", "TIME", "TRIG", "EVENT", "NEWRUN", "ENDRUN", "NUM", "PRINT"};
 	String[][] commandMatrix = {
 							{""}, 
@@ -40,7 +41,8 @@ public class ChronoUI extends Application
 							{"ENDRUN"}, 
 							{"NUM"}, 
 							{"PRINT"},
-							{"EVENT", "EVENT IND", "EVENT INDPAR", "EVENT GRP"}
+							{"EVENT", "EVENT IND", "EVENT INDPAR", "EVENT GRP"},
+							{"DNF"}
 							};
 	int commandInt = 0;
 	int comX = 0;
@@ -59,6 +61,8 @@ public class ChronoUI extends Application
 		logWriter = null;
 		try{
 			logWriter = new BufferedWriter(new FileWriter(logPath));
+			Date d = new Date();
+			logWriter.write(d.toString() + "\n");
 		}
 		catch(Exception e){
 			
@@ -290,9 +294,11 @@ public class ChronoUI extends Application
                 		i = 0;
                 	//screenArea.setText("" + i);
                 	i++;
-//                	updateMessage(String.valueOf(i));
                 	if (update){
                 		updateMessage(c.updateDisplay(System.nanoTime()));
+                	}
+                	else{
+                		updateMessage(String.valueOf(i));
                 	}
                 	Thread.sleep(100);
                 }

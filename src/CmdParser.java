@@ -44,32 +44,52 @@ public class CmdParser{
     /*Instead of resetting everything, the program is put on standby when the power is turned off
      * If power is on, read the command and pass it to the proper method in Chronotimer */
     else if(powerOn){
-      if(input[1].equalsIgnoreCase("TOG"))
+      if(input[1].equalsIgnoreCase("TOG")){
         chronotimer.toggle( Integer.parseInt(input[2]));
+        debug("tog called");
+      }
       
-      else if(input[1].equalsIgnoreCase("TIME"))
+      else if(input[1].equalsIgnoreCase("TIME")){
         chronotimer.setTime( parseTime(input[2]));
+        debug("time : " + parseTime(input[2]));
+      }
       
-      else if(input[1].equalsIgnoreCase("TRIG"))
+      else if(input[1].equalsIgnoreCase("TRIG")){
     	chronotimer.trigger( Integer.parseInt(input[2]), Long.parseLong(input[0]));
+    	debug("trig" + Integer.parseInt(input[2]));
+      }
       
-      else if(input[1].equalsIgnoreCase("EVENT"))
+      else if(input[1].equalsIgnoreCase("EVENT")){
         chronotimer.setEvent(input[2]);
+        debug("event : " + input[2]);
+      }
       
-      else if(input[1].equalsIgnoreCase("NEWRUN"))
+      else if(input[1].equalsIgnoreCase("NEWRUN")){
         chronotimer.newRun();
+        debug("newRun");
+      }
       
-      else if(input[0].equalsIgnoreCase("ENDRUN"))
+      else if(input[0].equalsIgnoreCase("ENDRUN")){
         chronotimer.endRun();
+        debug("endRun");
+      }
       
-      else if(input[0].equalsIgnoreCase("NUM"))
+      else if(input[0].equalsIgnoreCase("NUM")){
         chronotimer.addCompetitor( Integer.parseInt(input[2]));
+        debug("num : " + Integer.parseInt(input[2]));
+      }
       
-      else if(input[1].equalsIgnoreCase("PRINT"))
+      else if(input[1].equalsIgnoreCase("PRINT")){
         System.out.println( chronotimer.print());
+        debug("print");
+      }
 	    
-      else
-	  debug("Invalid command");
+      else{
+    	  String str = "";
+    	  for(int i = 0; i < input.length; i++)
+    		  str = str + input[i] + " ";
+    	  debug("Invalid command - " + str);
+	  }
       
     }
     return chronotimer.toString();

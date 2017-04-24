@@ -19,16 +19,19 @@ public class UIController {
 	}
 	public String command(String c, long l){
 		debug("command called");
-		c = String.valueOf(l) + c;
+		c = String.valueOf(l) +  " " + c;
 		String result = commandParser.input( c.split(" ") );
-		return "'" + c + "' was called at " + l;
+//		return "'" + c + "' was called at " + l;
+		return result;
 	}
 	 public String toggleChannel(int chan, boolean toState, long l){
 		 debug("toggleChannel called");
+		 command(("TOG " + chan), l);
 		 return "channel was toggled " + chan;
 	 }
 	 public String togglePower(){
 		 debug("togglePower called");
+		 command("POWER ", System.nanoTime());
 		 System.out.println("power toggled");
 		 return "";
 	 }
@@ -39,9 +42,11 @@ public class UIController {
 		 return "sensor disconnescted on channel " + chan;
 	 }
 	 public String trig(int chan, long l){
+		 command(("TRIG " + chan), l);
 		 return "";
 	 }
 	 public String swap(long l){
+		 command("SWAP", l);
 		 return "";
 	 }
 	
