@@ -37,9 +37,15 @@ public class CmdParser{
   
   /** Takes input from a file or console passed by Driver, and parses it into a method for use by the Chronotimer */
   public String input(String[] input){
+    String str = "";
+    for(int i = 0; i < input.length; i++)
+    	str += input[i] + " ";
+    debug(str);
     //If power is on, turn it off, and vice versa
-    if(input[1].equalsIgnoreCase("POWER"))
+    if(input[1].equalsIgnoreCase("POWER")){
       powerOn = !powerOn;
+      debug("power toggled");
+    }
     
     /*Instead of resetting everything, the program is put on standby when the power is turned off
      * If power is on, read the command and pass it to the proper method in Chronotimer */
@@ -84,14 +90,12 @@ public class CmdParser{
         debug("print");
       }
 	    
-      else{
-    	  String str = "";
-    	  for(int i = 0; i < input.length; i++)
-    		  str = str + input[i] + " ";
-    	  debug("Invalid command - " + str);
-	  }
+      else
+    	  debug("Invalid command");
       
     }
+    else
+	    debug("Power off - no command executed");
     return chronotimer.toString();
   }
   
