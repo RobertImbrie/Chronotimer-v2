@@ -72,7 +72,6 @@ public class UIController {
 			}
 
 		}
-	}
 
 	  /** Turns time formatted in HH:MM:SS.S to a long */
   	public long parseTime(String time){
