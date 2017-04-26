@@ -58,9 +58,7 @@ public class UIController {
 					
 					String command[] = nextLine.split("\\s+");
 					long time = parseTime(command[0]);
-					debug(command);
 					nextLine = nextLine.replace(command[0], "");
-					debug(nextLine);
 					/*for(int i = 1; i<command.length; i++){
 						nextLine += command[i] + " ";
 						debug(nextLine);
