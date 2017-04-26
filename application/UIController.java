@@ -76,7 +76,7 @@ public class UIController {
 
 	  /** Turns time formatted in HH:MM:SS.S to a long */
   	public long parseTime(String time){
-    		String[] timeString = time.split(":|\\.");
+    		String[] timeString = time.split(":|\\.| ");
     		return (Long.parseLong(timeString[0]) * 36000L //Convert to a single time unit (tenth-seconds), which is then converted to nanoseconds
      		 + Long.parseLong(timeString[1]) * 600L
    		 + Long.parseLong(timeString[2]) * 10L
