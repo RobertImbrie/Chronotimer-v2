@@ -51,8 +51,6 @@ public class UIController {
 	 }
 	
 	public void runFile(String filePath){
-		boolean fileBeenRead = false;
-		while (!fileBeenRead) { //loops until user enters a valid filepath
 			try {
 				BufferedReader reader = new BufferedReader(new FileReader(filePath));
 				String nextLine;
@@ -66,13 +64,13 @@ public class UIController {
 				reader.close();
 			}
 			catch (FileNotFoundException e){
-				System.out.println("Invalid filepath");
+				debug("Invalid filepath on UIController");
 			}
 			catch(IOException e){
 				System.out.println("IO Problem");
 			}
 
-	}
+		}
 	}
 
 	  /** Turns time formatted in HH:MM:SS.S to a long */
