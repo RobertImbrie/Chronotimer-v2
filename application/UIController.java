@@ -59,7 +59,7 @@ public class UIController {
 					long time = parseTime(command[0]);
 					nextLine = "";
 					for(int i = 1; i<command.length; i++)
-						nextLine += command[i];
+						nextLine += command[i] + " ";
 					command( nextLine, time);
 				}
 				reader.close();
