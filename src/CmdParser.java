@@ -39,7 +39,7 @@ public class CmdParser{
   public String input(String[] input){
     String str = "";
     for(int i = 0; i < input.length; i++)
-    	str += input[i] + " ";
+    	str += input[i] + ".";
     debug(str);
     //If power is on, turn it off, and vice versa
     if(input[1].equalsIgnoreCase("POWER")){
