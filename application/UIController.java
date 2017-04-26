@@ -64,7 +64,7 @@ public class UIController {
 				reader.close();
 			}
 			catch (FileNotFoundException e){
-				debug("Invalid filepath on UIController");
+				debug("Invalid filepath");
 			}
 			catch(IOException e){
 				System.out.println("IO Problem");
