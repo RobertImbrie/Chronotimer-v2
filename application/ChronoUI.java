@@ -60,7 +60,7 @@ public class ChronoUI extends Application
 		String logPath = "debugLog.log";
 		logWriter = null;
 		try{
-			logWriter = new BufferedWriter(new FileWriter(logPath));
+			logWriter = new BufferedWriter(new FileWriter(logPath, true));
 			Date d = new Date();
 			logWriter.write(d.toString() + "\n");
 		}
