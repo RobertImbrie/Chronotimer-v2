@@ -57,6 +57,7 @@ public class UIController {
 				for (nextLine = reader.readLine(); nextLine != null && !nextLine.equalsIgnoreCase("EXIT"); nextLine = reader.readLine()){
 					String command[] = nextLine.split("\\s+");
 					long time = parseTime(command[0]);
+					nextLine = "";
 					for(int i = 1; i<command.length; i++)
 						nextLine += command[i];
 					command( nextLine, time);
