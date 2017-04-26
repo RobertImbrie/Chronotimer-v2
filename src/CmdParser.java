@@ -69,12 +69,12 @@ public class CmdParser{
         debug("newRun");
       }
       
-      else if(input[0].equalsIgnoreCase("ENDRUN")){
+      else if(input[1].equalsIgnoreCase("ENDRUN")){
         chronotimer.endRun();
         debug("endRun");
       }
       
-      else if(input[0].equalsIgnoreCase("NUM")){
+      else if(input[1].equalsIgnoreCase("NUM")){
         chronotimer.addCompetitor( Integer.parseInt(input[2]));
         debug("num : " + Integer.parseInt(input[2]));
       }
