@@ -461,7 +461,8 @@ public class ChronoUI extends Application
 					debug(returnTxt);
 				}
 				else{
-					printArea.setText(printArea.getText() + returnTxt + "\n");
+//					printArea.setText(printArea.getText() + returnTxt + "\n");
+					printArea.setText(returnTxt);
 				}
 			}
 		});
