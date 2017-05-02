@@ -64,7 +64,7 @@ public class Chronotimer{
    * Otherwise nothing happens.
    */
   public void setEvent(String event){
-	  if(event.equalsIgnoreCase("IND") || event.equalsIgnoreCase("PARIND"))
+	  if(event.equalsIgnoreCase("IND") || event.equalsIgnoreCase("PARIND") || event.equalsIgnoreCase("GRP") || event.equalsIgnoreCase("PARGRP"))
 			  this.event = event;
   }
   
@@ -73,10 +73,23 @@ public class Chronotimer{
    */
   public void newRun(){
 	  if(!runStarted && event != null){
-		  if(event.equalsIgnoreCase("IND"))
-			  races.add(new Ind(logWriter));
-		  else
-			  races.add(new ParaInd(logWriter));
+		  switch(event){
+			  case "IND":
+			  	races.add(new Ind(logWriter));
+				break;
+			  case "PARIND":
+				races.add(new ParaInd(logWriter));
+				break;
+			  case "GRP":
+				races.add(new Grp(logWriter));
+				break;
+			  case "PARGRP":
+				races.add(new ParGrp(logWriter));
+				break;
+			  default:
+				debug("Invalid race type");
+				return;
+		  }
 		  runStarted = true;
 		  currentRace++;
 	  }
