@@ -13,8 +13,9 @@ public class Competitor {
 	transient BufferedWriter logWriter;
 
 	/**
-	 * the constructor that creates the competitor, with a bib#. Sets the start
-	 * and end times to default values (-1) and started and finished to false;
+	 * Competitor Constructor:
+	 * The constructor that creates the competitor, with a bib#. Sets the start
+	 * and end times to default values (-1) and started and finished to false.
 	 */
 	public Competitor(int bib) {
 		bibNum = bib;
@@ -25,6 +26,12 @@ public class Competitor {
 		setLane(0);
 	}
 	
+	/**
+	 * Competitor Constructor:
+	 * The constructor that creates the competitor, with a bib#. Sets the start
+	 * and end times to default values (-1) and started and finished to false,
+	 * adds a BufferedWriter in to print for same file. Used for testing purposes. 
+	 */
 	public Competitor(int bib, BufferedWriter log) {
 		bibNum = bib;
 		startTime = -1;
@@ -33,8 +40,13 @@ public class Competitor {
 		finished = false;
 		setLane(0);
 		logWriter = log;
+		this.debug(bib + " constructed.");
 	}
 	
+	/**
+	 * Competitor Debug:
+	 * Debug method used for testing and following program calls through the system.
+	 */
 	private void debug(String s){
 		String msg = "Competitor - " + s;
 		if(logWriter != null){
@@ -48,30 +60,36 @@ public class Competitor {
 	}
 
 	/**
-	 * Called when the competitor starts their run. Saves the time sets started
-	 * to true.
+	 * Competitor Start:
+	 * Called when a competitor starts their race. Sets started to true and stores the long value
+	 * as start time. returns void.
 	 */
 	public void start(long t) {
 		if (t >= 0L) {
 			this.startTime = t;
 			started = true;
 		}
+		this.debug(this.getBib() + " started at " + t);
 	}
 
 	/**
+	 * Competitor End:
 	 * Called when the competitor ends their run. Saves the time sets finsihed
 	 * to true if finishing time is greater than start time. Else assumes DNF
 	 * and sets finishing time to -1 and finished to false to signify DNF
+	 * NOTE: DNF are fed in using *.end(-1);
 	 */
 	public void end(long time) {
 		if (started && !finished && startTime <= time && time >= 0) {
 			endTime = time;
 			finished = true;
 		}
+		this.debug(this.getBib() + " ended at " + t);
 	}
 
 	/**
-	 * resets the run of the competitor, returns the start and end time to a
+	 * Competitor Reset:
+	 * Resets the run of the competitor, returns the start and end time to a
 	 * defult value, and sets started and finished to false. The bib Number will
 	 * remain intact.
 	 */
@@ -80,14 +98,16 @@ public class Competitor {
 		endTime = -1;
 		started = false;
 		finished = false;
+		this.debug(this.getBib() + " reset.");
 	}
 
 	/**
-	 * provides the difference in the start time and end time
-	 * 
-	 * @return long - The total time of the run
+	 * Competitor runTime:
+	 * Returns the total run time of a finished competitor. If a competitor has not finished
+	 * then will return -1.
 	 */
 	public long runTime() {
+		this.debug(this.getBib() + " giving run time.");
 		if (!started || !finished)
 			return -1;
 		if (startTime == -1 || endTime == -1)
@@ -96,10 +116,9 @@ public class Competitor {
 	}
 
 	/**
-	 * overrides the toString for now: [bib:<bibNum>,start:<start>,end:
-	 * <end>,final:]
-	 * 
-	 * @return String - String that represents this competitor
+	 * Competitor toString:
+	 * Returns competitor info as a string value in a format that can be displayed.
+	 * In format: Competitor: <bibNum> --- <time>
 	 */
 	@Override
 	public String toString() {
@@ -113,7 +132,7 @@ public class Competitor {
 		}
 	}
 
-	/* FOLLOWING METHODS ONLY USED FOR TESTING */
+	/*GETTERS AND SETTERS */
 	public long getStartTime() {
 		return startTime;
 	}
