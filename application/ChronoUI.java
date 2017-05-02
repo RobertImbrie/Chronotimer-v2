@@ -802,7 +802,7 @@ public class ChronoUI extends Application
 
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()){
-				String res = result.toString();
+				String res = result.get();
 				c.runFile(res);
 			}
 		});
