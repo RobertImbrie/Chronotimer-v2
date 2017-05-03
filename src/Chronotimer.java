@@ -54,7 +54,7 @@ public class Chronotimer{
    * trigger the channel in the current race */
   public void trigger(int channel, long time){
     if(channel<channels.length && channels[channel-1] && runStarted)
-	    races.get(currentRace).trigger(channel, time - startTime);
+	    races.get(currentRace).trigger(channel, time);
   }
   
   /** Sets the time offset in the file */
