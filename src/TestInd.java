@@ -6,7 +6,9 @@ public class TestInd {
     
 	
 	@Test
+	//Test Ind.java competitorList method
 	public void testCompetitorList(){
+		//Test 1
 		Ind r = new Ind();
 		r.addCompetitor(111);
 		assertEquals("Competitor: 111 --- Has Not Started", r.competitorList().get(0));
@@ -33,7 +35,9 @@ public class TestInd {
 	}
 	
 	@Test
+	//Test Ind.java addCompetitor method
 	public void testAddCompetitor(){
+		//Test 1
 		Ind r = new Ind();
 		assertEquals(true, r.addCompetitor(111));
 		assertEquals(true, r.addCompetitor(222));
@@ -45,7 +49,9 @@ public class TestInd {
 	}
 	
 	@Test
+	//Test Ind.java clear method
 	public void testClear(){
+		//Test 1
 		Ind r = new Ind();
 		r.addCompetitor(111);
 		r.addCompetitor(222);
@@ -89,7 +95,9 @@ public class TestInd {
 	}
 	
 	@Test
+	//Test Ind.java removeCompetitorByPos method
 	public void testRemoveCompetitorByPos(){
+		//Test 1
 		Ind r = new Ind();
 		r.addCompetitor(111);
 		assertEquals("Competitor: 111 --- Has Not Started", r.removeCompetitorByPos(0));
@@ -114,7 +122,9 @@ public class TestInd {
 	}
 	
 	@Test
+	//Test Ind.java didNotFinish method
 	public void testDidNotFinish(){
+		//Test 1
 		Ind r = new Ind();
 		r.addCompetitor(111);
 		r.addCompetitor(222);
@@ -141,7 +151,9 @@ public class TestInd {
 	}
 	
 	@Test
+	//Test Ind.java end method
 	public void testEnd(){
+		//Test 1
 		Ind r = new Ind();
 		r.addCompetitor(111);
 		r.addCompetitor(222);
@@ -162,7 +174,9 @@ public class TestInd {
 	}
 	
 	@Test
+	//Test Ind.java test end2 method
 	public void testEnd2(){
+		//Test 1
 		Ind r = new Ind();
 		r.addCompetitor(111);
 		r.addCompetitor(222);
@@ -183,7 +197,9 @@ public class TestInd {
 	}
 	
 	@Test
+	//Test Ind.java reset method
 	public void testReset(){
+		//Test 1 
 		Ind r = new Ind();
 		r.addCompetitor(111); 
 		r.addCompetitor(222); 
@@ -207,34 +223,36 @@ public class TestInd {
 	}
 	
     @Test
+    //Test Ind.java runEnd method
     public void testRunEnd(){
+    	//Test 1
     	Ind run = new Ind();
     	run.addCompetitor(1);
     	run.start(1000000000);
     	run.end(2000000000);
     	assertEquals(2000000000, run.getCompetitors().get(0).getEndTime());
     	assertEquals(true, run.getCompetitors().get(0).getFinished());
-     
+    	//Test 2
     	run = new Ind();
     	run.addCompetitor(1);
     	run.start(1000);
     	run.end(-1);
     	assertEquals(-1, run.getCompetitors().get(0).getEndTime());
     	assertEquals(false, run.getCompetitors().get(0).getFinished());
-     
+    	//Test 3
     	run = new Ind();
     	run.addCompetitor(1);
     	run.end(1000000000);
     	assertEquals(-1, run.getCompetitors().get(0).getEndTime());
     	assertEquals(false, run.getCompetitors().get(0).getFinished());
-    	
+    	//Test 4
     	run = new Ind();
     	run.addCompetitor(1);
     	run.start(-1);
     	run.end(1000000000);
     	assertEquals(-1, run.getCompetitors().get(0).getEndTime());
     	assertEquals(false, run.getCompetitors().get(0).getFinished());
-     
+    	//Test 5
     	run = new Ind();
     	run.addCompetitor(1);
     	run.start(2000000000);
@@ -245,6 +263,7 @@ public class TestInd {
     
    
     @Test
+    //Test Ind.java start
     public void testStart(){
     	//start(Time t)
     	Ind r = new Ind();
@@ -255,6 +274,7 @@ public class TestInd {
     }
     
     @Test
+    //Test Ind.java start2
     public void testStart2(){
     	//start(Time t, int position)
     	Ind r = new Ind();
