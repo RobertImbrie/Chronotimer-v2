@@ -55,7 +55,8 @@ public class UIController {
 				BufferedReader reader = new BufferedReader(new FileReader(filePath));
 				String nextLine;
 				for (nextLine = reader.readLine(); nextLine != null && !nextLine.equalsIgnoreCase("EXIT"); nextLine = reader.readLine()){
-					
+					if(nextLine.trim().equals(""))
+						continue;
 					String command[] = nextLine.split("\\s+");
 					long time = parseTime(command[0]);
 					nextLine = nextLine.replace(command[0], "").trim();
