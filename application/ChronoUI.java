@@ -62,6 +62,7 @@ public class ChronoUI extends Application
 		try{
 			logWriter = new BufferedWriter(new FileWriter(logPath, true));
 			Date d = new Date();
+			logWriter.write("\n\n****************************************************************\n");
 			logWriter.write(d.toString() + "\n");
 		}
 		catch(Exception e){
@@ -244,6 +245,7 @@ public class ChronoUI extends Application
 		Button btnPrint = new Button("PrintPWR");
 		printBox.getChildren().add(btnPrint);
 		printArea = new TextArea();
+		printArea.setEditable(false);
 		btnPrint.setOnAction((e) ->{
 			if (printerPWR){
 				printerPWR = false;
