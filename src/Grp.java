@@ -22,6 +22,15 @@ public class Grp extends Race {
 		finishes = new Queue<Competitor>();
 		curComp = 0;
 	}
+	
+	public Grp(BufferedWriter log) {
+		competitors = new ArrayList<Competitor>();
+		hasStarted = false;
+		startTime = -1;
+		finishes = new Queue<Competitor>();
+		curComp = 0;
+		logWriter = log;
+	}
 
 	public void trigger(int channel, long time) {
 		if (channel == 1 && !hasStarted) {
@@ -44,7 +53,7 @@ public class Grp extends Race {
 	//TODO Are these used anywhere?? REMOVE SUPRESSION WARNING WHEN IT IS IN ALL RACE CLASSES
 	@SuppressWarnings("unused")
 	private void debug(String s) {
-		String msg = "Race - " + s;
+		String msg = "GRP Race - " + s;
 		if (logWriter != null) {
 			try {
 				logWriter.write(msg + "\n");
