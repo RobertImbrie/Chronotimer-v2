@@ -5,13 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Ind extends Race {
-	// ArrayList<Competitor> competitors;
 	int curStart;
 	int curFinish;
 	long startTime;
 
 	/**
-	 * the constructor creates the run, with default values
+	 * Ind Constructor: the constructor creates the run, with default values.
 	 */
 	public Ind() {
 		competitors = new ArrayList<Competitor>();
@@ -20,6 +19,10 @@ public class Ind extends Race {
 		startTime = -1;
 	}
 
+	/**
+	 * Ind Constructor: the constructor creates the run, with default values and
+	 * a BufferedWriter
+	 */
 	public Ind(BufferedWriter log) {
 		competitors = new ArrayList<Competitor>();
 		curStart = 0;
@@ -27,18 +30,29 @@ public class Ind extends Race {
 		logWriter = log;
 	}
 
+	/**
+	 * Ind Tigger: Handles the trigger pass ins from the main class. Only takes
+	 * values on 1 or two. If first trigger, sets startTime to the time value
+	 * passed in, then 1 starts the next racer and 2 stops them.
+	 */
 	@Override
 	public void trigger(int channel, long time) {
-		if(startTime==-1)
-			startTime = time;
+		if (startTime == -1)
+			debug("Race startTime recorded: " + time);
+		startTime = time;
 		if (channel == 1) {
+			debug("Racer start recorded: " + time);
 			start(time - startTime);
 		} else if (channel == 2) {
+			debug("Racer end recorded: " + time);
 			end(time = startTime);
 		}
 	}
 
-	// @Override //private methods are not inherited
+	/**
+	 * Ind Debug: Gives output statements that allow for us to debug code.
+	 * Private method.
+	 */
 	private void debug(String s) {
 		String msg = "Ind - " + s;
 		if (logWriter != null) {
@@ -52,12 +66,8 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * provides a list of the competitors for this race
-	 * 
-	 * @param bib
-	 *            the bib number of the competitor
-	 * @return ArrayList<String> - The list of formatted strings that represent
-	 *         the competitors
+	 * Ind competitorList: Returns an arraylist that contains all the
+	 * competitors.
 	 */
 	@Override
 	public ArrayList<String> competitorList() {
@@ -69,12 +79,8 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * adds a new competitor to the list of competitors, does not add a
-	 * competitor if the a competitor already exists with the same bib number
-	 * 
-	 * @param bib
-	 *            the bib number of the competitor
-	 * @return true if the competitor was added, false otherwise
+	 * Ind add: adds a competitor as long as bib number is not previously in the
+	 * list.
 	 */
 	@Override
 	public boolean addCompetitor(int bib) {
@@ -87,11 +93,8 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * clears the list of competitors
-	 * 
-	 * @param
-	 * @return String[] - a formatted list of strings of the competitors that
-	 *         were in the list
+	 * Ind clear: clears the competitor list and returns a String[] containing
+	 * all of the competitors that have been added.
 	 */
 	@Override
 	public String[] clear() {
@@ -106,11 +109,9 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * finds a competitor with a matching bib and removes them from the list
-	 * 
-	 * @param bib
-	 *            the bib number of the competitor
-	 * @return String - A formatted string that represents the competitor
+	 * Ind removeCompetitorByBib: Removes competitor by a fed in bib number.
+	 * Returning the competitor info as a string if successful and null if it
+	 * fails.
 	 */
 	@Override
 	public String removeCompetitorByBib(int bib) {
@@ -127,11 +128,9 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * removes the competitor in the position specified
-	 * 
-	 * @param position
-	 *            - the zero indexed position of the competitor to be removed
-	 * @return String - A formatted string that represents the competitor
+	 * Ind removeCompetitorByPos: Removes competitor by a fed in 0-position in
+	 * the array. Returning the competitor info as a string if successful and
+	 * null if it fails.
 	 */
 	@Override
 	public String removeCompetitorByPos(int position) {
@@ -148,7 +147,8 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * indicates that the current competitor did not finish their run
+	 * Ind didNotFinish: Denotes that the current competitor did not finish
+	 * their race, and sets values accordingly.
 	 */
 	@Override
 	public void didNotFinish() {
@@ -162,40 +162,28 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * sets the start time of the current competitor
-	 * 
-	 * @param l
-	 *            - the time the trigger was fired
-	 * @return
+	 * Ind start: Sets the start time of the curStart competitor.
 	 */
 	@Override
 	public void start(long time) {
-		competitors.get(curStart).start(time);
-		curStart++;
+		if (curStart < competitors.size()) {
+			competitors.get(curStart).start(time);
+			curStart++;
+		}
 	}
 
 	/**
-	 * sets the time of the competitor at a specified position
-	 * 
-	 * @param t
-	 *            - a newly created Time object containing the time the the
-	 *            trigger was fired
-	 * @param position
-	 *            - the zero index position of the competitor to act on
+	 * Ind start: Starts the competitor in the competitors array at the current
+	 * position.
 	 */
 	public void start(long t, int position) {
-		competitors.get(position).start(t);
+		if (position < competitors.size()) {
+			competitors.get(position).start(t);
+		}
 	}
 
 	/**
-	 * ends the run of the current competitor, send in null for DNF, this will
-	 * return the duration of the run or null if the competitor did not finish,
-	 * or -1 if there is not start time(the end time will be recorded)
-	 * 
-	 * @param t
-	 *            - a newly created Time object containing the time the the
-	 *            trigger was fired
-	 * @return Time - the difference of time from the start to the finish
+	 * Ind end: Ends the next competitor to finish.
 	 */
 	@Override
 	public void end(long l) {
@@ -206,28 +194,19 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * ends the run of the current specified, send in null for DNF, thsi will
-	 * return the duration of the run or null if the competitor did not finish,
-	 * or -1 if there is not start time(the end time will be recorded)
-	 * 
-	 * @param t
-	 *            - a newly created Time object containing the time the the
-	 *            trigger was fired
-	 * @param position
-	 *            - the zero index position of the competitor to act on
+	 * Ind end: Ends the next competitor to finish, given a position.
 	 */
 	public void end(long t, int position) {
-		if (curFinish == position)
-			curFinish++;
-		competitors.get(position).end(t);
+		if (position <= curStart) {
+			competitors.get(position).end(t);
+		}
 	}
 
 	/**
-	 * resets the run of the current competitor, returns the start and end time
-	 * to a default value, the bib Number will remain intact
-	 * 
-	 * @return long[3] - a three element array of Long containing the start
-	 *         time, end time, and duration
+	 * Ind reset: resets the run of the current competitor, returns the start
+	 * and end time to a default value, the bib Number will remain intact.
+	 * Returns a three element array of Long containing the start time, end
+	 * time, and duration.
 	 */
 	@Override
 	public long[] reset() {
@@ -248,23 +227,24 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * provides the difference in the start time and end time of the current
-	 * specified
-	 * 
-	 * @param position
-	 *            - the zero index position of the competitor to act on
-	 * @return Time - The total time of the run
-	 * @see
+	 * Ind runTime: returns the runtime as a long for the competitor at the
+	 * given 0-index position.
 	 */
 	@Override
 	public long runTime(int position) {
 		return competitors.get(position).runTime();
 	}
 
+	/**
+	 * Ind getCompetitors: the full arrayList of competitors.
+	 */
 	public ArrayList<Competitor> getCompetitors() {
 		return competitors;
 	}
 
+	/**
+	 * Ind toString: returns all competitors as a formatted string.
+	 */
 	@Override
 	public String toString() {
 		String out = "";
@@ -274,6 +254,9 @@ public class Ind extends Race {
 		return out;
 	}
 
+	/**
+	 * Ind toDisplay: Returns a formatted string to be displayed on the program's display pop up.
+	 */
 	@Override
 	public String toDisplay(long currentTime) {
 		// GET HEADER
