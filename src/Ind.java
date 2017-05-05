@@ -8,7 +8,7 @@ public class Ind extends Race {
 	// ArrayList<Competitor> competitors;
 	int curStart;
 	int curFinish;
-	Time startTime;
+	long startTime;
 
 	/**
 	 * the constructor creates the run, with default values
@@ -17,6 +17,7 @@ public class Ind extends Race {
 		competitors = new ArrayList<Competitor>();
 		curStart = 0;
 		curFinish = 0;
+		startTime = -1;
 	}
 
 	public Ind(BufferedWriter log) {
@@ -28,7 +29,7 @@ public class Ind extends Race {
 
 	@Override
 	public void trigger(int channel, long time) {
-		if(startTime==null)
+		if(startTime==-1)
 			startTime = time;
 		if (channel == 1) {
 			start(time - startTime);
