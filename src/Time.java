@@ -23,7 +23,7 @@ public class Time {
 		return result;
 	}
 
-	// Parses a long val to time.
+	// Parses a long val to time in a string
 	public static String parseTime(long a) {
 		String result;
 		final long hours = a / 3600000000000L;

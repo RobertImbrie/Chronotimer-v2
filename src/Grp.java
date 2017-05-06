@@ -63,6 +63,7 @@ public class Grp extends Race {
 		}
 	}
 
+	//Returns competitor list as an ArrayList
 	public ArrayList<String> competitorList() {
 		ArrayList<String> result = new ArrayList<String>();
 		for (int i = 0; i < competitors.size(); i++) {
