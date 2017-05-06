@@ -16,6 +16,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -451,20 +453,22 @@ public class ChronoUI extends Application
 			//ENTER
 			//String com = commandList[commandInt] + " " + enterNum;
 			String com = commandMatrix[comX][comY] + " " + enterNum;
-			enterNum = "";
-			commandInt = 0;
-			comX = 0;
-			comY = 0;
-			updateEnterBox(enterBox);
 			//screenArea.setText(screenArea.getText() + com + "\n");
-			String returnTxt = c.command(com, System.nanoTime());	// this will send the command into the system once the controlller is created
-			if(returnTxt != null){
-				if (returnTxt.toUpperCase().contains("ERROR")){
-					debug(returnTxt);
-				}
-				else{
-//					printArea.setText(printArea.getText() + returnTxt + "\n");
-					printArea.setText(returnTxt);
+			if (!com.trim().equals("")){
+				enterNum = "";
+				commandInt = 0;
+				comX = 0;
+				comY = 0;
+				updateEnterBox(enterBox);
+				String returnTxt = c.command(com, System.nanoTime());	// this will send the command into the system once the controlller is created
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+	//					printArea.setText(printArea.getText() + returnTxt + "\n");
+						printArea.setText(returnTxt);
+					}
 				}
 			}
 		});
@@ -861,6 +865,65 @@ public class ChronoUI extends Application
 				}
 	    	});
 		});
+	    
+	    // adds support for keybord input
+	    scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+	        public void handle(KeyEvent ke) {
+	        	System.out.println("Key Pressed: " + ke.getCode());
+	            if (ke.getCode() == KeyCode.ESCAPE) {
+	                btnPower.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT1 || ke.getCode() == KeyCode.NUMPAD1){
+	            	btn1.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT2 || ke.getCode() == KeyCode.NUMPAD2){
+	            	btn2.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT3 || ke.getCode() == KeyCode.NUMPAD3){
+	            	btn3.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT4 || ke.getCode() == KeyCode.NUMPAD4){
+	            	btn4.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT5 || ke.getCode() == KeyCode.NUMPAD5){
+	            	btn5.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT6 || ke.getCode() == KeyCode.NUMPAD6){
+	            	btn6.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT7 || ke.getCode() == KeyCode.NUMPAD7){
+	            	btn7.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT8 || ke.getCode() == KeyCode.NUMPAD8){
+	            	btn8.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT9 || ke.getCode() == KeyCode.NUMPAD9){
+	            	btn9.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DIGIT0 || ke.getCode() == KeyCode.NUMPAD0){
+	            	btn0.fire();
+	            }
+	            
+	            else if(ke.getCode() == KeyCode.ENTER){
+	            	btnPound.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.PERIOD || ke.getCode() == KeyCode.DECIMAL){
+	            	btnStar.fire();
+	            }
+	            
+	            else if(ke.getCode() == KeyCode.UP || ke.getCode() == KeyCode.W){
+	            	btnUp.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.DOWN || ke.getCode() == KeyCode.S){
+	            	btnDown.fire();
+	            }else if(ke.getCode() == KeyCode.LEFT || ke.getCode() == KeyCode.A){
+	            	btnLeft.fire();
+	            }
+	            else if(ke.getCode() == KeyCode.RIGHT || ke.getCode() == KeyCode.D){
+	            	btnRight.fire();
+	            }
+	        }
+	    });
 	}
 		
 	
