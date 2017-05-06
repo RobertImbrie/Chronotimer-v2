@@ -13,6 +13,7 @@ public class Race{
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private void debug(String s){
 		String msg = "Race - " + s;
 		if(logWriter != null){

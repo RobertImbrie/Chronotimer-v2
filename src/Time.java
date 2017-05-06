@@ -1,20 +1,21 @@
 package src;
+
 import java.text.DecimalFormat;
 
 public class Time {
 	private long startTime; // Stores TimeStarted
 
-	//Constructs a new time class and records the start time in nanotime
+	// Constructs a new time class and records the start time in nanotime
 	public Time() {
 		startTime = System.nanoTime();
 	}
 
-	//Updates the startTime value to be the current nanoTime
+	// Updates the startTime value to be the current nanoTime
 	public void ToggleTimer() {
 		startTime = System.nanoTime();
 	}
 
-	//Parses the currentTime into seconds
+	// Parses the currentTime into seconds
 	public String parseTime() { // Parse current time
 		String result;
 		final double seconds = ((double) this.getTime() / 1000000000);
@@ -22,18 +23,18 @@ public class Time {
 		return result;
 	}
 
-	//Parses a  long val to time.
+	// Parses a long val to time in a string
 	public static String parseTime(long a) {
 		String result;
-		final int hours = (int) a/3600000000000;
-		final int minutes = (int) (a%3600000000000)/60000000000;
-		final int seconds = (int) ((a%3600000000000)%60000000000)/1000000000;
-		final int milliseconds = (int) (((a%3600000000000)%60000000000)%1000000000)/1000000;
-		result = hours+":"+minutes+":"+seconds+"."+milliseconds;
+		final long hours = a / 3600000000000L;
+		final long minutes = (a % 3600000000000L) / 60000000000L;
+		final long seconds = ((a % 3600000000000L) % 60000000000L) / 1000000000;
+		final long milliseconds = (((a % 3600000000000L) % 60000000000L) % 1000000000) / 1000000;
+		result = hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 		return result;
 	}
-	
-	//Returns the current time as a long.
+
+	// Returns the current time as a long.
 	public long getTime() {
 		return System.nanoTime() - startTime;
 	}
