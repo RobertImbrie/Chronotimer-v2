@@ -49,8 +49,7 @@ public class Grp extends Race {
 			return;
 		}
 	}
-
-	//TODO Are these used anywhere?? REMOVE SUPRESSION WARNING WHEN IT IS IN ALL RACE CLASSES
+	
 	@SuppressWarnings("unused")
 	private void debug(String s) {
 		String msg = "GRP Race - " + s;

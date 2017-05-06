@@ -191,7 +191,7 @@ public class ParaInd extends Race {
 	}
 
 	/**
-	 * 
+	 * resets the run completely.
 	 */
 	public long[] reset() {
 		for (int i = 0; i < competitors.size(); i++) {
