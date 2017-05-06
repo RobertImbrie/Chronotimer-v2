@@ -109,7 +109,6 @@ public class ChronoUI extends Application
 		mainGrid.setAlignment(Pos.CENTER);
 		mainGrid.setHgap(10);
 		mainGrid.setVgap(10);
-		//mainGrid.setPadding(new Insets(25, 25, 25, 25));
 		mainGrid.setId("front_layout");
 		
 		VBox uiBox = new VBox();
@@ -138,7 +137,6 @@ public class ChronoUI extends Application
 		trigGrid.setAlignment(Pos.CENTER);
 		trigGrid.setHgap(10);
 		trigGrid.setVgap(10);
-		//trigGrid.setPadding(new Insets(25, 25, 25, 25));
 		
 		Label lblStart = new Label("Start");
 		trigGrid.add(lblStart, 0, 0);
@@ -265,17 +263,16 @@ public class ChronoUI extends Application
 		controlBox.setSpacing(8);
 		Button btnFunction = new Button("Function");
 		controlBox.getChildren().add(btnFunction);
-		HBox dPadBox = new HBox();
+		GridPane dPadBox = new GridPane();
 		dPadBox.setPadding(new Insets(10));
-		dPadBox.setSpacing(8);
-		Button btnLeft = new Button("<");
-		Button btnRight = new Button(">");
-		Button btnDown = new Button("V");
-		Button btnUp = new Button("^");
-		dPadBox.getChildren().add(btnLeft);
-		dPadBox.getChildren().add(btnRight);
-		dPadBox.getChildren().add(btnDown);
-		dPadBox.getChildren().add(btnUp);
+		Button btnLeft = new Button(" < ");
+		Button btnRight = new Button(" > ");
+		Button btnDown = new Button(" V ");
+		Button btnUp = new Button(" ^ ");
+		dPadBox.add(btnUp, 1, 0);
+		dPadBox.add(btnLeft, 0, 1);
+		dPadBox.add(btnRight, 2, 1);
+		dPadBox.add(btnDown, 1, 2);
 		controlBox.getChildren().add(dPadBox);
 		Button btnSwap = new Button("Swap");
 		btnSwap.setOnAction((e) ->{
@@ -323,12 +320,6 @@ public class ChronoUI extends Application
 		
 		// adds the event handlers for the directional buttons
 		btnLeft.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "1");
-//			if (commandInt == commandList.length -1)
-//				commandInt = 0;
-//			else
-//				commandInt++;
-			
 			if (comY == commandMatrix[comX].length -1)
 				comY = 0;
 			else
@@ -336,11 +327,6 @@ public class ChronoUI extends Application
 			updateEnterBox(enterBox);
 		});
 		btnUp.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "1");
-//			if (commandInt == commandList.length -1)
-//				commandInt = 0;
-//			else
-//				commandInt++;
 			if (comX == commandMatrix.length -1)
 				comX = 0;
 			else
@@ -348,11 +334,6 @@ public class ChronoUI extends Application
 			updateEnterBox(enterBox);
 		});
 		btnRight.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "1");
-//			if (commandInt == 0)
-//				commandInt = commandList.length -1;
-//			else
-//				commandInt--;
 			if (comY == 0)
 				comY = commandMatrix[comX].length -1;
 			else
@@ -360,11 +341,6 @@ public class ChronoUI extends Application
 			updateEnterBox(enterBox);
 		});
 		btnDown.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "1");
-//			if (commandInt == 0)
-//				commandInt = commandList.length -1;
-//			else
-//				commandInt--;
 			if (comX == 0)
 				comX = commandMatrix.length -1;
 			else
@@ -394,52 +370,42 @@ public class ChronoUI extends Application
 		
 		btn1.setOnAction(this:: numPad);
 		btn1.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "1");
 			enterNum = enterNum + "1";
 			updateEnterBox(enterBox);
 		});
 		btn2.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "2");
 			enterNum = enterNum + "2";
 			updateEnterBox(enterBox);
 		});
 		btn3.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "3");
 			enterNum = enterNum + "3";
 			updateEnterBox(enterBox);
 		});
 		btn4.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "4");
 			enterNum = enterNum + "4";
 			updateEnterBox(enterBox);
 		});
 		btn5.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "5");
 			enterNum = enterNum + "5";
 			updateEnterBox(enterBox);
 		});
 		btn6.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "6");
 			enterNum = enterNum + "6";
 			updateEnterBox(enterBox);
 		});
 		btn7.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "7");
 			enterNum = enterNum + "7";
 			updateEnterBox(enterBox);
 		});
 		btn8.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "8");
 			enterNum = enterNum + "8";
 			updateEnterBox(enterBox);
 		});
 		btn9.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "9");
 			enterNum = enterNum + "9";
 			updateEnterBox(enterBox);
 		});
 		btn0.setOnAction((e) ->{
-			//enterBox.setText(enterBox.getText() + "0");
 			enterNum = enterNum + "0";
 			updateEnterBox(enterBox);
 		});
@@ -451,7 +417,6 @@ public class ChronoUI extends Application
 		});
 		btnPound.setOnAction((e) ->{
 			//ENTER
-			//String com = commandList[commandInt] + " " + enterNum;
 			String com = commandMatrix[comX][comY] + " " + enterNum;
 			//screenArea.setText(screenArea.getText() + com + "\n");
 			if (!com.trim().equals("")){
