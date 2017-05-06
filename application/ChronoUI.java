@@ -310,7 +310,7 @@ public class ChronoUI extends Application
         // adds the section with the screen and command bar
 		VBox screenBox = new VBox();
 		screenArea = new TextArea();
-		//screenArea.textProperty().bind(task.messageProperty());
+		screenArea.textProperty().bind(task.messageProperty());
 		screenBox.getChildren().add(screenArea);
 		TextField enterBox= new TextField();
 		enterBox.setEditable(false);
@@ -418,7 +418,6 @@ public class ChronoUI extends Application
 		btnPound.setOnAction((e) ->{
 			//ENTER
 			String com = commandMatrix[comX][comY] + " " + enterNum;
-			//screenArea.setText(screenArea.getText() + com + "\n");
 			if (!com.trim().equals("")){
 				enterNum = "";
 				commandInt = 0;
@@ -431,7 +430,6 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-	//					printArea.setText(printArea.getText() + returnTxt + "\n");
 						printArea.setText(returnTxt);
 					}
 				}
