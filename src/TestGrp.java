@@ -7,8 +7,9 @@ import java.util.ArrayList;
 public class TestGrp {
 	
 	@Test
+	//Test Grp.java trigger() method
 	public void testTrigger() {
-
+		//Test 1
 		Grp g = new Grp();
 		assertFalse(g.hasStarted);
 		g.trigger(1, 0);
@@ -25,7 +26,7 @@ public class TestGrp {
 		g.addCompetitor(333);
 		assertEquals(0, g.competitors.get(2).getStartTime());
 		assertEquals(3000000000L, g.competitors.get(2).getEndTime());
-		
+		//Test 2
 		g = new Grp();
 		g.trigger(2, 0);
 		g.trigger(2, 1000000000);
@@ -46,8 +47,9 @@ public class TestGrp {
 	}
 	
 	@Test 
+	//Test Grp.java competitorList() method
 	public void testCompetitorList(){
-		
+		//Test 1
 		Grp g = new Grp();
 		g.trigger(1, 0);
 		ArrayList<String> temp = new ArrayList<String>();
@@ -65,7 +67,9 @@ public class TestGrp {
 	}
 	
 	@Test 
+	//Test Grp.java clear() method
 	public void testClear(){
+		//Test 1
 		Grp g = new Grp();
 		g.trigger(1, 0);
 		g.trigger(2, 1000000000);
@@ -91,8 +95,9 @@ public class TestGrp {
 	}
 	
 	@Test
+	//Test Grp.java addCompetitor() method
 	public void testAddCompetitor(){
-		
+		//Test 1
 		Grp g = new Grp();
 		assertFalse(g.addCompetitor(111));
 		g.trigger(1, 0);
@@ -116,7 +121,9 @@ public class TestGrp {
 	}
 	
 	@Test
+	//Test Grp.java runtime() method
 	public void testRuntime(){
+		//Test 1
 		Grp g = new Grp();
 		g.trigger(1, 0);
 		g.trigger(2, 1000000000);
@@ -131,7 +138,9 @@ public class TestGrp {
 	}
 	
 	@Test
+	//Test Grp.java runtime() method
 	public void testToString(){
+		//Test 1
 		Grp g = new Grp();
 		assertEquals("", g.toString());
 		g.trigger(1, 0);
