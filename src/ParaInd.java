@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ParaInd extends Race {
-	ArrayList<Competitor> competitors;
+	//ArrayList<Competitor> competitors;
 	int curComp1, curComp2, nextComp;
 	boolean laneOneHasStarted, laneTwoHasStarted;
 

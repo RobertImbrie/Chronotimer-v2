@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import sun.misc.Queue;
 
 public class Grp extends Race {
-	ArrayList<Competitor> competitors;
+	//ArrayList<Competitor> competitors;
 	Queue<Competitor> finishes;
 	boolean hasStarted;
 	long startTime;

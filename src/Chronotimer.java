@@ -84,7 +84,7 @@ public class Chronotimer{
 				races.add(new Grp(logWriter));
 				break;
 			  case "PARGRP":
-				races.add(new ParGrp(logWriter));
+				//races.add(new ParGrp(logWriter));
 				break;
 			  default:
 				debug("Invalid race type");
