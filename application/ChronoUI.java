@@ -53,7 +53,7 @@ public class ChronoUI extends Application
 	boolean powerOn = false;
 	static UIController c;	//Class to be made
 	static BufferedWriter logWriter;
-	static TextArea screenArea;
+	static Label screenArea;
 	static TextArea printArea;
 	boolean printerPWR = false;
 	
@@ -309,12 +309,22 @@ public class ChronoUI extends Application
         
         // adds the section with the screen and command bar
 		VBox screenBox = new VBox();
-		screenArea = new TextArea();
+		screenArea = new Label();
+		ScrollPane screenScroll = new ScrollPane();
+		screenScroll.setId("screenScroll");
+		screenScroll.setMaxSize(350, 275);
+		screenScroll.setPrefWidth(350);
+		screenScroll.setPrefHeight(275);
+		screenScroll.setContent(screenArea);
+		screenArea.setId("screen");
+		screenArea.setMinHeight(275);
+		screenArea.setMinWidth(350);
 		screenArea.textProperty().bind(task.messageProperty());
-		screenBox.getChildren().add(screenArea);
+//		screenBox.getChildren().add(screenArea);
+		screenBox.getChildren().add(screenScroll);
 		TextField enterBox= new TextField();
 		enterBox.setEditable(false);
-		screenArea.setEditable(false);
+		//screenArea.setEditable(false);
 		screenBox.getChildren().add(enterBox);
 		mainGrid.add(screenBox, 1, 1);
 		
@@ -762,6 +772,10 @@ public class ChronoUI extends Application
 		// adds a button to enter a file to run, this can also be done on start as a commandline argument
 		Button btnFile = new Button("Run From File");
 		btnFile.setOnAction((e) ->{
+			
+			//TAKE OUT!!
+			System.out.println("x: " + screenScroll.getWidth());
+			System.out.println("y: " + screenScroll.getHeight());
 			String s = "";
 
 			TextInputDialog dialog = new TextInputDialog();
@@ -820,6 +834,7 @@ public class ChronoUI extends Application
 	    	// saves the log file when the program exits
 	    	primaryStage.setOnCloseRequest(event -> {
 	    	    System.out.println("Stage is closing");
+	    	    task.cancel();
 	    	    try {
 					logWriter.close();
 				} catch (IOException e1) {

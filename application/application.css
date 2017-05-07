@@ -42,3 +42,14 @@
 .textfield{
 	-fx-font-size: 16pt;
 }
+
+#screen{
+    -fx-font-size: 10pt;
+    -fx-font-weight: normal;
+    -fx-background-color: powderblue;
+    
+}
+#screenScroll{
+    -fx-background-color: powderblue;
+    
+}
