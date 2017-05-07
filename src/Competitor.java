@@ -69,7 +69,7 @@ public class Competitor {
 			this.startTime = t;
 			started = true;
 		}
-		this.debug(this.getBib() + " started at " + t);
+		this.debug(this.getBibNum() + " started at " + t);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class Competitor {
 			endTime = time;
 			finished = true;
 		}
-		this.debug(this.getBib() + " ended at " + t);
+		this.debug(this.getBibNum() + " ended at " + endTime);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class Competitor {
 		endTime = -1;
 		started = false;
 		finished = false;
-		this.debug(this.getBib() + " reset.");
+		this.debug(this.getBibNum() + " reset.");
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Competitor {
 	 * then will return -1.
 	 */
 	public long runTime() {
-		this.debug(this.getBib() + " giving run time.");
+		this.debug(this.getBibNum() + " giving run time.");
 		if (!started || !finished)
 			return -1;
 		if (startTime == -1 || endTime == -1)
