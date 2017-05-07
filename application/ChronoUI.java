@@ -163,22 +163,54 @@ public class ChronoUI extends Application
 		// handlers for the trigger buttons
 		btnTrig1.setOnAction((e) ->{
 			if (chkEn1.isSelected()){
-				c.trig(1, System.nanoTime());
+				String returnTxt = c.trig(1, System.nanoTime());
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+						printArea.setText(returnTxt);
+					}
+				}
 			}
 		});
 		btnTrig3.setOnAction((e) ->{
 			if (chkEn3.isSelected()){
-				c.trig(3, System.nanoTime());
+				String returnTxt = c.trig(3, System.nanoTime());
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+						printArea.setText(returnTxt);
+					}
+				}
 			}
 		});
 		btnTrig5.setOnAction((e) ->{
 			if (chkEn5.isSelected()){
-				c.trig(5, System.nanoTime());
+				String returnTxt = c.trig(5, System.nanoTime());
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+						printArea.setText(returnTxt);
+					}
+				}
 			}
 		});
 		btnTrig7.setOnAction((e) ->{
 			if (chkEn7.isSelected()){
-				c.trig(7, System.nanoTime());
+				String returnTxt = c.trig(7, System.nanoTime());
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+						printArea.setText(returnTxt);
+					}
+				}
 			}
 		});
 		
@@ -207,22 +239,54 @@ public class ChronoUI extends Application
 		
 		btnTrig2.setOnAction((e) ->{
 			if (chkEn2.isSelected()){
-				c.trig(2, System.nanoTime());
+				String returnTxt = c.trig(2, System.nanoTime());
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+						printArea.setText(returnTxt);
+					}
+				}
 			}
 		});
 		btnTrig4.setOnAction((e) ->{
 			if (chkEn4.isSelected()){
-				c.trig(4, System.nanoTime());
+				String returnTxt = c.trig(4, System.nanoTime());
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+						printArea.setText(returnTxt);
+					}
+				}
 			}
 		});
 		btnTrig6.setOnAction((e) ->{
 			if (chkEn6.isSelected()){
-				c.trig(6, System.nanoTime());
+				String returnTxt = c.trig(6, System.nanoTime());
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+						printArea.setText(returnTxt);
+					}
+				}
 			}
 		});
 		btnTrig8.setOnAction((e) ->{
 			if (chkEn8.isSelected()){
-				c.trig(8, System.nanoTime());
+				String returnTxt = c.trig(8, System.nanoTime());
+				if(returnTxt != null){
+					if (returnTxt.toUpperCase().contains("ERROR")){
+						debug(returnTxt);
+					}
+					else{
+						printArea.setText(returnTxt);
+					}
+				}
 			}
 		});
 		

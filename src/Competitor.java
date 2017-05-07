@@ -107,7 +107,7 @@ public class Competitor {
 	 * then will return -1.
 	 */
 	public long runTime() {
-		this.debug(this.getBibNum() + " giving run time.");
+		//this.debug(this.getBibNum() + " giving run time.");
 		if (!started || !finished)
 			return -1;
 		if (startTime == -1 || endTime == -1)

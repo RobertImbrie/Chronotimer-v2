@@ -42,12 +42,12 @@ public class UIController {
 		 return "sensor disconnescted on channel " + chan;
 	 }
 	 public String trig(int chan, long l){
-		 command(("TRIG " + chan), l);
-		 return "";
+		 return command(("TRIG " + chan), l);
+		 //return "";
 	 }
 	 public String swap(long l){
-		 command("SWAP", l);
-		 return "";
+		 return command("SWAP ", l);
+		 //return "";
 	 }
 	
 	public void runFile(String filePath){
