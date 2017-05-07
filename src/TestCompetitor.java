@@ -30,22 +30,22 @@ public class TestCompetitor {
 		a.start(1000000000);
 		assertEquals(a.toString(), "Competitor: 1 --- DNF");
 		a.end(3000000000L);
-		assertEquals(a.toString(), "Competitor: 1 --- 2 Seconds");
+		assertEquals(a.toString(), "Competitor: 1 --- 00:00:02.000");
 		//Test 2
 		Competitor b = new Competitor(123);
 		assertEquals("Competitor: 123 --- Has Not Started", b.toString());
 		b.start(3000000000L);
 		b.end(60333000000L);
-		assertEquals("Competitor: 123 --- 57.333 Seconds", b.toString());
+		assertEquals("Competitor: 123 --- 00:00:57.333", b.toString());
 		//Test 3
 		Competitor c = new Competitor(999);
 		c.start(1000000999);
 		c.end(6000000789L);
-		assertEquals("Competitor: 999 --- 5 Seconds", c.toString());
+		assertEquals("Competitor: 999 --- 00:00:04.999", c.toString());
 		c.setStarted(false);
 		assertEquals("Competitor: 999 --- Has Not Started", c.toString());
 		c.setStarted(true);
-		assertEquals("Competitor: 999 --- 5 Seconds", c.toString());
+		assertEquals("Competitor: 999 --- 00:00:04.999", c.toString());
 		c.setFinished(false);
 		assertEquals("Competitor: 999 --- DNF", c.toString());
 		//Test 4

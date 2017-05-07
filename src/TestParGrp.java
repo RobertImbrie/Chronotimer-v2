@@ -131,14 +131,14 @@ public class TestParGrp {
 		g.addCompetitor(666);
 		g.addCompetitor(777);
 		g.addCompetitor(888);
-		temp.add("Competitor: 111 --- 1 Seconds");
-		temp.add("Competitor: 222 --- 2 Seconds");
-		temp.add("Competitor: 333 --- 3 Seconds");
-		temp.add("Competitor: 444 --- 4 Seconds");
-		temp.add("Competitor: 555 --- 5 Seconds");
-		temp.add("Competitor: 666 --- 6 Seconds");
-		temp.add("Competitor: 777 --- 7 Seconds");
-		temp.add("Competitor: 888 --- 8 Seconds");
+		temp.add("Competitor: 111 --- 00:00:01.000");
+		temp.add("Competitor: 222 --- 00:00:02.000");
+		temp.add("Competitor: 333 --- 00:00:03.000");
+		temp.add("Competitor: 444 --- 00:00:04.000");
+		temp.add("Competitor: 555 --- 00:00:05.000");
+		temp.add("Competitor: 666 --- 00:00:06.000");
+		temp.add("Competitor: 777 --- 00:00:07.000");
+		temp.add("Competitor: 888 --- 00:00:08.000");
 		assertEquals(temp, g.competitorList());
 		//Test 2
 		g = new ParGrp();
@@ -171,14 +171,14 @@ public class TestParGrp {
 		g.addCompetitor(666);
 		g.addCompetitor(777);
 		g.addCompetitor(888);
-		temp.add("Competitor: 111 --- 1 Seconds");
-		temp.add("Competitor: 222 --- 2 Seconds");
-		temp.add("Competitor: 333 --- 3 Seconds");
-		temp.add("Competitor: 444 --- 4 Seconds");
-		temp.add("Competitor: 555 --- 5 Seconds");
-		temp.add("Competitor: 666 --- 6 Seconds");
-		temp.add("Competitor: 777 --- 7 Seconds");
-		temp.add("Competitor: 888 --- 8 Seconds");
+		temp.add("Competitor: 111 --- 00:00:01.000");
+		temp.add("Competitor: 222 --- 00:00:02.000");
+		temp.add("Competitor: 333 --- 00:00:03.000");
+		temp.add("Competitor: 444 --- 00:00:04.000");
+		temp.add("Competitor: 555 --- 00:00:05.000");
+		temp.add("Competitor: 666 --- 00:00:06.000");
+		temp.add("Competitor: 777 --- 00:00:07.000");
+		temp.add("Competitor: 888 --- 00:00:08.000");
 		assertEquals(temp, g.competitorList());
 	}
 	
@@ -191,7 +191,7 @@ public class TestParGrp {
 		g.trigger(1, 1000000000);
 		g.addCompetitor(111);
 		String[] temp = g.clear();
-		assertEquals("Competitor: 111 --- 1 Seconds", temp[0]);
+		assertEquals("Competitor: 111 --- 00:00:01.000", temp[0]);
 		//Test 2
 		g = new ParGrp();
 		g.trigger(1, 0);
@@ -212,14 +212,14 @@ public class TestParGrp {
 		g.addCompetitor(777);
 		g.addCompetitor(888);
 		temp = g.clear();
-		assertEquals("Competitor: 111 --- 1 Seconds", temp[0]);
-		assertEquals("Competitor: 222 --- 2 Seconds", temp[1]);
-		assertEquals("Competitor: 333 --- 3 Seconds", temp[2]);
-		assertEquals("Competitor: 444 --- 4 Seconds", temp[3]);
-		assertEquals("Competitor: 555 --- 5 Seconds", temp[4]);
-		assertEquals("Competitor: 666 --- 6 Seconds", temp[5]);
-		assertEquals("Competitor: 777 --- 7 Seconds", temp[6]);
-		assertEquals("Competitor: 888 --- 8 Seconds", temp[7]);
+		assertEquals("Competitor: 111 --- 00:00:01.000", temp[0]);
+		assertEquals("Competitor: 222 --- 00:00:02.000", temp[1]);
+		assertEquals("Competitor: 333 --- 00:00:03.000", temp[2]);
+		assertEquals("Competitor: 444 --- 00:00:04.000", temp[3]);
+		assertEquals("Competitor: 555 --- 00:00:05.000", temp[4]);
+		assertEquals("Competitor: 666 --- 00:00:06.000", temp[5]);
+		assertEquals("Competitor: 777 --- 00:00:07.000", temp[6]);
+		assertEquals("Competitor: 888 --- 00:00:08.000", temp[7]);
 	}
 	
 	@Test
@@ -295,10 +295,10 @@ public class TestParGrp {
 		assertEquals("", g.toString());
 		g.trigger(1, 1000000000);
 		g.addCompetitor(111);
-		assertEquals("\tCompetitor: 111 --- 1 Seconds\n", g.toString());
+		assertEquals("\tCompetitor: 111 --- 00:00:01.000\n", g.toString());
 		g.trigger(2, 2000000000);
 		g.addCompetitor(222);
-		assertEquals("\tCompetitor: 111 --- 1 Seconds\n\tCompetitor: 222 --- 2 Seconds\n", g.toString());
+		assertEquals("\tCompetitor: 111 --- 00:00:01.000\n\tCompetitor: 222 --- 00:00:02.000\n", g.toString());
 		g.trigger(3, 3000000000L);
 		g.trigger(4, 4000000000L);
 		g.trigger(5, 5000000000L);
@@ -311,7 +311,7 @@ public class TestParGrp {
 		g.addCompetitor(666);
 		g.addCompetitor(777);
 		g.addCompetitor(888);
-		assertEquals("\tCompetitor: 111 --- 1 Seconds\n\tCompetitor: 222 --- 2 Seconds\n\tCompetitor: 333 --- 3 Seconds\n\tCompetitor: 444 --- 4 Seconds\n\tCompetitor: 555 --- 5 Seconds\n\tCompetitor: 666 --- 6 Seconds\n\tCompetitor: 777 --- 7 Seconds\n\tCompetitor: 888 --- 8 Seconds\n", g.toString());
+		assertEquals("\tCompetitor: 111 --- 00:00:01.000\n\tCompetitor: 222 --- 00:00:02.000\n\tCompetitor: 333 --- 00:00:03.000\n\tCompetitor: 444 --- 00:00:04.000\n\tCompetitor: 555 --- 00:00:05.000\n\tCompetitor: 666 --- 00:00:06.000\n\tCompetitor: 777 --- 00:00:07.000\n\tCompetitor: 888 --- 00:00:08.000\n", g.toString());
 	}
 	
 }

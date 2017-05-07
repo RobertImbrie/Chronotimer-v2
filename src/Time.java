@@ -25,12 +25,19 @@ public class Time {
 
 	// Parses a long val to time in a string
 	public static String parseTime(long a) {
-		String result;
+		String result, hr = "", min = "", sec = "", mil = "";
 		final long hours = a / 3600000000000L;
 		final long minutes = (a % 3600000000000L) / 60000000000L;
 		final long seconds = ((a % 3600000000000L) % 60000000000L) / 1000000000;
 		final long milliseconds = (((a % 3600000000000L) % 60000000000L) % 1000000000) / 1000000;
-		result = hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+		if(hours < 10) hr = "0";
+		if(minutes < 10) min = "0";
+		if(seconds < 10) sec = "0";
+		if(milliseconds < 100){
+			if(milliseconds < 10) mil = "00";
+			else mil = "0";
+		}
+		result = hr + hours + ":" + min + minutes + ":" + sec + seconds + "." + milliseconds + mil;
 		return result;
 	}
 

@@ -60,9 +60,9 @@ public class TestGrp {
 		g.addCompetitor(111);
 		g.addCompetitor(222);
 		g.addCompetitor(333);
-		temp.add("Competitor: 111 --- 1 Seconds");
-		temp.add("Competitor: 222 --- 2 Seconds");
-		temp.add("Competitor: 333 --- 3 Seconds");
+		temp.add("Competitor: 111 --- 00:00:01.000");
+		temp.add("Competitor: 222 --- 00:00:02.000");
+		temp.add("Competitor: 333 --- 00:00:03.000");
 		assertEquals(temp, g.competitorList());
 	}
 	
@@ -75,7 +75,7 @@ public class TestGrp {
 		g.trigger(2, 1000000000);
 		g.addCompetitor(111);
 		String[] temp = g.clear();
-		assertEquals("Competitor: 111 --- 1 Seconds", temp[0]);
+		assertEquals("Competitor: 111 --- 00:00:01.000", temp[0]);
 		g.trigger(2, 2000000000);
 		g.trigger(2, 3000000000L);
 		g.trigger(2, 4000000000L);
@@ -87,11 +87,11 @@ public class TestGrp {
 		g.addCompetitor(444);
 		g.addCompetitor(555);
 		temp = g.clear();
-		assertEquals("Competitor: 111 --- 2 Seconds", temp[0]);
-		assertEquals("Competitor: 222 --- 3 Seconds", temp[1]);
-		assertEquals("Competitor: 333 --- 4 Seconds", temp[2]);
-		assertEquals("Competitor: 444 --- 5 Seconds", temp[3]);
-		assertEquals("Competitor: 555 --- 6 Seconds", temp[4]);
+		assertEquals("Competitor: 111 --- 00:00:02.000", temp[0]);
+		assertEquals("Competitor: 222 --- 00:00:03.000", temp[1]);
+		assertEquals("Competitor: 333 --- 00:00:04.000", temp[2]);
+		assertEquals("Competitor: 444 --- 00:00:05.000", temp[3]);
+		assertEquals("Competitor: 555 --- 00:00:06.000", temp[4]);
 	}
 	
 	@Test
@@ -147,10 +147,10 @@ public class TestGrp {
 		assertEquals("", g.toString());
 		g.trigger(2, 1000000000);
 		g.addCompetitor(111);
-		assertEquals("\tCompetitor: 111 --- 1 Seconds\n", g.toString());
+		assertEquals("\tCompetitor: 111 --- 00:00:01.000\n", g.toString());
 		g.trigger(2, 2000000000);
 		g.addCompetitor(222);
-		assertEquals("\tCompetitor: 111 --- 1 Seconds\n\tCompetitor: 222 --- 2 Seconds\n", g.toString());
+		assertEquals("\tCompetitor: 111 --- 00:00:01.000\n\tCompetitor: 222 --- 00:00:02.000\n", g.toString());
 	}
 }	
 	

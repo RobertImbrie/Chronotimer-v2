@@ -22,16 +22,16 @@ public class TestInd {
 		assertEquals("Competitor: 122 --- DNF", r.competitorList().get(0));
 		assertEquals("Competitor: 333 --- Has Not Started", r.competitorList().get(1));
 		r.end(2000000000);
-		assertEquals("Competitor: 122 --- 1 Seconds", r.competitorList().get(0));
+		assertEquals("Competitor: 122 --- 00:00:01.000", r.competitorList().get(0));
 		assertEquals("Competitor: 333 --- Has Not Started", r.competitorList().get(1));
 		r.start(3000000000L);
-		assertEquals("Competitor: 122 --- 1 Seconds", r.competitorList().get(0));
+		assertEquals("Competitor: 122 --- 00:00:01.000", r.competitorList().get(0));
 		assertEquals("Competitor: 333 --- DNF", r.competitorList().get(1));
 		r.end(7000000000L);
-		assertEquals("Competitor: 122 --- 1 Seconds", r.competitorList().get(0));
-		assertEquals("Competitor: 333 --- 4 Seconds", r.competitorList().get(1));
+		assertEquals("Competitor: 122 --- 00:00:01.000", r.competitorList().get(0));
+		assertEquals("Competitor: 333 --- 00:00:04.000", r.competitorList().get(1));
 		r.removeCompetitorByBib(122);
-		assertEquals("Competitor: 333 --- 4 Seconds", r.competitorList().get(0));
+		assertEquals("Competitor: 333 --- 00:00:04.000", r.competitorList().get(0));
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class TestInd {
 		r.start(3000000000L);
 		r.end(4000000000L);
 		r.start(5000000000L);
-		assertEquals("Competitor: 111 --- 1 Seconds", r.clear()[0]);
+		assertEquals("Competitor: 111 --- 00:00:01.000", r.clear()[0]);
 		r.addCompetitor(111);
 		r.addCompetitor(222);
 		r.addCompetitor(333);
@@ -82,7 +82,7 @@ public class TestInd {
 		r.start(3000000000L);
 		r.end(4000000000L);
 		r.start(5000000000L);
-		assertEquals("Competitor: 222 --- 1 Seconds", r.clear()[1]);
+		assertEquals("Competitor: 222 --- 00:00:01.000", r.clear()[1]);
 		r.addCompetitor(111);
 		r.addCompetitor(222);
 		r.addCompetitor(333);
@@ -106,7 +106,7 @@ public class TestInd {
 		r.start(1000000000);
 		r.end(3000000000L);
 		assertEquals("Competitor: 222 --- Has Not Started", r.removeCompetitorByPos(1));
-		assertEquals("Competitor: 111 --- 2 Seconds", r.removeCompetitorByPos(0));
+		assertEquals("Competitor: 111 --- 00:00:02.000", r.removeCompetitorByPos(0));
 		r.addCompetitor(111);
 		r.addCompetitor(222);
 		r.addCompetitor(333);
@@ -114,11 +114,11 @@ public class TestInd {
 		r.end(2000000000);
 		r.start(3000000000L);
 		r.end(5000000000L);
-		assertEquals("Competitor: 222 --- 2 Seconds", r.removeCompetitorByPos(1));
-		assertEquals("Competitor: 111 --- 1 Seconds", r.removeCompetitorByPos(0));
+		assertEquals("Competitor: 222 --- 00:00:02.000", r.removeCompetitorByPos(1));
+		assertEquals("Competitor: 111 --- 00:00:01.000", r.removeCompetitorByPos(0));
 		r.start(6000000000L);
 		r.end(8000000000L);
-		assertEquals("Competitor: 333 --- 2 Seconds", r.removeCompetitorByPos(0));
+		assertEquals("Competitor: 333 --- 00:00:02.000", r.removeCompetitorByPos(0));
 	}
 	
 	@Test
@@ -133,7 +133,7 @@ public class TestInd {
 		r.start(2000000000);
 		r.end(3000000000L);
 		assertEquals("Competitor: 111 --- DNF", r.getCompetitors().get(0).toString());
-		assertEquals("Competitor: 222 --- 1 Seconds", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 222 --- 00:00:01.000", r.getCompetitors().get(1).toString());
 		r.clear();
 		r.addCompetitor(111);
 		r.addCompetitor(222);
@@ -145,7 +145,7 @@ public class TestInd {
 		r.end(4000000000L);
 		assertEquals("Competitor: 111 --- DNF", r.getCompetitors().get(0).toString());
 		assertEquals("Competitor: 222 --- DNF", r.getCompetitors().get(1).toString());
-		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
+		assertEquals("Competitor: 333 --- 00:00:02.000", r.getCompetitors().get(2).toString());
 	
 	
 	}
@@ -167,10 +167,10 @@ public class TestInd {
 		r.end(5000000000L);
 		r.end(5000000000L);
 		r.end(5000000000L);
-		assertEquals("Competitor: 111 --- 4 Seconds", r.getCompetitors().get(0).toString());
-		assertEquals("Competitor: 222 --- 3 Seconds", r.getCompetitors().get(1).toString());
-		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
-		assertEquals("Competitor: 444 --- 1 Seconds", r.getCompetitors().get(3).toString());		
+		assertEquals("Competitor: 111 --- 00:00:04.000", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 222 --- 00:00:03.000", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 333 --- 00:00:02.000", r.getCompetitors().get(2).toString());
+		assertEquals("Competitor: 444 --- 00:00:01.000", r.getCompetitors().get(3).toString());		
 	}
 	
 	@Test
@@ -190,10 +190,10 @@ public class TestInd {
 		r.start(7000000000L);		//444 Start 7s
 		r.end(8000000000L, 3);		//444 End 8s
 		r.end(3000000000L, 0);		//111 End 3s
-		assertEquals("Competitor: 111 --- 2 Seconds", r.getCompetitors().get(0).toString());
-		assertEquals("Competitor: 222 --- 1 Seconds", r.getCompetitors().get(1).toString());
-		assertEquals("Competitor: 333 --- 1 Seconds", r.getCompetitors().get(2).toString());
-		assertEquals("Competitor: 444 --- 1 Seconds", r.getCompetitors().get(3).toString());		
+		assertEquals("Competitor: 111 --- 00:00:02.000", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 222 --- 00:00:01.000", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 333 --- 00:00:01.000", r.getCompetitors().get(2).toString());
+		assertEquals("Competitor: 444 --- 00:00:01.000", r.getCompetitors().get(3).toString());		
 	}
 	
 	@Test
@@ -215,9 +215,9 @@ public class TestInd {
 		r.end(7000000000L);			assertEquals(2, r.curStart); assertEquals(2, r.curFinish);
 		r.start(8000000000L);		assertEquals(3, r.curStart); assertEquals(2, r.curFinish);
 		r.end(10000000000L);		assertEquals(3, r.curStart); assertEquals(3, r.curFinish);
-		assertEquals("Competitor: 111 --- 1 Seconds", r.getCompetitors().get(0).toString());
-		assertEquals("Competitor: 222 --- 1 Seconds", r.getCompetitors().get(1).toString());
-		assertEquals("Competitor: 333 --- 2 Seconds", r.getCompetitors().get(2).toString());
+		assertEquals("Competitor: 111 --- 00:00:01.000", r.getCompetitors().get(0).toString());
+		assertEquals("Competitor: 222 --- 00:00:01.000", r.getCompetitors().get(1).toString());
+		assertEquals("Competitor: 333 --- 00:00:02.000", r.getCompetitors().get(2).toString());
 		r.reset();
 		assertEquals("Competitor: 333 --- Has Not Started", r.getCompetitors().get(2).toString());
 	}
@@ -335,7 +335,7 @@ public class TestInd {
 		r.start(1000000000);
 		r.end(3000000000L);
 		assertEquals("Competitor: 222 --- Has Not Started", r.removeCompetitorByBib(222));
-		assertEquals("Competitor: 111 --- 2 Seconds", r.removeCompetitorByBib(111));
+		assertEquals("Competitor: 111 --- 00:00:02.000", r.removeCompetitorByBib(111));
 		r.addCompetitor(111);
 		r.addCompetitor(222);
 		r.addCompetitor(333);
@@ -343,11 +343,11 @@ public class TestInd {
 		r.end(2000000000);
 		r.start(3000000000L);
 		r.end(5000000000L);
-		assertEquals("Competitor: 222 --- 2 Seconds", r.removeCompetitorByBib(222));
-		assertEquals("Competitor: 111 --- 1 Seconds", r.removeCompetitorByBib(111));
+		assertEquals("Competitor: 222 --- 00:00:02.000", r.removeCompetitorByBib(222));
+		assertEquals("Competitor: 111 --- 00:00:01.000", r.removeCompetitorByBib(111));
 		r.start(6000000000L);
 		r.end(8000000000L);
-		assertEquals("Competitor: 333 --- 2 Seconds", r.removeCompetitorByBib(333));
+		assertEquals("Competitor: 333 --- 00:00:02.000", r.removeCompetitorByBib(333));
     }
  
     
