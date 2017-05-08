@@ -394,6 +394,7 @@ public class ChronoUI extends Application
 		
 		// adds the event handlers for the directional buttons
 		btnLeft.setOnAction((e) ->{
+			System.out.println(comX + ", " + comY);
 			if (comY == commandMatrix[comX].length -1)
 				comY = 0;
 			else
@@ -401,13 +402,17 @@ public class ChronoUI extends Application
 			updateEnterBox(enterBox);
 		});
 		btnUp.setOnAction((e) ->{
+			System.out.println(comX + ", " + comY);
 			if (comX == commandMatrix.length -1)
 				comX = 0;
 			else
 				comX++;
 			updateEnterBox(enterBox);
+			if(comY >= commandMatrix[comX].length)
+				comY = commandMatrix[comX].length - 1;
 		});
 		btnRight.setOnAction((e) ->{
+			System.out.println(comX + ", " + comY);
 			if (comY == 0)
 				comY = commandMatrix[comX].length -1;
 			else
@@ -415,10 +420,14 @@ public class ChronoUI extends Application
 			updateEnterBox(enterBox);
 		});
 		btnDown.setOnAction((e) ->{
-			if (comX == 0)
+			System.out.println(comX + ", " + comY);
+			if (comX == 0){
 				comX = commandMatrix.length -1;
+			}
 			else
 				comX--;
+			if(comY >= commandMatrix[comX].length)
+				comY = commandMatrix[comX].length - 1;
 			updateEnterBox(enterBox);
 		});
 		
