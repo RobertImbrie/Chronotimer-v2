@@ -299,6 +299,39 @@ public class ChronoUI extends Application
 		chkEn7.setDisable(true);
 		chkEn8.setDisable(true);
 		
+		chkEn1.setOnAction((e) ->{
+			String s = "";
+			s = c.toggleChannel(1, chkEn1.isSelected(), System.nanoTime());
+		});
+		chkEn2.setOnAction((e) ->{
+			String s = "";
+			s = c.toggleChannel(2, chkEn2.isSelected(), System.nanoTime());
+		});
+		chkEn3.setOnAction((e) ->{
+			String s = "";
+			s = c.toggleChannel(3, chkEn3.isSelected(), System.nanoTime());
+		});
+		chkEn4.setOnAction((e) ->{
+			String s = "";
+			s = c.toggleChannel(4, chkEn4.isSelected(), System.nanoTime());
+		});
+		chkEn5.setOnAction((e) ->{
+			String s = "";
+			s = c.toggleChannel(5, chkEn5.isSelected(), System.nanoTime());
+		});
+		chkEn6.setOnAction((e) ->{
+			String s = "";
+			s = c.toggleChannel(6, chkEn6.isSelected(), System.nanoTime());
+		});
+		chkEn7.setOnAction((e) ->{
+			String s = "";
+			s = c.toggleChannel(7, chkEn7.isSelected(), System.nanoTime());
+		});
+		chkEn8.setOnAction((e) ->{
+			String s = "";
+			s = c.toggleChannel(8, chkEn8.isSelected(), System.nanoTime());
+		});
+		
 		mainGrid.add(trigGrid, 1, 0);
 		
 		// adds the printer section
