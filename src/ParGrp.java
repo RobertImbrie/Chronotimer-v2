@@ -74,23 +74,26 @@ public class ParGrp extends Race {
 			started = true;
 			startTime = time;
 			for (int i = 0; i < competitors.size(); i++) {
-				debug("Started at " + time);
+				debug("Lane " + i + "started at " + time);
 				competitors.get(i).setStarted(true);
 				competitors.get(i).start(time);
 			}
 			// If race has started and competitor has not finished and channel.
 			// is currently running, end the racer on that channel.
 		} else if (started == true && (channel - 1) < competitors.size()) {
+			
 			if (competitors.get(channel - 1).getFinished() == false) {
 				debug("Competitor finished at " + time);
 				competitors.get(channel - 1).end(time);
 				competitors.get(channel - 1).setFinished(true);
 				compCount++;
+				
 				if (compCount == competitors.size()) {
 					debug("Race finished at " + time);
 					finished = true;
 					finishTime = time;
 				}
+				
 				if (compCount == 1 || compCount == 2 || compCount == 3) {
 					lastFinished[compCount - 1] = competitors.get(channel - 1);
 				} else if (compCount > 3) {
@@ -99,7 +102,11 @@ public class ParGrp extends Race {
 					lastFinished[2] = competitors.get(channel - 1);
 				}
 			}
+			else
+				debug("Lane " + channel + " already finished.");
 		}
+		else
+			debug("Lane " + channel + "Not started. \n\t\tS: " + started + "F: " + finished + "Size: " + competitors.size());
 	}
 
 	/**
