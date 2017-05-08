@@ -42,7 +42,7 @@ public class ParGrp extends Race {
 	@Override
 	public boolean addCompetitor(int bib) {
 		// Check race hasn't started and there are less than 8 competitors
-		if (started == true || competitors.size() > 7) {
+		if (started == true || competitors.size() >= 8) {
 			return false;
 		}
 		// Check bib number hasn't been used.
