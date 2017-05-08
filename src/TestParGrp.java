@@ -12,27 +12,14 @@ public class TestParGrp {
 	public void testTrigger(){
 		//Test 1
 		ParGrp g = new ParGrp();
-		assertFalse(g.hasStarted);
+		g.addCompetitor(111);		
 		g.trigger(1, 0);
-		assertTrue(g.hasStarted);
 		g.trigger(1, 1000000000);
 		g.trigger(1, 2000000000);
-		g.addCompetitor(111);		
 		assertEquals(0, g.competitors.get(0).getStartTime());
 		assertEquals(1000000000, g.competitors.get(0).getEndTime());
 		//Test 2
 		g = new ParGrp();
-		assertFalse(g.hasStarted);
-		g.trigger(1, 0);
-		assertTrue(g.hasStarted);
-		g.trigger(1, 1000000000);
-		g.trigger(2, 2000000000);
-		g.trigger(3, 3000000000L);
-		g.trigger(4, 4000000000L);
-		g.trigger(5, 5000000000L);
-		g.trigger(6, 6000000000L);
-		g.trigger(7, 7000000000L);
-		g.trigger(8, 8000000000L);
 		g.addCompetitor(111);
 		g.addCompetitor(222);
 		g.addCompetitor(333);
@@ -41,6 +28,15 @@ public class TestParGrp {
 		g.addCompetitor(666);
 		g.addCompetitor(777);
 		g.addCompetitor(888);
+		g.trigger(1, 0);
+		g.trigger(1, 1000000000);
+		g.trigger(2, 2000000000);
+		g.trigger(3, 3000000000L);
+		g.trigger(4, 4000000000L);
+		g.trigger(5, 5000000000L);
+		g.trigger(6, 6000000000L);
+		g.trigger(7, 7000000000L);
+		g.trigger(8, 8000000000L);
 		assertEquals(0, g.competitors.get(0).getStartTime());
 		assertEquals(1000000000, g.competitors.get(0).getEndTime());
 		assertEquals(0, g.competitors.get(1).getStartTime());
@@ -59,9 +55,15 @@ public class TestParGrp {
 		assertEquals(8000000000L, g.competitors.get(7).getEndTime());
 		//Test 3
 		g = new ParGrp();
-		assertFalse(g.hasStarted);
+		g.addCompetitor(111);
+		g.addCompetitor(222);
+		g.addCompetitor(333);
+		g.addCompetitor(444);
+		g.addCompetitor(555);
+		g.addCompetitor(666);
+		g.addCompetitor(777);
+		g.addCompetitor(888);
 		g.trigger(1, 0);
-		assertTrue(g.hasStarted);
 		g.trigger(1, 1000000000);
 		g.trigger(1, 7000000000L);
 		g.trigger(2, 2000000000);
@@ -81,14 +83,6 @@ public class TestParGrp {
 		g.trigger(8, 8000000000L);
 		g.trigger(1, 1000000000);
 		g.trigger(8, 1000000000);
-		g.addCompetitor(111);
-		g.addCompetitor(222);
-		g.addCompetitor(333);
-		g.addCompetitor(444);
-		g.addCompetitor(555);
-		g.addCompetitor(666);
-		g.addCompetitor(777);
-		g.addCompetitor(888);
 		assertEquals(0, g.competitors.get(0).getStartTime());
 		assertEquals(1000000000, g.competitors.get(0).getEndTime());
 		assertEquals(0, g.competitors.get(1).getStartTime());
@@ -112,17 +106,6 @@ public class TestParGrp {
 	public void testCompetitorList(){
 		//Test 1
 		ParGrp g = new ParGrp();
-		g.trigger(1, 0);
-		ArrayList<String> temp = new ArrayList<String>();
-		assertEquals(temp, g.competitorList());
-		g.trigger(1, 1000000000);
-		g.trigger(2, 2000000000);
-		g.trigger(3, 3000000000L);
-		g.trigger(4, 4000000000L);
-		g.trigger(5, 5000000000L);
-		g.trigger(6, 6000000000L);
-		g.trigger(7, 7000000000L);
-		g.trigger(8, 8000000000L);
 		g.addCompetitor(111);
 		g.addCompetitor(222);
 		g.addCompetitor(333);
@@ -131,6 +114,16 @@ public class TestParGrp {
 		g.addCompetitor(666);
 		g.addCompetitor(777);
 		g.addCompetitor(888);
+		ArrayList<String> temp = new ArrayList<String>();
+		g.trigger(1, 0);
+		g.trigger(1, 1000000000);
+		g.trigger(2, 2000000000);
+		g.trigger(3, 3000000000L);
+		g.trigger(4, 4000000000L);
+		g.trigger(5, 5000000000L);
+		g.trigger(6, 6000000000L);
+		g.trigger(7, 7000000000L);
+		g.trigger(8, 8000000000L);
 		temp.add("Competitor: 111 --- 00:00:01.000");
 		temp.add("Competitor: 222 --- 00:00:02.000");
 		temp.add("Competitor: 333 --- 00:00:03.000");
@@ -144,6 +137,15 @@ public class TestParGrp {
 		g = new ParGrp();
 		temp = new ArrayList<String>();
 		assertEquals(temp, g.competitorList());
+		g.addCompetitor(111);
+		g.addCompetitor(222);
+		g.addCompetitor(333);
+		g.addCompetitor(444);
+		g.addCompetitor(555);
+		g.addCompetitor(666);
+		g.addCompetitor(777);
+		g.addCompetitor(888);
+		g.trigger(1, 0);
 		g.trigger(1, 1000000000);
 		g.trigger(1, 7000000000L);
 		g.trigger(2, 2000000000);
@@ -163,14 +165,6 @@ public class TestParGrp {
 		g.trigger(8, 8000000000L);
 		g.trigger(1, 1000000000);
 		g.trigger(8, 1000000000);
-		g.addCompetitor(111);
-		g.addCompetitor(222);
-		g.addCompetitor(333);
-		g.addCompetitor(444);
-		g.addCompetitor(555);
-		g.addCompetitor(666);
-		g.addCompetitor(777);
-		g.addCompetitor(888);
 		temp.add("Competitor: 111 --- 00:00:01.000");
 		temp.add("Competitor: 222 --- 00:00:02.000");
 		temp.add("Competitor: 333 --- 00:00:03.000");
@@ -187,13 +181,21 @@ public class TestParGrp {
 	public void testClear(){
 		//Test 1
 		ParGrp g = new ParGrp();
+		g.addCompetitor(111);
 		g.trigger(1, 0);
 		g.trigger(1, 1000000000);
-		g.addCompetitor(111);
 		String[] temp = g.clear();
 		assertEquals("Competitor: 111 --- 00:00:01.000", temp[0]);
 		//Test 2
 		g = new ParGrp();
+		g.addCompetitor(111);
+		g.addCompetitor(222);
+		g.addCompetitor(333);
+		g.addCompetitor(444);
+		g.addCompetitor(555);
+		g.addCompetitor(666);
+		g.addCompetitor(777);
+		g.addCompetitor(888);
 		g.trigger(1, 0);
 		g.trigger(1, 1000000000);
 		g.trigger(2, 2000000000);
@@ -203,14 +205,6 @@ public class TestParGrp {
 		g.trigger(6, 6000000000L);
 		g.trigger(7, 7000000000L);
 		g.trigger(8, 8000000000L);
-		g.addCompetitor(111);
-		g.addCompetitor(222);
-		g.addCompetitor(333);
-		g.addCompetitor(444);
-		g.addCompetitor(555);
-		g.addCompetitor(666);
-		g.addCompetitor(777);
-		g.addCompetitor(888);
 		temp = g.clear();
 		assertEquals("Competitor: 111 --- 00:00:01.000", temp[0]);
 		assertEquals("Competitor: 222 --- 00:00:02.000", temp[1]);
@@ -227,23 +221,21 @@ public class TestParGrp {
 	public void testAddCompetitor(){
 		//Test 1
 		ParGrp g = new ParGrp();
-		assertFalse(g.addCompetitor(111));
-		g.trigger(1, 0);
-		assertFalse(g.addCompetitor(111));
-		g.trigger(1, 1000000000);
 		assertTrue(g.addCompetitor(111));
-		assertFalse(g.addCompetitor(222));
-		g.trigger(1, 1000000000);
-		assertFalse(g.addCompetitor(222));
-		g.trigger(2, 2000000000);
+		assertTrue(g.addCompetitor(222));
+		g.trigger(1, 0);
+		assertFalse(g.addCompetitor(333));
+		assertFalse(g.addCompetitor(444));
+		assertFalse(g.addCompetitor(555));
+		assertFalse(g.addCompetitor(666));
+		assertFalse(g.addCompetitor(777));
+		assertFalse(g.addCompetitor(888));
+		assertFalse(g.addCompetitor(999));
+		//Test 2
+		g = new ParGrp();
+		assertTrue(g.addCompetitor(111));
 		assertFalse(g.addCompetitor(111));
 		assertTrue(g.addCompetitor(222));
-		g.trigger(3, 3000000000L);
-		g.trigger(4, 4000000000L);
-		g.trigger(5, 5000000000L);
-		g.trigger(6, 6000000000L);
-		g.trigger(7, 7000000000L);
-		g.trigger(8, 8000000000L);
 		assertTrue(g.addCompetitor(333));
 		assertTrue(g.addCompetitor(444));
 		assertTrue(g.addCompetitor(555));
@@ -251,6 +243,7 @@ public class TestParGrp {
 		assertTrue(g.addCompetitor(777));
 		assertTrue(g.addCompetitor(888));
 		assertFalse(g.addCompetitor(999));
+		assertFalse(g.addCompetitor(101));
 	}
 	
 	@Test
@@ -258,15 +251,6 @@ public class TestParGrp {
 	public void testRuntime(){
 		//Test 1
 		ParGrp g = new ParGrp();
-		g.trigger(1, 0);
-		g.trigger(1, 1000000000);
-		g.trigger(2, 2000000000);
-		g.trigger(3, 3000000000L);
-		g.trigger(4, 4000000000L);
-		g.trigger(5, 5000000000L);
-		g.trigger(6, 6000000000L);
-		g.trigger(7, 7000000000L);
-		g.trigger(8, 8000000000L);
 		g.addCompetitor(111);
 		g.addCompetitor(222);
 		g.addCompetitor(333);
@@ -275,6 +259,15 @@ public class TestParGrp {
 		g.addCompetitor(666);
 		g.addCompetitor(777);
 		g.addCompetitor(888);
+		g.trigger(1, 0);
+		g.trigger(1, 1000000000);
+		g.trigger(2, 2000000000);
+		g.trigger(3, 3000000000L);
+		g.trigger(4, 4000000000L);
+		g.trigger(5, 5000000000L);
+		g.trigger(6, 6000000000L);
+		g.trigger(7, 7000000000L);
+		g.trigger(8, 8000000000L);
 		assertEquals(1000000000, g.runTime(0));
 		assertEquals(2000000000, g.runTime(1));
 		assertEquals(3000000000L, g.runTime(2));
@@ -290,27 +283,23 @@ public class TestParGrp {
 	public void testToString(){
 		//Test 1
 		ParGrp g = new ParGrp();
-		assertEquals("", g.toString());
-		g.trigger(1, 0);
-		assertEquals("", g.toString());
-		g.trigger(1, 1000000000);
 		g.addCompetitor(111);
-		assertEquals("\tCompetitor: 111 --- 00:00:01.000\n", g.toString());
-		g.trigger(2, 2000000000);
 		g.addCompetitor(222);
-		assertEquals("\tCompetitor: 111 --- 00:00:01.000\n\tCompetitor: 222 --- 00:00:02.000\n", g.toString());
-		g.trigger(3, 3000000000L);
-		g.trigger(4, 4000000000L);
-		g.trigger(5, 5000000000L);
-		g.trigger(6, 6000000000L);
-		g.trigger(7, 7000000000L);
-		g.trigger(8, 8000000000L);
 		g.addCompetitor(333);
 		g.addCompetitor(444);
 		g.addCompetitor(555);
 		g.addCompetitor(666);
 		g.addCompetitor(777);
 		g.addCompetitor(888);
+		g.trigger(1, 0);
+		g.trigger(1, 1000000000);
+		g.trigger(2, 2000000000);
+		g.trigger(3, 3000000000L);
+		g.trigger(4, 4000000000L);
+		g.trigger(5, 5000000000L);
+		g.trigger(6, 6000000000L);
+		g.trigger(7, 7000000000L);
+		g.trigger(8, 8000000000L);
 		assertEquals("\tCompetitor: 111 --- 00:00:01.000\n\tCompetitor: 222 --- 00:00:02.000\n\tCompetitor: 333 --- 00:00:03.000\n\tCompetitor: 444 --- 00:00:04.000\n\tCompetitor: 555 --- 00:00:05.000\n\tCompetitor: 666 --- 00:00:06.000\n\tCompetitor: 777 --- 00:00:07.000\n\tCompetitor: 888 --- 00:00:08.000\n", g.toString());
 	}
 	

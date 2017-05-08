@@ -21,6 +21,7 @@ public class ParGrp extends Race {
 		finishTime = -1;
 		compCount = 0;
 		lastFinished = new Competitor[3];
+		competitors = new ArrayList<Competitor>();
 	}
 
 	public ParGrp(BufferedWriter logWriter) {
@@ -31,6 +32,7 @@ public class ParGrp extends Race {
 		compCount = 0;
 		this.logWriter = logWriter;
 		lastFinished = new Competitor[3];
+		competitors = new ArrayList<Competitor>();
 	}
 
 	/**
@@ -40,7 +42,7 @@ public class ParGrp extends Race {
 	@Override
 	public boolean addCompetitor(int bib) {
 		// Check race hasn't started and there are less than 8 competitors
-		if (started == true || competitors.size() > 8) {
+		if (started == true || competitors.size() > 7) {
 			return false;
 		}
 		// Check bib number hasn't been used.
@@ -76,7 +78,7 @@ public class ParGrp extends Race {
 		} else if (started == true && (channel - 1) < competitors.size()) {
 			if (competitors.get(channel - 1).getFinished() == false) {
 				competitors.get(channel - 1).end(time);
-				competitors.get(channel - 1).setFinished(false);
+				competitors.get(channel - 1).setFinished(true);
 				compCount++;
 				if (compCount == competitors.size()) {
 					finished = true;
