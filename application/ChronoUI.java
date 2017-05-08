@@ -43,7 +43,7 @@ public class ChronoUI extends Application
 							{"ENDRUN"}, 
 							{"NUM"}, 
 							{"PRINT"},
-							{"EVENT", "EVENT IND", "EVENT INDPAR", "EVENT GRP"},
+							{"EVENT", "EVENT IND", "EVENT PARIND", "EVENT GRP", "EVENT PARGRP"},
 							{"DNF"}
 							};
 	int commandInt = 0;
