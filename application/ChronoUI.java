@@ -125,8 +125,8 @@ public class ChronoUI extends Application
 		
 		// adds the section with the power button
 		VBox powerBox = new VBox();
-		powerBox.setPadding(new Insets(10));
-		powerBox.setSpacing(8);
+		//powerBox.setPadding(new Insets(10));
+		//powerBox.setSpacing(8);
 	    Button btnPower = new Button("Power");
 
 	    powerBox.getChildren().add(btnPower);
@@ -169,7 +169,7 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
@@ -182,7 +182,7 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
@@ -195,7 +195,7 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
@@ -208,7 +208,7 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
@@ -245,7 +245,7 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
@@ -258,7 +258,7 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
@@ -271,7 +271,7 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
@@ -284,7 +284,7 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
@@ -302,12 +302,11 @@ public class ChronoUI extends Application
 		mainGrid.add(trigGrid, 1, 0);
 		
 		// adds the printer section
-		VBox printBox = new VBox();
-		printBox.setPadding(new Insets(10));
+		HBox printBox = new HBox();
+		//printBox.setPadding(new Insets(10));
 		printBox.setSpacing(8);
 		printBox.setDisable(true);
 		Button btnPrint = new Button("PrintPWR");
-		printBox.getChildren().add(btnPrint);
 		printArea = new TextArea();
 		printArea.setEditable(false);
 		btnPrint.setOnAction((e) ->{
@@ -315,16 +314,20 @@ public class ChronoUI extends Application
 				printerPWR = false;
 				printArea.setText("");
 			}
-			else
+			else{
 				printerPWR = true;
+				String result = c.command("PRINT", System.nanoTime());
+				printArea.setText(result);
+			}
 		});
 		printBox.getChildren().add(printArea);
+		printBox.getChildren().add(btnPrint);
 		mainGrid.add(printBox, 2, 0);
 		
 		//adds the section with the directional and swap buttons, handlers further down
 		VBox controlBox = new VBox();
-		controlBox.setPadding(new Insets(10));
-		controlBox.setSpacing(8);
+		//controlBox.setPadding(new Insets(10));
+		//controlBox.setSpacing(8);
 		Button btnFunction = new Button("Function");
 		controlBox.getChildren().add(btnFunction);
 		GridPane dPadBox = new GridPane();
@@ -513,7 +516,8 @@ public class ChronoUI extends Application
 						debug(returnTxt);
 					}
 					else{
-						printArea.setText(returnTxt);
+						if(printerPWR)
+							if (printerPWR){printArea.setText(returnTxt);}
 					}
 				}
 			}
