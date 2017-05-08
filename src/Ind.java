@@ -286,7 +286,6 @@ public class Ind extends Race {
 		} else {
 			out = out + "\n\n\tMost recent finish: No racer to finish.";
 			out = out + "\n\n\t\tTime: NA";
-
 		}
 		return out;
 	}

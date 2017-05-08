@@ -131,6 +131,18 @@ public class Competitor {
 			return "Competitor: " + bibNum + " --- Has Not Started";
 		}
 	}
+	
+	public String print(long time){
+		if ((started == true) && (finished == true)) {
+			endTime += time; startTime += time;
+			String finalTime = Time.parseTime(endTime - startTime);
+			return "Competitor: " + bibNum + " --- " + finalTime;
+		} else if ((started == true && finished == false)) {
+			return "Competitor: " + bibNum + " --- DNF";
+		} else {
+			return "Competitor: " + bibNum + " --- Has Not Started";
+		}
+	}
 
 	/*GETTERS AND SETTERS */
 	public long getStartTime() {
