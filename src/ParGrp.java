@@ -1,6 +1,7 @@
 package src;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ParGrp extends Race {
@@ -43,11 +44,13 @@ public class ParGrp extends Race {
 	public boolean addCompetitor(int bib) {
 		// Check race hasn't started and there are less than 8 competitors
 		if (started == true || competitors.size() >= 8) {
+			debug("No competitor added");
 			return false;
 		}
 		// Check bib number hasn't been used.
 		for (int i = 0; i < competitors.size(); i++) {
 			if (bib == competitors.get(i).getBibNum()) {
+				debug("No competitor added");
 				return false;
 			}
 		}
@@ -55,6 +58,7 @@ public class ParGrp extends Race {
 		Competitor temp = new Competitor(bib);
 		temp.setLane(competitors.size() + 1);
 		competitors.add(temp);
+		debug("Added competitor " + bib);
 		return true;
 	}
 
@@ -70,6 +74,7 @@ public class ParGrp extends Race {
 			started = true;
 			startTime = time;
 			for (int i = 0; i < competitors.size(); i++) {
+				debug("Started at " + time);
 				competitors.get(i).setStarted(true);
 				competitors.get(i).start(time);
 			}
@@ -77,10 +82,12 @@ public class ParGrp extends Race {
 			// is currently running, end the racer on that channel.
 		} else if (started == true && (channel - 1) < competitors.size()) {
 			if (competitors.get(channel - 1).getFinished() == false) {
+				debug("Competitor finished at " + time);
 				competitors.get(channel - 1).end(time);
 				competitors.get(channel - 1).setFinished(true);
 				compCount++;
 				if (compCount == competitors.size()) {
+					debug("Race finished at " + time);
 					finished = true;
 					finishTime = time;
 				}
@@ -126,6 +133,18 @@ public class ParGrp extends Race {
 		lastFinished[1] = null;
 		lastFinished[2] = null;
 		return result;
+	}
+	
+	private void debug(String s) {
+		String msg = "ParaGrp - " + s;
+		if (logWriter != null) {
+			try {
+				logWriter.write(msg + "\n");
+			} catch (IOException e) {
+				System.out.println(msg);
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
