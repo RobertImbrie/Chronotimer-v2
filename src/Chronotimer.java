@@ -53,6 +53,7 @@ public class Chronotimer{
   /** If the channel is on and there's an active run,
    * trigger the channel in the current race */
   public void trigger(int channel, long time){
+	debug("Triggered lane: " + channel + " Time: " + time);
     if(channel<channels.length && channels[channel-1] && runStarted)
 	    races.get(currentRace).trigger(channel, time);
   }
@@ -73,7 +74,7 @@ public class Chronotimer{
    */
   public void newRun(){
 	  if(!runStarted && event != null){
-		  switch(event){
+		  switch(event.toUpperCase()){
 			  case "IND":
 			  	races.add(new Ind(logWriter));
 				break;
@@ -84,7 +85,7 @@ public class Chronotimer{
 				races.add(new Grp(logWriter));
 				break;
 			  case "PARGRP":
-				//races.add(new ParGrp(logWriter));
+				races.add(new ParGrp(logWriter));
 				break;
 			  default:
 				debug("Invalid race type");
