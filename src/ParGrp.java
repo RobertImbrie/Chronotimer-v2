@@ -70,6 +70,7 @@ public class ParGrp extends Race {
 	@Override
 	public void trigger(int channel, long time) {
 		// Check if race has started, if not fill all racers startTime with time
+		debug("ParGrp trigger called");
 		if (channel == 1 && started == false) {
 			started = true;
 			startTime = time;
