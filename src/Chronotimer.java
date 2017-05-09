@@ -157,6 +157,43 @@ public class Chronotimer{
 		  return races.get(currentRace).toDisplay(t);
 	  return "CURRENTLY RUNNING RACE: N/A\n\n\t Race has not started yet.\n\n\tNext Racer: No Racer next.\n\n\tCurrent racer: No racer to finish.\n\n\tMost recent finish: No racer to finish.\n\n\t\tTime: NA";
   }
+	
+  //Returns an arrayList of competitors of a race sorted by finish time, any competitor without a time will be at the end.
+	//Returns null if race is empty
+  public ArrayList<Competitor> sortRace(Race r){
+	  ArrayList<Competitor> result = new ArrayList<Competitor>();
+	  ArrayList<Competitor> DNF = new ArrayList<Competitor>();
+	  ArrayList<Competitor> Times = new ArrayList<Competitor>();
+	  if(r.competitors.size() > 0){
+	  	for(int i = 0; i < r.competitors.size(); i++){
+			if(r.competitors.getFinished() == true){
+				Times.add(r.competitors.get(i));
+			} else {
+				DNF.add(r.competitors.get(i);
+			}
+	  	}
+					
+		Collections.sort(Times, new Comparator<competitor>() {
+        		@Override
+        		public int compare(competitor comp1, competitor comp2)
+        		{
+            			if(comp1.getEndTime() > comp2.getEndTime()){
+					return 1;
+				} else if(comp1.getEndTime() < comp2.getEndTime() {
+					return -1;	
+				} else {
+					return 0;	
+				}
+        		}
+    		});
+				
+		result.addAll(Times);
+		result.addAll(DNF);
+		return result;
+	  else {
+		  return null;
+	  }
+  }
   
   @Override
   public String toString(){
