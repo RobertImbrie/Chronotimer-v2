@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Race{
 	ArrayList<Competitor> competitors;
 	transient BufferedWriter logWriter = null;
-	transient long offsetTime = 0;
+	long offsetTime = 0;
 	
 	
 	public void trigger(int channel, long time){
