@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Ind extends Race {
 	int curStart;
 	int curFinish;
-	long startTime;
+	long startTime = -1;
 
 	/**
 	 * Ind Constructor: the constructor creates the run, with default values.
@@ -16,7 +16,6 @@ public class Ind extends Race {
 		competitors = new ArrayList<Competitor>();
 		curStart = 0;
 		curFinish = 0;
-		startTime = -1;
 	}
 
 	/**
@@ -37,15 +36,16 @@ public class Ind extends Race {
 	 */
 	@Override
 	public void trigger(int channel, long time) {
-		if (startTime == -1)
+		if (startTime == -1){
 			debug("Race startTime recorded: " + time);
-		startTime = time;
+			startTime = time;
+		}
 		if (channel == 1) {
 			debug("Racer start recorded: " + time);
 			start(time - startTime);
 		} else if (channel == 2) {
 			debug("Racer end recorded: " + time);
-			end(time = startTime);
+			end(time - startTime);
 		}
 	}
 
@@ -265,8 +265,8 @@ public class Ind extends Race {
 		if (competitors.isEmpty() && !competitors.get(0).getStarted()) {
 			out = out + "\n\n\t Race has not started yet.";
 		} else {
-			out = out + "\n\tRace Start Time: " + Time.parseTime(competitors.get(0).getStartTime());
-			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime);
+			out = out + "\n\tRace Start Time: " + Time.parseTime(offsetTime);
+			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime - startTime + offsetTime);
 		}
 		if (curStart < competitors.size()) {
 			out = out + "\n\n\tNext Start: " + competitors.get(curStart).getBibNum();
@@ -286,6 +286,7 @@ public class Ind extends Race {
 		} else {
 			out = out + "\n\n\tMost recent finish: No racer to finish.";
 			out = out + "\n\n\t\tTime: NA";
+
 		}
 		return out;
 	}
