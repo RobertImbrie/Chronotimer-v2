@@ -47,7 +47,8 @@ public class Chronotimer{
   /** The TOG console/file command has a range from 1-8
    * This toggles the appropriate channel in the array from on (true) to off (false) or vice versa, from 0-7.*/
   public void toggle(int channel){
-	  channels[channel-1] = !channels[channel-1];
+	  if(channel<9)
+		  channels[channel-1] = !channels[channel-1];
   }
   
   /** If the channel is on and there's an active run,
@@ -152,7 +153,9 @@ public class Chronotimer{
   }
   
   public String updateDisplay(long t){
-	  return races.get(currentRace).toDisplay(t);
+	  if(runStarted)
+		  return races.get(currentRace).toDisplay(t);
+	  return "CURRENTLY RUNNING RACE: N/A\n\n\t Race has not started yet.\n\n\tNext Racer: No Racer next.\n\n\tCurrent racer: No racer to finish.\n\n\tMost recent finish: No racer to finish.\n\n\t\tTime: NA";
   }
   
   @Override
