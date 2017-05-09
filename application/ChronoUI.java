@@ -33,7 +33,7 @@ public class ChronoUI extends Application
 {
 	//String command = "";
 	boolean update = true;
-	//String[] commandList = {"", "TOG", "TIME", "TRIG", "EVENT", "NEWRUN", "ENDRUN", "NUM", "PRINT"};
+	//String[] commandList = {"", "TIME", "TRIG", "EVENT", "NEWRUN", "ENDRUN", "NUM", "PRINT"};
 	String[][] commandMatrix = {
 							{""}, 
 							{"TOG"}, 
@@ -344,6 +344,7 @@ public class ChronoUI extends Application
 		btnSwap.setOnAction((e) ->{
 			c.swap(System.nanoTime());
 		});
+		
 		controlBox.getChildren().add(btnSwap);
 		
 		mainGrid.add(controlBox, 0, 1);
@@ -397,6 +398,19 @@ public class ChronoUI extends Application
 		//screenArea.setEditable(false);
 		screenBox.getChildren().add(enterBox);
 		mainGrid.add(screenBox, 1, 1);
+		
+		//function button handler
+		btnUp.setOnAction((e) ->{
+			System.out.println(comX + ", " + comY);
+			if (comX == commandMatrix.length -1)
+				comX = 0;
+			else
+				comX++;
+			if(comY >= commandMatrix[comX].length)
+				comY = commandMatrix[comX].length - 1;
+			updateEnterBox(enterBox);
+		});
+		
 		
 		// adds the event handlers for the directional buttons
 		btnLeft.setOnAction((e) ->{
