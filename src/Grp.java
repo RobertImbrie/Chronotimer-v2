@@ -8,28 +8,19 @@ import sun.misc.Queue;
 
 public class Grp extends Race {
 	//ArrayList<Competitor> competitors;
-	Queue<Competitor> finishes;
-	boolean hasStarted;
-	long startTime;
-	int curComp;
+	transient Queue<Competitor> finishes = new Queue<Competitor>();
+	boolean hasStarted = false;
+	long startTime = -1;
+	int curComp = 0;
 	Time t;
-
-	transient BufferedWriter logWriter = null;
+	transient BufferedWriter logWriter;
 
 	public Grp() {
 		competitors = new ArrayList<Competitor>();
-		hasStarted = false;
-		startTime = -1;
-		finishes = new Queue<Competitor>();
-		curComp = 0;
 	}
 	
 	public Grp(BufferedWriter log) {
 		competitors = new ArrayList<Competitor>();
-		hasStarted = false;
-		startTime = -1;
-		finishes = new Queue<Competitor>();
-		curComp = 0;
 		logWriter = log;
 	}
 
@@ -111,15 +102,6 @@ public class Grp extends Race {
 	}
 
 	@Override
-	public String toString() {
-		String out = "";
-		for (int i = 0; i < competitors.size(); i++) {
-			out = out + "\t" + competitors.get(i).toString() + "\n";
-		}
-		return out;
-	}
-	
-	@Override
 	public String toDisplay(long currentTime) {
 		//GET HEADER
 		String out = "CURRENTLY RUNNING RACE: GROUP";
@@ -127,8 +109,8 @@ public class Grp extends Race {
 		if(startTime == -1){
 			out = out + "\n\n\t Race has not started yet.";
 		} else {
-			out = out + "\n\tRace Start Time: " + Time.parseTime(startTime);
-			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime);
+			out = out + "\n\tRace Start Time: " + Time.parseTime(offsetTime);
+			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime - startTime + offsetTime);
 			out = out + "\n\n\tMost Recent Finishes:";
 		}
 		if(curComp == 0){
