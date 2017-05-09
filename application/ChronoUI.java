@@ -128,8 +128,10 @@ public class ChronoUI extends Application
 		powerBox.setPadding(new Insets(10));
 		powerBox.setSpacing(8);
 	    Button btnPower = new Button("Power");
+	    Button btnExit = new Button("Exit");
 
 	    powerBox.getChildren().add(btnPower);
+	    powerBox.getChildren().add(btnExit);
 	    mainGrid.add(powerBox, 0, 0);
 	    
 	    // adds the section with the channel triggers
@@ -850,9 +852,6 @@ public class ChronoUI extends Application
 		Button btnFile = new Button("Run From File");
 		btnFile.setOnAction((e) ->{
 			
-			//TAKE OUT!!
-			System.out.println("x: " + screenScroll.getWidth());
-			System.out.println("y: " + screenScroll.getHeight());
 			String s = "";
 
 			TextInputDialog dialog = new TextInputDialog();
@@ -920,6 +919,21 @@ public class ChronoUI extends Application
 				}
 	    	});
 		});
+	    
+	    //adds the handler to the exit button
+	    btnExit.setOnAction((e) ->{
+	    	System.out.println("Stage is closing from Exit button");
+    	    task.cancel();
+    	    try {
+				logWriter.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	    	primaryStage.close();
+	    	System.exit(0);
+		});
+	    
 	    
 	    // adds support for keybord input
 	    scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
