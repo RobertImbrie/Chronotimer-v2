@@ -90,6 +90,10 @@ public class UIController {
   	public String updateDisplay(long t){
   		return commandParser.updateDisplay(t);
   	}
+  	
+  	public Object getData(){
+  		return commandParser.getData();
+  	}
 	 
 	 //----------
 	 private void debug(String s){
