@@ -193,8 +193,8 @@ public class ParGrp extends Race {
 		if (startTime == -1) {
 			out = out + "\n\n\t Race has not started yet.";
 		} else {
-			out = out + "\n\tRace Start Time: " + Time.parseTime(startTime);
-			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime);
+			out = out + "\n\tRace Start Time: " + Time.parseTime(offsetTime);
+			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime - startTime + offsetTime);
 			out = out + "\n\n\tMost Recent Finishes:";
 			if (compCount == 1) {
 				out = out + "n\t\t" + lastFinished[0].toString();
