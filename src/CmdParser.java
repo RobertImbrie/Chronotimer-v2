@@ -56,8 +56,8 @@ public class CmdParser{
       }
       
       else if(input[1].equalsIgnoreCase("TIME")){
-        chronotimer.setTime( parseTime(input[2]));
-        debug("time : " + parseTime(input[2]));
+        chronotimer.setTime( Long.parseLong(input[2]));
+        debug("time : " + Long.parseLong(input[2]));
       }
       
       else if(input[1].equalsIgnoreCase("TRIG")){
@@ -101,6 +101,10 @@ public class CmdParser{
   
   public String updateDisplay(long t){
 	  return chronotimer.updateDisplay(t);
+  }
+  
+  public Object getData(){
+	  return chronotimer;
   }
   
   //this was is UIcontroller but this class uses it, 
