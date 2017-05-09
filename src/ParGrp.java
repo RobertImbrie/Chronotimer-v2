@@ -197,13 +197,16 @@ public class ParGrp extends Race {
 			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime - startTime + offsetTime);
 			out = out + "\n\n\tMost Recent Finishes:";
 			if (compCount == 1) {
-				out = out + "n\t\t" + lastFinished[0].toString();
+				out = out + "n\t\t" + lastFinished[0].getBibNum() + ": " + lastFinished[0].runTime();
 			}
 			if (compCount == 2) {
-				out = out + "n\t\t" + lastFinished[1].toString();
+				out = out + "n\t\t" + lastFinished[0].getBibNum() + ": " + lastFinished[0].runTime();
+				out = out + "n\t\t" + lastFinished[1].getBibNum() + ": " + lastFinished[0].runTime();
 			}
 			if (compCount >= 3) {
-				out = out + "n\t\t" + lastFinished[2].toString();
+				out = out + "n\t\t" + lastFinished[0].getBibNum() + ": " + lastFinished[0].runTime();
+				out = out + "n\t\t" + lastFinished[1].getBibNum() + ": " + lastFinished[0].runTime();
+				out = out + "n\t\t" + lastFinished[2].getBibNum() + ": " + lastFinished[0].runTime();
 			}
 		}
 		return out;
