@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Race{
 	ArrayList<Competitor> competitors;
 	transient BufferedWriter logWriter = null;
+	transient long startTime;
 	
 	
 	public void trigger(int channel, long time){
@@ -117,13 +118,24 @@ public class Race{
 	 * sets the time of the competitor at a specified position
 	 * 
 	 * @param t
-	 *            - a newly created Time object containing the time the the
+	 *            - a newly created long object containing the time the the
 	 *            trigger was fired
 	 * @param position
 	 *            - the zero index position of the competitor to act on
 	 */
 	public void start(long t) {
 		
+	}
+	
+	/**
+	 * sets the offset time for printing
+	 * 
+	 * @param t
+	 * 			- a newly created long containing the time to set
+	 * 
+	 */
+	public void setTime(long t){
+		startTime = t;
 	}
 	
 	/**
