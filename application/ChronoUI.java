@@ -33,7 +33,7 @@ public class ChronoUI extends Application
 {
 	//String command = "";
 	boolean update = true;
-	//String[] commandList = {"", "TIME", "TRIG", "EVENT", "NEWRUN", "ENDRUN", "NUM", "PRINT"};
+	//String[] commandList = {"", "TOG", "TIME", "TRIG", "EVENT", "NEWRUN", "ENDRUN", "NUM", "PRINT"};
 	String[][] commandMatrix = {
 							{""}, 
 							{"TOG"}, 
@@ -53,6 +53,7 @@ public class ChronoUI extends Application
 	boolean powerOn = false;
 	static UIController c;	//Class to be made
 	static BufferedWriter logWriter;
+	static Client client = new Client();
 	static Label screenArea;
 	static TextArea printArea;
 	boolean printerPWR = false;
@@ -128,10 +129,8 @@ public class ChronoUI extends Application
 		powerBox.setPadding(new Insets(10));
 		powerBox.setSpacing(8);
 	    Button btnPower = new Button("Power");
-	    Button btnExit = new Button("Exit");
 
 	    powerBox.getChildren().add(btnPower);
-	    powerBox.getChildren().add(btnExit);
 	    mainGrid.add(powerBox, 0, 0);
 	    
 	    // adds the section with the channel triggers
@@ -344,7 +343,6 @@ public class ChronoUI extends Application
 		btnSwap.setOnAction((e) ->{
 			c.swap(System.nanoTime());
 		});
-		
 		controlBox.getChildren().add(btnSwap);
 		
 		mainGrid.add(controlBox, 0, 1);
@@ -365,8 +363,9 @@ public class ChronoUI extends Application
                 	if (update){
                 		try{
                 			updateMessage(c.updateDisplay(System.nanoTime()));
+                			client.sendToServer( c.getData() );
                 		}catch(Exception e){
-                			
+                			System.out.println("Message failed to update");
                 		}
                 	}
                 	else{
@@ -398,19 +397,6 @@ public class ChronoUI extends Application
 		//screenArea.setEditable(false);
 		screenBox.getChildren().add(enterBox);
 		mainGrid.add(screenBox, 1, 1);
-		
-		//function button handler
-		btnUp.setOnAction((e) ->{
-			System.out.println(comX + ", " + comY);
-			if (comX == commandMatrix.length -1)
-				comX = 0;
-			else
-				comX++;
-			if(comY >= commandMatrix[comX].length)
-				comY = commandMatrix[comX].length - 1;
-			updateEnterBox(enterBox);
-		});
-		
 		
 		// adds the event handlers for the directional buttons
 		btnLeft.setOnAction((e) ->{
@@ -866,6 +852,9 @@ public class ChronoUI extends Application
 		Button btnFile = new Button("Run From File");
 		btnFile.setOnAction((e) ->{
 			
+			//TAKE OUT!!
+			System.out.println("x: " + screenScroll.getWidth());
+			System.out.println("y: " + screenScroll.getHeight());
 			String s = "";
 
 			TextInputDialog dialog = new TextInputDialog();
@@ -933,21 +922,6 @@ public class ChronoUI extends Application
 				}
 	    	});
 		});
-	    
-	    //adds the handler to the exit button
-	    btnExit.setOnAction((e) ->{
-	    	System.out.println("Stage is closing from Exit button");
-    	    task.cancel();
-    	    try {
-				logWriter.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	    	primaryStage.close();
-	    	System.exit(0);
-		});
-	    
 	    
 	    // adds support for keybord input
 	    scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
