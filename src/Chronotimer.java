@@ -59,7 +59,7 @@ public class Chronotimer{
   }
   
   /** Sets the time offset in the file */
-  public void setTime(long time){ races.get(currentRace).setTime(time); } 
+  public void setTime(long time){ races.get(currentRace).setTime(time * 1000000000); } 
   
   /** If the event is IND, turns eventSelected to true, allowing new runs to be created.
    * Otherwise nothing happens.
