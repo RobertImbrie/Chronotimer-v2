@@ -458,18 +458,18 @@ public class ChronoUI extends Application
 		numGrid.setVgap(10);
 		numGrid.setPadding(new Insets(25, 25, 25, 25));
 		
-		Button btn1 = new Button("1");
-		Button btn2 = new Button("2");
-		Button btn3 = new Button("3");
-		Button btn4 = new Button("4");
-		Button btn5 = new Button("5");
-		Button btn6 = new Button("6");
-		Button btn7 = new Button("7");
-		Button btn8 = new Button("8");
-		Button btn9 = new Button("9");
-		Button btn0 = new Button("0");
-		Button btnStar = new Button("*");
-		Button btnPound = new Button("#");
+		Button btn1 = new Button(" 1 ");
+		Button btn2 = new Button(" 2 ");
+		Button btn3 = new Button(" 3 ");
+		Button btn4 = new Button(" 4 ");
+		Button btn5 = new Button(" 5 ");
+		Button btn6 = new Button(" 6 ");
+		Button btn7 = new Button(" 7 ");
+		Button btn8 = new Button(" 8 ");
+		Button btn9 = new Button(" 9 ");
+		Button btn0 = new Button(" 0 ");
+		Button btnStar = new Button(" * ");
+		Button btnPound = new Button(" # ");
 		
 		btn1.setOnAction(this:: numPad);
 		btn1.setOnAction((e) ->{

@@ -1,6 +1,7 @@
 package src;
 
-import java.util.Collections
+import java.util.Collections;
+import java.util.Comparator;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -167,20 +168,20 @@ public class Chronotimer{
 	  ArrayList<Competitor> Times = new ArrayList<Competitor>();
 	  if(r.competitors.size() > 0){
 	  	for(int i = 0; i < r.competitors.size(); i++){
-			if(r.competitors.getFinished() == true){
+			if(r.competitors.get(i).getFinished() == true){
 				Times.add(r.competitors.get(i));
 			} else {
-				DNF.add(r.competitors.get(i);
+				DNF.add(r.competitors.get(i));
 			}
 	  	}
 					
-		Collections.sort(Times, new Comparator<competitor>() {
-        		@Override
-        		public int compare(competitor comp1, competitor comp2)
+		Collections.sort(Times, new Comparator<Competitor>() {
+        		
+        		public int compare(Competitor comp1, Competitor comp2)
         		{
             			if(comp1.getEndTime() > comp2.getEndTime()){
 					return 1;
-				} else if(comp1.getEndTime() < comp2.getEndTime() {
+				} else if(comp1.getEndTime() < comp2.getEndTime()) {
 					return -1;	
 				} else {
 					return 0;	
@@ -191,6 +192,7 @@ public class Chronotimer{
 		result.addAll(Times);
 		result.addAll(DNF);
 		return result;
+	  }
 	  else {
 		  return null;
 	  }
