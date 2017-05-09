@@ -163,10 +163,10 @@ public class Race{
 	}
 	
 	@Override
-	public String toString(){
+	public String toString() {
 		String out = "";
-		for(int i = 0; i < competitors.size(); i++){
-			out = out +  "\t" + competitors.get(i).toString() + "\n";
+		for (int i = 0; i < competitors.size(); i++) {
+			out = out + "\t" + competitors.get(i).toString() + "\n";
 		}
 		return out;
 	}
