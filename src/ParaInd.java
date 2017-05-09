@@ -31,7 +31,7 @@ public class ParaInd extends Race {
 		logWriter = log;
 	}
 
-	// @Override //private methods are not inharited
+	// @Override //private methods are not inherited
 	@SuppressWarnings("unused")
 	private void debug(String s) {
 		String msg = "ParaInd - " + s;
@@ -251,13 +251,13 @@ public class ParaInd extends Race {
 
 	public String toDisplay(long currentTime) {
 		// GET HEADER
-		String out = "CURRENTLY RUNNING RACE: PARALELL INDIVIDUAL";
+		String out = "CURRENTLY RUNNING RACE: PARALLEL INDIVIDUAL";
 		// DISPLAY START TIME OF RACE
-		if (competitors.isEmpty() && !competitors.get(0).getStarted()) {
+		if (competitors.isEmpty() || !competitors.get(0).getStarted()) {
 			out = out + "\n\n\t Race has not started yet.";
 		} else {
-			out = out + "\n\tRace Start Time: " + Time.parseTime(competitors.get(0).getStartTime());
-			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime);
+			out = out + "\n\tRace Start Time: " + Time.parseTime(offsetTime);
+			out = out + "\n\tCurrent Race Time: " + Time.parseTime(currentTime - competitors.get(0).getStartTime() + offsetTime);
 		}
 		if (nextComp < competitors.size()) {
 			out = out + "\n\n\tNext Start: " + competitors.get(nextComp).getBibNum();
@@ -265,13 +265,13 @@ public class ParaInd extends Race {
 			out = out + "\n\n\tNext Racer: No Racer next.";
 		}
 
-		if (curComp1 < competitors.size()) {
+		if (curComp1 < competitors.size() && curComp1 >= 0) {
 			out = out + "\n\n\tCurrent racer lane 1: " + competitors.get(curComp1).getBibNum();
 		} else {
 			out = out + "\n\n\tCurrent racer lane 1: No racer to finish.";
 		}
 
-		if (curComp2 < competitors.size()) {
+		if (curComp2 < competitors.size() && curComp2 >= 0) {
 			out = out + "\n\n\tCurrent racer lane 2: " + competitors.get(curComp2).getBibNum();
 		} else {
 			out = out + "\n\n\tCurrent racer lane 2: No racer to finish.";
