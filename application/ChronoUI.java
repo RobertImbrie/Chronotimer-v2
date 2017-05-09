@@ -365,7 +365,7 @@ public class ChronoUI extends Application
                 			updateMessage(c.updateDisplay(System.nanoTime()));
                 			client.sendToServer( c.getData() );
                 		}catch(Exception e){
-                			System.out.println("Message failed to update");
+                			System.out.println("Message failed to update: " + e.toString());
                 		}
                 	}
                 	else{
