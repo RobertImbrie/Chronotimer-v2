@@ -243,18 +243,6 @@ public class Ind extends Race {
 	}
 
 	/**
-	 * Ind toString: returns all competitors as a formatted string.
-	 */
-	@Override
-	public String toString() {
-		String out = "";
-		for (int i = 0; i < competitors.size(); i++) {
-			out = out + "\t" + competitors.get(i).toString() + "\n";
-		}
-		return out;
-	}
-
-	/**
 	 * Ind toDisplay: Returns a formatted string to be displayed on the program's display pop up.
 	 */
 	@Override
@@ -262,7 +250,7 @@ public class Ind extends Race {
 		// GET HEADER
 		String out = "CURRENTLY RUNNING RACE: INDIVIDUAL";
 		// DISPLAY START TIME OF RACE
-		if (competitors.isEmpty() && !competitors.get(0).getStarted()) {
+		if (competitors.isEmpty() || !competitors.get(0).getStarted()) {
 			out = out + "\n\n\t Race has not started yet.";
 		} else {
 			out = out + "\n\tRace Start Time: " + Time.parseTime(offsetTime);
