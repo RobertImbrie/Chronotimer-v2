@@ -10,7 +10,7 @@ import com.google.gson.GsonBuilder;
 
 public class Chronotimer{
   boolean[] channels = new boolean[8];
-  long startTime, offsetTime;
+  long startTime;
   ArrayList<Race> races = new ArrayList<Race>();
   boolean runStarted;
   String event;
@@ -53,13 +53,13 @@ public class Chronotimer{
   /** If the channel is on and there's an active run,
    * trigger the channel in the current race */
   public void trigger(int channel, long time){
-	debug("Triggered lane: " + channel + " Time: " + time);
+	debug("Triggered lane: " + channel + " Time: " + time + " RunStarted: " + runStarted + " Channels: " + channels.length + "I");
     if(channel<channels.length && channels[channel-1] && runStarted)
 	    races.get(currentRace).trigger(channel, time);
   }
   
   /** Sets the time offset in the file */
-  public void setTime(long time){ offsetTime = time; } 
+  public void setTime(long time){ races.get(currentRace).setTime(time); } 
   
   /** If the event is IND, turns eventSelected to true, allowing new runs to be created.
    * Otherwise nothing happens.
